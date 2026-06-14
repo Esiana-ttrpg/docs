@@ -5,7 +5,7 @@ Install, deploy, and operate Esiana on your own infrastructure.
 | Guide | Topic |
 |-------|-------|
 | [Installation](installation.md) | Quick start — Docker Compose |
-| [Docker](docker.md) | Compose profiles, services, volumes |
+| [Docker](docker.md) | Compose services (`postgres` + `esiana`), GHCR image, volumes |
 | [PostgreSQL](postgres.md) | Database engine choice and backups |
 | [Backups](backups.md) | Campaign ZIP and system data |
 | [Reverse proxy](reverse-proxy.md) | HTTPS, CORS, cookies |

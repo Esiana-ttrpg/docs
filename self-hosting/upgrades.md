@@ -14,12 +14,12 @@ Upgrade a self-hosted Esiana instance safely.
    docker compose pull
    docker compose up -d
    ```
-   Backend entrypoint runs `prisma migrate deploy` automatically.
+   Esiana entrypoint runs `prisma migrate deploy` automatically.
 
    **Build from source** (no GHCR pull):
    ```bash
    git fetch --tags
-   git checkout v1.0.0
+   git checkout v1.0.1
    docker compose up -d --build
    ```
 4. **Smoke test** — login, wiki edit, export ZIP
@@ -28,9 +28,9 @@ Upgrade a self-hosted Esiana instance safely.
 
 ## Migration notes
 
-Schema changes ship as Prisma migrations in the backend image. Do not use `db:push` in production containers.
+Schema changes ship as Prisma migrations in the esiana image. Do not use `db:push` in production containers.
 
-If migration fails, check `docker compose logs backend` and restore from backup before retrying.
+If migration fails, check `docker compose logs esiana` and restore from backup before retrying.
 
 Engineering record: [`esiana-core/docs/audits/migration-audit.md`](../../esiana-core/docs/audits/migration-audit.md)
 
