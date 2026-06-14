@@ -47,3 +47,5 @@ User-facing: [Developer Keys](../options/user-account-settings.md)
 HTTP routes for campaign plugins require `campaignHandle`, set `pluginJailedCampaignId`, and return 404 when the plugin is not enabled for that campaign.
 
 **Endpoint reference:** open `/api/docs` on your running Esiana instance.
+
+Engineering deep dive: [`esiana-core/docs/plugins/security-model.md`](../../esiana-core/docs/plugins/security-model.md) · [`capability-matrix.md`](../../esiana-core/docs/plugins/capability-matrix.md)

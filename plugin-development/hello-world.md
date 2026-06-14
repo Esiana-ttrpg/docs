@@ -48,7 +48,14 @@ Core loads plugins from `plugins/` (symlink target). Restart backend after manif
 
 The example plugin registers a domain event listener. Create or edit a wiki page — check backend logs for the hook firing.
 
-See [Events](events.md).
+**HTTP smoke test** (global example plugin enabled):
+
+```bash
+curl -s http://localhost:3001/api/plugin-runtime/example-plugin/hello \
+  -H "Authorization: Bearer <your-token>"
+```
+
+Expect JSON from the plugin route. See [Events](events.md).
 
 ---
 
@@ -74,6 +81,8 @@ See [Storage](storage.md).
 
 - [Manifests](manifests.md)
 - [Capabilities](capabilities.md)
+- [Publishing to registry](publishing-to-registry.md)
+- [Troubleshooting](troubleshooting.md)
 - [`example-plugin` README](../../community-plugins/example-plugin/README.md)
 
 **Endpoint reference:** open `/api/docs` on your running Esiana instance.
