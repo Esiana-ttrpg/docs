@@ -174,3 +174,14 @@ Archived planning and system evolution notes live in:
 - [Plans archive](plans/README.md)
 
 These are not user-facing documentation.
+
+---
+
+## License
+
+Documentation in this wiki is licensed under [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](./LICENSE).
+
+- **Attribution:** Credit Esiana and link to the source page when reusing content.
+- **ShareAlike:** If you remix or build upon this material, distribute your contributions under the same license.
+
+Copyright (C) 2026 Esiana Contributors. Full legal text: [LICENSE](./LICENSE).
