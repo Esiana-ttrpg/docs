@@ -47,7 +47,7 @@ If you're new:
 
 1. [Campaign model](architecture/campaign-model.md)
 2. [Narrative foundation](architecture/narrative-foundation.md)
-3. [Self-hosting installation](self-hosting/installation.md)
+3. [Self-hosting installation](self-hosting/installation.md) — Docker Compose (`postgres` + `ghcr.io/esiana-ttrpg/esiana`)
 4. Explore a running instance via `/api/docs`
 
 ---
