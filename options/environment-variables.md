@@ -8,7 +8,7 @@ Complete reference for backend and frontend environment variables. Copy template
 
 ## Docker Compose operator variables
 
-Used in `.env` beside `docker-compose.yml` ([Self-hosting: Installation](../self-hosting/installation.md)). Canonical template: `esiana-core/.env.example`. Docs mirror: [compose.env.example](compose.env.example).
+Used in `.env` beside `docker-compose.yml` ([Self-hosting: Installation](../self-hosting/installation.md)). Minimal templates: [compose.env.example](compose.env.example) + [compose.docker.example.yml](compose.docker.example.yml). The compose example uses `env_file: .env` — add any optional variable below to `.env` without editing the compose file. Canonical copies: `esiana-core/.env.example` and `esiana-core/docker-compose.yml`.
 
 Official Compose ships **PostgreSQL only** (`esiana` + `postgres`). SQLite is for local Node development — not the Docker quick start.
 

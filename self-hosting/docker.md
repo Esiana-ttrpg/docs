@@ -4,6 +4,8 @@ Compose services, images, volumes, and operational commands.
 
 See [Installation](installation.md) for first-time setup.
 
+Compose file: [compose.docker.example.yml](../options/compose.docker.example.yml) (minimal; optional env in [environment variables](../options/environment-variables.md)). Canonical copy: [`esiana-core/docker-compose.yml`](https://github.com/Esiana-ttrpg/esiana-core/blob/main/docker-compose.yml).
+
 ---
 
 ## Architecture

@@ -30,11 +30,15 @@ No separate frontend or backend containers. Optional integrations (OIDC, plugins
 
 ## Quick start
 
+**Recommended:** clone esiana-core (includes `docker-compose.yml` and `.env.example`).
+
 ```bash
 git clone https://github.com/Esiana-ttrpg/esiana-core.git
 cd esiana-core
 cp .env.example .env
 ```
+
+**Alternative:** copy the docs templates ([compose.docker.example.yml](../options/compose.docker.example.yml) → `docker-compose.yml`, [compose.env.example](../options/compose.env.example) → `.env`).
 
 Edit `.env` and set:
 

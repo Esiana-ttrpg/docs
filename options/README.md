@@ -21,9 +21,9 @@ Some values exist in **both** env and Admin UI. When both apply, Admin DB settin
 
 ## Operator quick path
 
-1. [Self-hosting: installation](../self-hosting/installation.md) — Docker Compose + `.env` (PostgreSQL or SQLite profile)
-2. [Database & persistence](database-and-persistence.md) — choose SQLite vs Postgres by use case
-3. [Environment variables](environment-variables.md) — full reference; template: [compose.env.example](compose.env.example)
+1. [Self-hosting: installation](../self-hosting/installation.md) — Docker Compose + `.env` (Postgres)
+2. [Database & persistence](database-and-persistence.md) — Postgres for Compose; SQLite for local dev
+3. [Environment variables](environment-variables.md) — full reference; templates: [compose.env.example](compose.env.example), [compose.docker.example.yml](compose.docker.example.yml)
 4. [Federated identity (OIDC)](federated-identity.md) — when using external IdPs
 5. [Reverse proxy & security](reverse-proxy-and-security.md) — HTTPS, cookies, rate limits
 6. [Limits & quotas](limits-and-quotas.md) — uploads, compile caps, polling
@@ -36,7 +36,7 @@ Developers hacking on core: [Installation](installation.md) instead of Docker.
 
 | Page | Covers |
 |------|--------|
-| [Quick install](quick-install.md) | Docker Compose, `.env`, Postgres vs SQLite profiles |
+| [Quick install](quick-install.md) | Redirect → self-hosting installation |
 | [Installation](installation.md) | Local Node dev setup |
 | [Environment variables](environment-variables.md) | All backend + frontend env vars |
 | [Federated identity (OIDC)](federated-identity.md) | External IdP setup, `AUTH_SECRETS_KEY`, user link flows |
