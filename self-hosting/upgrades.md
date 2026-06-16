@@ -6,22 +6,16 @@ Upgrade a self-hosted Esiana instance safely.
 
 ## Procedure
 
-1. **Backup** — database (`pg_dump` or SQLite volume), uploads volume, and campaign sovereign ZIPs
-2. **Pull** the release images (recommended) or checkout the git tag and rebuild
+1. **Backup** — database (`pg_dump`), uploads volume, and campaign sovereign ZIPs
+2. **Pull** the release image (recommended) or checkout the git tag
 3. **Restart:**
    ```bash
-   export ESIANA_VERSION=v1.0.0   # match your target release tag
+   # In .env: ESIANA_VERSION=v1.0.7
    docker compose pull
    docker compose up -d
    ```
    Esiana entrypoint runs `prisma migrate deploy` automatically.
 
-   **Build from source** (no GHCR pull):
-   ```bash
-   git fetch --tags
-   git checkout v1.0.1
-   docker compose up -d --build
-   ```
 4. **Smoke test** — login, wiki edit, export ZIP
 
 ---
