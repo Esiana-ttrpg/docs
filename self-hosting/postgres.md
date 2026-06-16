@@ -25,7 +25,7 @@ No SQLite profile in official Compose. For SQLite, use local Node dev ([Options:
 
 ## Backups
 
-PostgreSQL: `pg_dump` against the `pgdata` volume (not in Admin UI).
+PostgreSQL: `pg_dump` against the `postgres_data` volume (docs template; `pgdata` in esiana-core clone).
 
 Campaign lore: sovereign ZIP from Campaign Settings — see [Backups](backups.md).
 

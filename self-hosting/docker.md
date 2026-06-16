@@ -67,7 +67,7 @@ Omit `ESIANA_VERSION` to use `latest`.
 
 | Volume | Mount | Contents |
 |--------|-------|----------|
-| `pgdata` | postgres | PostgreSQL data |
+| `postgres_data` | postgres | PostgreSQL data |
 | `uploads` | `/data/uploads` | Maps, media |
 | `plugins` | `/app/plugins` | Runtime plugin packages |
 

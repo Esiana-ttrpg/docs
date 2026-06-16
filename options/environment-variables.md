@@ -17,7 +17,7 @@ Official Compose ships **PostgreSQL only** (`esiana` + `postgres`). SQLite is fo
 | `POSTGRES_PASSWORD` | (required) | PostgreSQL container password; also used in app `DATABASE_URL` | Compose + app |
 | `JWT_SECRET` | (required) | Session token signing secret | App |
 | `ESIANA_VERSION` | `latest` | GHCR image tag (`ghcr.io/esiana-ttrpg/esiana`) | Compose only |
-| `PUBLIC_ORIGIN` | `http://localhost:8080` | Single source of truth for external URL generation. Compose derives `FRONTEND_ORIGIN`, `CORS_ORIGIN`, and `BACKEND_PUBLIC_ORIGIN` at startup | Compose → app |
+| `PUBLIC_ORIGIN` | `http://localhost:8080` | Single URL operators set in `.env`. Compose derives `FRONTEND_ORIGIN`, `CORS_ORIGIN`, and `BACKEND_PUBLIC_ORIGIN` — do not set those manually unless overriding | Compose → app |
 | `COMPOSE_HTTP_PORT` | `8080` | Host port mapped to esiana container port 80 | Compose only |
 | `AUTH_SECRETS_KEY` | (empty) | AES key for encrypting OIDC client secrets stored in Admin — required in production when using Identity Providers | App |
 | `TRUST_PROXY` | `false` | `true` when behind a reverse proxy with `X-Forwarded-*` headers | App |
