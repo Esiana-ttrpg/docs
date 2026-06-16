@@ -1,0 +1,45 @@
+# Esiana Docker Compose — minimal appliance (1.0.7+)
+# Copy: cp compose.docker.example.yml docker-compose.yml
+# Pair with compose.env.example → .env
+# Optional env: options/environment-variables.md
+
+services:
+  esiana:
+    image: ghcr.io/esiana-ttrpg/esiana:${ESIANA_VERSION:-latest}
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://esiana:${POSTGRES_PASSWORD}@postgres:5432/esiana
+      UPLOADS_DIR: /data/uploads
+      # Operator sets PUBLIC_ORIGIN in .env; compose wires origin-related app vars
+      FRONTEND_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost:8080}
+      CORS_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost:8080}
+      BACKEND_PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost:8080}
+    volumes:
+      - uploads:/data/uploads
+      - plugins:/app/plugins
+    ports:
+      - '8080:80'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: esiana
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: esiana
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U esiana -d esiana']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  uploads:
+  plugins:

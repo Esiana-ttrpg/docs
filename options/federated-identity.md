@@ -25,15 +25,16 @@ In practice, Esiana consumes normalized OIDC assertions (`sub`, `email`, optiona
 
 ## Environment (production)
 
+IdP issuer, client ID, and client secret are configured in **Admin → Identity Providers** — not in `.env`.
+
 | Variable | Purpose |
 |----------|---------|
-| `AUTH_SECRETS_KEY` | 32-byte base64 AES key for encrypting IdP client secrets (**required in production**) |
-| `BACKEND_PUBLIC_ORIGIN` | Public URL of the API (redirect URI host), e.g. `https://esiana.example.com` |
-| `FRONTEND_ORIGIN` | Where OIDC callbacks redirect users after login |
+| `AUTH_SECRETS_KEY` | 32-byte base64 AES key for **encrypting IdP client secrets stored in Admin** — required in production |
+| `PUBLIC_ORIGIN` | Public URL of your instance (no trailing slash). Compose derives `BACKEND_PUBLIC_ORIGIN`, `FRONTEND_ORIGIN`, and `CORS_ORIGIN` for OIDC callbacks and email links |
 
-Generate key: `openssl rand -base64 32`
+Generate encryption key: `openssl rand -base64 32`
 
-Also set `JWT_SECRET`, `CORS_ORIGIN`, and `COOKIE_SECURE` per [Reverse proxy & security](reverse-proxy-and-security.md).
+Also set `JWT_SECRET` and `COOKIE_SECURE=true` when serving over HTTPS — see [Reverse proxy & security](reverse-proxy-and-security.md).
 
 **In practice:** Without `AUTH_SECRETS_KEY` in production, the server refuses to store encrypted client secrets — local dev may store plaintext when the key is unset.
 

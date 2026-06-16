@@ -1,6 +1,6 @@
 # Environment Variables
 
-Complete reference for backend and frontend environment variables. Copy templates from `esiana-core/backend/.env.example`, `esiana-core/frontend/.env.example`, and [compose.env.example](compose.env.example).
+Complete reference for backend and frontend environment variables. Copy templates from `esiana-core/.env.example` (Docker Compose), `esiana-core/backend/.env.example`, and `esiana-core/frontend/.env.example`. Docs mirror: [compose.env.example](compose.env.example).
 
 **Legend:** **Env only** = server file only · **Overridden in Admin** = DB setting wins when set · **Dev only** = not needed in production static frontend · **Compose only** = Docker Compose operator file, not read by the app directly
 
@@ -8,20 +8,25 @@ Complete reference for backend and frontend environment variables. Copy template
 
 ## Docker Compose operator variables
 
-Used in `.env` beside `docker-compose.yml` ([Self-hosting: Installation](../self-hosting/installation.md)). Template: [compose.env.example](compose.env.example).
+Used in `.env` beside `docker-compose.yml` ([Self-hosting: Installation](../self-hosting/installation.md)). Minimal templates: [compose.env.example](compose.env.example) + [compose.docker.example.yml](compose.docker.example.yml). The compose example uses `env_file: .env` — add any optional variable below to `.env` without editing the compose file. Canonical copies: `esiana-core/.env.example` and `esiana-core/docker-compose.yml`.
+
+Official Compose ships **PostgreSQL only** (`esiana` + `postgres`). SQLite is for local Node development — not the Docker quick start.
 
 | Variable | Default | Purpose | Set by |
 |----------|---------|---------|--------|
-| `COMPOSE_PROFILES` | `postgresql` | Active profile: `postgresql` or `sqlite` | Compose only |
-| `POSTGRES_USER` | `esiana` | PostgreSQL container username | Compose only |
-| `POSTGRES_PASSWORD` | (required) | PostgreSQL container password | Compose only |
-| `POSTGRES_DB` | `esiana` | PostgreSQL database name | Compose only |
-| `PUBLIC_ORIGIN` | — | **Documentation convention** — not read by the app. Set `FRONTEND_ORIGIN`, `CORS_ORIGIN`, and `BACKEND_PUBLIC_ORIGIN` to this value | Compose only |
-| `COMPOSE_HTTP_PORT` | `8080` | Host port mapped to the frontend nginx container | Compose only |
-| `ESIANA_IMAGE_TAG` | latest | Docker image tag when pulling prebuilt images | Compose only |
-| `SQLITE_DATABASE_PATH` | `/data/esiana.db` | SQLite file path inside the backend container (sqlite profile) | Compose only |
+| `POSTGRES_PASSWORD` | (required) | PostgreSQL container password; also used in app `DATABASE_URL` | Compose + app |
+| `JWT_SECRET` | (required) | Session token signing secret | App |
+| `ESIANA_VERSION` | `latest` | GHCR image tag (`ghcr.io/esiana-ttrpg/esiana`) | Compose only |
+| `PUBLIC_ORIGIN` | `http://localhost:8080` | Single URL operators set in `.env`. Compose derives `FRONTEND_ORIGIN`, `CORS_ORIGIN`, and `BACKEND_PUBLIC_ORIGIN` — do not set those manually unless overriding | Compose → app |
+| `COMPOSE_HTTP_PORT` | `8080` | Host port mapped to esiana container port 80 | Compose only |
+| `AUTH_SECRETS_KEY` | (empty) | AES key for encrypting OIDC client secrets stored in Admin — required in production when using Identity Providers | App |
+| `TRUST_PROXY` | `false` | `true` when behind a reverse proxy with `X-Forwarded-*` headers | App |
+| `COOKIE_SECURE` | `false` | `true` for HTTPS-only session cookies | App |
+| `OPENAPI_DOCS_ENABLED` | `true` | `false` hides `/api/docs` on public hosts | App |
 
-The backend service reads `DATABASE_URL`, `JWT_SECRET`, `FRONTEND_ORIGIN`, `CORS_ORIGIN`, and other app variables from the same `.env` file. See sections below.
+Fixed in compose (do not duplicate in `.env` unless overriding): `POSTGRES_USER=esiana`, `POSTGRES_DB=esiana`, `DATABASE_URL=postgresql://esiana:${POSTGRES_PASSWORD}@postgres:5432/esiana`.
+
+See [Backend — core runtime](#backend--core-runtime) and [Backend — identity & OIDC](#backend--identity--oidc) for app variables compose passes through.
 
 ---
 

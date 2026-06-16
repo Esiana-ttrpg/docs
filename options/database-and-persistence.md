@@ -2,7 +2,7 @@
 
 Esiana uses **Prisma** with a DB-agnostic schema. This page helps you **choose SQLite or PostgreSQL** and configure each engine.
 
-For Docker setup, see [Quick install](quick-install.md).
+For Docker setup, see [Self-hosting: Installation](../self-hosting/installation.md).
 
 ---
 
@@ -11,8 +11,8 @@ For Docker setup, see [Quick install](quick-install.md).
 | Use case | Recommended engine | Why |
 |----------|-------------------|-----|
 | **Local dev / hacking on core** | SQLite | Zero setup; `file:./dev.db`; fast iteration with `db:push` |
-| **Solo GM, one campaign, LAN-only** | SQLite | Single file to back up; low RAM; fine for small groups |
-| **Docker trial (sqlite profile)** | SQLite | No Postgres container; one volume for `esiana.db` |
+| **Solo GM, one campaign, LAN-only** | SQLite (local dev) | Single file to back up; low RAM; fine for small groups |
+| **Docker self-hosting** | PostgreSQL | Official Compose ships `postgres` service |
 | **Production / internet-facing** | PostgreSQL | Concurrent writes, connection pooling, `pg_dump` backups |
 | **Multi-campaign hub, LFG, many users** | PostgreSQL | Better under write load; standard ops tooling |
 | **Automated testing** | Both | Run the same test suite against each engine to catch drift |
@@ -35,7 +35,7 @@ For Docker setup, see [Quick install](quick-install.md).
 | Schema sync (dev) | `npm run db:push` |
 | Migrations (prod) | `prisma migrate deploy` |
 | System backup | Copy the `.db` file while backend is stopped, or Admin → System Utilities |
-| Compose profile | `COMPOSE_PROFILES=sqlite` — [Quick install](quick-install.md) |
+| Docker Compose | Not supported — use local Node dev or PostgreSQL Compose |
 
 **Limitations:**
 
@@ -50,13 +50,7 @@ DATABASE_PROVIDER=sqlite
 DATABASE_URL="file:./dev.db"
 ```
 
-**Example Docker `.env` (sqlite profile):**
-
-```env
-COMPOSE_PROFILES=sqlite
-DATABASE_PROVIDER=sqlite
-DATABASE_URL=file:/data/esiana.db
-```
+**Example Docker `.env`:** not applicable — official Compose uses PostgreSQL. See [Self-hosting: Installation](../self-hosting/installation.md).
 
 ---
 
@@ -72,7 +66,7 @@ DATABASE_URL=file:/data/esiana.db
 | Schema sync (dev) | `npm run db:migrate` (prefer over `db:push` on shared DBs) |
 | Migrations (prod) | `prisma migrate deploy` on container start |
 | System backup | `pg_dump` + campaign ZIPs |
-| Compose profile | `COMPOSE_PROFILES=postgresql` — [Quick install](quick-install.md) |
+| Docker Compose | Default — set `POSTGRES_PASSWORD` in `.env` ([Installation](../self-hosting/installation.md)) |
 
 **Example `backend/.env` (local Postgres):**
 
@@ -81,16 +75,14 @@ DATABASE_PROVIDER=postgresql
 DATABASE_URL="postgresql://esiana:secret@localhost:5432/esiana"
 ```
 
-**Example Docker `.env` (postgresql profile):**
+**Example Docker `.env`:**
 
 ```env
-COMPOSE_PROFILES=postgresql
-POSTGRES_USER=esiana
 POSTGRES_PASSWORD=strong-secret-here
-POSTGRES_DB=esiana
-DATABASE_PROVIDER=postgresql
-DATABASE_URL=postgresql://esiana:strong-secret-here@postgres:5432/esiana
+JWT_SECRET=<openssl rand -hex 32>
 ```
+
+Compose generates `DATABASE_URL` from `POSTGRES_PASSWORD`. See [Self-hosting: Installation](../self-hosting/installation.md).
 
 **Operational notes:**
 
@@ -105,7 +97,7 @@ DATABASE_URL=postgresql://esiana:strong-secret-here@postgres:5432/esiana
 | Aspect | SQLite | PostgreSQL |
 |--------|--------|------------|
 | **Default in dev checkout** | Yes (`provider = "sqlite"` in repo) | Set `provider` literal + `DATABASE_URL` |
-| **Docker Compose default** | `sqlite` profile | `postgresql` profile (recommended) |
+| **Docker Compose default** | PostgreSQL (`esiana` + `postgres`) | SQLite (local Node dev only) |
 | **Setup complexity** | None (embedded file) | Server or Compose service |
 | **Backup** | Copy `.db` file | `pg_dump` / volume snapshot |
 | **Move instance** | Copy file + uploads volume | Dump/restore + uploads volume |
@@ -138,7 +130,7 @@ Prisma requires a **literal** `provider` — it is not switched by `DATABASE_URL
 There is no in-place engine conversion. Use sovereign data export:
 
 1. Export all campaigns (ZIP) from the old instance
-2. Stand up a new instance with the target engine ([Quick install](quick-install.md))
+2. Stand up a new instance with the target engine ([Self-hosting: Installation](../self-hosting/installation.md) or local Node dev)
 3. Restore campaigns from ZIP
 4. Point DNS / reverse proxy at the new instance
 
@@ -172,7 +164,7 @@ From `esiana-core` root:
 
 ## Related docs
 
-- [Quick install](quick-install.md) — Docker Compose + `.env` for both profiles
+- [Self-hosting: Installation](../self-hosting/installation.md) — Docker Compose quick start
 - [Installation](installation.md) — local Node dev install
 - [Deployment & Docker](deployment-and-docker.md) — container architecture
 - [Environment variables](environment-variables.md)

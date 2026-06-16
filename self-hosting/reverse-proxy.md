@@ -1,33 +1,53 @@
 # Reverse proxy
 
-HTTPS, CORS, and cookie settings for production deployments.
+HTTPS and public hostname setup for production deployments.
 
-Compose exposes HTTP on port 8080 by default. Terminate TLS on **Caddy** or **nginx** in front.
+Compose exposes HTTP on port **8080** by default. Terminate TLS on **Caddy**, **nginx**, or any reverse proxy you already use.
 
 ---
 
-## Required env (HTTPS)
+## Before you proxy
+
+1. Confirm Esiana works directly: `docker compose up -d` → http://localhost:8080
+2. Set **`PUBLIC_ORIGIN`** in `.env` to your public URL (no trailing slash), e.g. `https://esiana.example.com`
+
+`PUBLIC_ORIGIN` is the single source of truth for external URL generation. The container derives all origin-related values internally at startup — you do not need to manually set `CORS_ORIGIN` or `FRONTEND_ORIGIN` unless doing advanced overrides.
+
+3. For HTTPS, also set:
 
 ```env
-COOKIE_SECURE=true
 TRUST_PROXY=true
+COOKIE_SECURE=true
 PUBLIC_ORIGIN=https://esiana.example.com
-CORS_ORIGIN=https://esiana.example.com
-FRONTEND_ORIGIN=https://esiana.example.com
 ```
 
 ---
 
-## Proxy paths
+## Proxy target
 
-| Path | Target |
-|------|--------|
-| `/` | frontend container :80 |
-| `/api` | backend :3001 |
-| `/uploads` | backend :3001 |
+Forward all traffic to the **esiana container on port 80** (or host `COMPOSE_HTTP_PORT`, default 8080).
+
+Internal nginx is the web delivery layer: it serves the SPA and proxies `/api` and `/uploads` to the Node API. External proxies target container port **80**, not Node 3001.
+
+```text
+Browser ──HTTPS──► Reverse proxy ──HTTP──► esiana:80
+```
+
+---
+
+## Caddy (standalone)
+
+```caddyfile
+esiana.example.com {
+    reverse_proxy localhost:8080
+}
+```
+
+With `PUBLIC_ORIGIN=https://esiana.example.com`, `TRUST_PROXY=true`, and `COOKIE_SECURE=true` in `.env`.
 
 ---
 
 ## Full examples
 
-[Options: reverse proxy & security](../options/reverse-proxy-and-security.md)
+- [`esiana-core/docs/deployment/Reverse Proxies.md`](../../esiana-core/docs/deployment/Reverse%20Proxies.md) — Caddy Docker Proxy, nginx, Traefik, Cloudflare Tunnel
+- [Options: reverse proxy & security](../options/reverse-proxy-and-security.md) — cookies, CORS, trust proxy
