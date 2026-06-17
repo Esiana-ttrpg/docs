@@ -47,6 +47,22 @@ With `PUBLIC_ORIGIN=https://esiana.example.com`, `TRUST_PROXY=true`, and `COOKIE
 
 ---
 
+## Upload body size
+
+The Esiana image's internal nginx allows request bodies up to **64 MB** (campaign wizard can send up to four files, each capped by Admin **max upload size**, default 10 MB).
+
+If you terminate TLS on an external reverse proxy, raise its body limit too — otherwise banner images and Obsidian ZIP imports may fail before reaching Esiana:
+
+**nginx**
+
+```nginx
+client_max_body_size 64m;
+```
+
+**Caddy** — Caddy has no practical default limit for reverse_proxy; only add `request_body` limits if you configure them explicitly.
+
+---
+
 ## Full examples
 
 - [`esiana-core/docs/deployment/Reverse Proxies.md`](../../esiana-core/docs/deployment/Reverse%20Proxies.md) — Caddy Docker Proxy, nginx, Traefik, Cloudflare Tunnel

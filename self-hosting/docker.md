@@ -105,5 +105,6 @@ Configure after the base install — do not block quick start.
 | Postgres restart loop | `POSTGRES_PASSWORD` missing | Copy `.env.example` and set required secrets |
 | Blank page / API errors | Migrations failed on startup | `docker compose logs esiana` |
 | SPA blank but `/api/health` works | Internal nginx failed | `docker compose logs esiana`; confirm `ENABLE_INTERNAL_NGINX=true` |
+| Campaign wizard upload fails / NetworkError | Request body exceeds internal nginx limit | Image is bundled with `client_max_body_size 64m` (wizard allows up to 4 files × `maxUploadSizeMb`, default 10 MB each). Rebuild/pull image after upgrade. External reverse proxies may need their own body limit — see [Reverse proxy](reverse-proxy.md) |
 
 Full operator runbook: [`esiana-core/docs/deployment/Docker Compose.md`](../../esiana-core/docs/deployment/Docker%20Compose.md)
