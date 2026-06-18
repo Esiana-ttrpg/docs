@@ -19,7 +19,7 @@ For restoring a prior Esiana export, use **Esiana backup** in the same wizard �
 |--------|--------|
 | **Esiana backup ZIP** (`esiana-campaign-backup-v2`) | Separate wizard card — [Data backup & export](features/data-backup-and-export.md) |
 | **Notion, Logseq, OneNote, Google Docs** | No direct importer. Export Markdown (or Obsidian-compatible Markdown), then use the Obsidian ZIP path if folder layout fits. |
-| **Kanka.io** | Shown in the wizard as planned; not available yet. |
+| **Kanka.io** | JSON campaign export via the wizard **Kanka.io** card (see [Kanka JSON export](#kanka-json-export) below). Markdown export is not supported in v1. |
 | **Content packs / sample data** | Separate wizard sources — not vault import. |
 
 ---
@@ -125,6 +125,93 @@ Folder mapping sets wiki **template type** and **entity category** unless frontm
 | Objects | `DEFAULT` | `objects` |
 | Maps | `DEFAULT` | `maps` |
 | Other modules | `DEFAULT` | — |
+
+---
+
+## Kanka JSON export
+
+Use this path when importing a **Kanka campaign JSON export** (`.zip` from Kanka’s export tool). This is separate from Obsidian Markdown vault import and from Esiana backup restore.
+
+### Wizard workflow
+
+1. Hub → **Create campaign** → **Campaign Source** → **Kanka.io**.
+2. Upload the Kanka `.zip`. The wizard detects the format, lists **entity folders** for mapping, and shows **skipped modules** (abilities, items, maps, etc.).
+3. Review **Source Folder Mapping** — Kanka folder names (`characters`, `locations`, `organisations`, …) auto-map to Esiana modules where possible.
+4. Campaign title may prefill from `campaign.json` when the title field is empty.
+5. Finish identity and access steps; import runs in the background after creation.
+
+### ZIP layout
+
+```
+kanka-export.zip
+├── info.json
+├── campaign.json
+├── characters/
+│   └── anya-nightshadow_6401071.json
+├── locations/
+│   └── elderhelm_6359027.json
+├── organisations/
+│   └── guild_123.json
+├── abilities/          ← skipped (system data)
+├── items/              ← skipped (system data)
+├── maps/               ← skipped (not supported in v1)
+├── settings/           ← skipped (campaign config)
+├── tags/               ← skipped (metadata only)
+└── w/                  ← image assets (ingested when referenced)
+```
+
+Each entity file is JSON with HTML in `entity.entry` (and optional `posts`). Internal links like `[character:6362082]` are rewritten to `[[Entity Name]]` wikilinks when the target entity is in the same export.
+
+### Skipped modules (v1)
+
+| Kanka folder | Reason |
+|--------------|--------|
+| `abilities` | System / sheet data — not lore pages |
+| `items` | System / inventory data |
+| `maps` | Not supported in v1 |
+| `settings` | Campaign configuration |
+| `tags` | Metadata only |
+| `w` | Image assets only (resolved when referenced in body or portrait) |
+
+Skipped counts appear in the wizard and in the post-import **Import Report**.
+
+### Folder mapping
+
+Kanka export folders use lowercase names. Auto-match includes:
+
+| Kanka folder | Esiana module |
+|--------------|---------------|
+| `characters` | Characters |
+| `locations` | Locations |
+| `organisations` | Organizations |
+| `creatures` | Bestiary |
+| `races` | Ancestries |
+| `families` | Families (tree) |
+| `quests` | Game/Quests |
+| `journals` | Game/Journals |
+| `events` | Game/Events |
+| `timelines` | Game/Timelines |
+| `calendars` | Game/Calendars |
+| `notes` | Characters (misc notes) |
+
+Placement precedence matches Obsidian import: entity `type` in JSON → wizard folder mapping → folder synonyms → skip.
+
+### Character field mapping
+
+Kanka D&D-style sheet fields are **not** imported as full stat blocks. Esiana maps narrative-relevant fields only:
+
+| Kanka source | Esiana field |
+|--------------|--------------|
+| `Player Character` type | Active party participation; virtual path under `characters/party/` |
+| `NPC` type | Inactive NPC ally participation |
+| `Class` attribute | `profession` |
+| `Level` attribute | Import metadata / quick info |
+| `Player_Name` attribute | Import metadata only |
+| Appearance traits (section 1) | `appearance` metadata |
+| `character_races` | `ancestry` + deferred `ancestryId` |
+| `organisation_memberships` | deferred `primaryAffiliationId` |
+| `entityLocations` | deferred `currentLocationId` |
+| Other sheet attributes (Background, Alignment, attacks, spells, …) | Appended to biography as **Sheet notes** / **Notable gear** |
 
 ---
 
