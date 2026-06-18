@@ -38,4 +38,8 @@ Common permissions:
 
 Shipped vs deferred capability audit: [`esiana-core/docs/plugins/capability-matrix.md`](../../esiana-core/docs/plugins/capability-matrix.md)
 
+Host security model (engineering): [`esiana-core/docs/plugins/security-model.md`](../../esiana-core/docs/plugins/security-model.md)
+
+Operator summary: [Security](security.md)
+
 **Endpoint reference:** open `/api/docs` on your running Esiana instance.

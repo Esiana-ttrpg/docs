@@ -44,3 +44,5 @@ Human API guides: [API catalog](../api/README.md)
 | KV storage | [Storage](storage.md) |
 | UI slots | [UI extensions](ui-extensions.md) |
 | Trust model | [Security](security.md) |
+| Publish to catalog | [Publishing to registry](publishing-to-registry.md) |
+| Debug install issues | [Troubleshooting](troubleshooting.md) |

@@ -21,6 +21,7 @@ For configuration (env vars, Admin console, campaign tabs), see [Options](../opt
 | Living-world batch simulation | [World advance](world-advance.md) |
 | Session timeline, combined notes, compile export | [Sessions & notes](sessions-and-notes.md) |
 | Fantasy calendars, timeline events, advance time | [Chronology & calendars](chronology-and-calendars.md) |
+| Campaign History snapshots and compare | [Campaign History & snapshots](campaign-history-and-snapshots.md) |
 | Interactive maps, pins, hover previews | [Maps & cartography](maps-and-cartography.md) |
 | Campaign Home widgets, sidebar layout | [Campaign Home & sidebar](campaign-home-and-sidebar.md) |
 | LFG listings, join requests | [Recruitment & LFG](recruitment-lfg.md) |
