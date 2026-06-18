@@ -1,0 +1,10 @@
+# Runtime / local dev examples (not live URLs)
+http://localhost:*
+https://localhost:*
+http://127.0.0.1:*
+# OpenAPI path cited as runtime surface, not a file
+^/api/docs$
+# Placeholder / example hosts in self-hosting docs
+https://esiana.example.com
+# Machine-local plan URIs (plans/ excluded from scan, belt-and-suspenders)
+^file://

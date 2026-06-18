@@ -1,0 +1,29 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Chronicle",
+    "codex",
+    "Esiana",
+    "gameplay",
+    "GHCR",
+    "Kanka",
+    "lore",
+    "nodemailer",
+    "Notion",
+    "Obsidian",
+    "OpenAPI",
+    "Postgres",
+    "self-hosted",
+    "SQLite",
+    "TipTap",
+    "TTRPG",
+    "worldbuilding"
+  ],
+  "ignorePaths": ["plans/**", "options/compose.*"],
+  "ignoreRegExpList": [
+    "file:///.*",
+    "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}",
+    "C:\\\\Users\\\\.*"
+  ]
+}

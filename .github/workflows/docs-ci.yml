@@ -1,0 +1,100 @@
+name: Docs CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: docs-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: docs
+
+      - uses: actions/checkout@v4
+        with:
+          repository: Esiana-ttrpg/esiana-core
+          path: esiana-core
+
+      - uses: actions/checkout@v4
+        with:
+          repository: Esiana-ttrpg/community-plugins
+          path: community-plugins
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: workspace
+          path: |
+            docs
+            esiana-core
+            community-plugins
+          retention-days: 1
+
+  links:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: workspace
+
+      - name: Link check
+        uses: lycheeverse/lychee-action@v2.8.0
+        with:
+          workingDirectory: docs
+          args: >
+            --verbose --no-progress
+            --exclude-path plans/**
+            --exclude-mail
+            --retry-wait-time 5s
+            --max-retries 3
+            --timeout 20s
+            --accept 200,206,429,999
+            **/*.md
+          fail: true
+          jobSummary: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  markdown:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: workspace
+
+      - name: Markdown lint
+        uses: DavidAnson/markdownlint-cli2-action@v23.2.0
+        with:
+          config: docs/.markdownlint-cli2.yaml
+          globs: |
+            docs/**/*.md
+            !docs/plans/**
+
+  spell:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: workspace
+
+      - name: Spell check
+        uses: streetsidesoftware/cspell-action@v2.1.0
+        with:
+          root: docs
+          files: |
+            **/*.md
+            !plans/**
+          config: docs/cspell.json
