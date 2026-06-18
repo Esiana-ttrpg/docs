@@ -19,7 +19,7 @@ For restoring a prior Esiana export, use **Esiana backup** in the same wizard �
 |--------|--------|
 | **Esiana backup ZIP** (`esiana-campaign-backup-v2`) | Separate wizard card — [Data backup & export](features/data-backup-and-export.md) |
 | **Notion, Logseq, OneNote, Google Docs** | No direct importer. Export Markdown (or Obsidian-compatible Markdown), then use the Obsidian ZIP path if folder layout fits. |
-| **Kanka.io** | Shown in the wizard as planned; not available yet. |
+| **Kanka.io** | JSON campaign export via the wizard **Kanka.io** card (see [Kanka JSON export](#kanka-json-export) below). Markdown export is not supported in v1. |
 | **Content packs / sample data** | Separate wizard sources — not vault import. |
 
 ---
@@ -27,14 +27,28 @@ For restoring a prior Esiana export, use **Esiana backup** in the same wizard �
 ## Wizard workflow
 
 1. Hub → **Create campaign** → **Campaign Source** → **Obsidian**.
-2. Upload a `.zip` of your vault. The **first path segment** of each `.md` file is the source folder name used for mapping (see [ZIP layout](#zip-layout)).
-3. Review **Source Folder Mapping** — every row needs a target module before you can proceed.
+2. Upload a `.zip` of your vault. The wizard **scans the ZIP** and lists discovered top-level folders for mapping (see [ZIP layout](#zip-layout)).
+3. Review **Source Folder Mapping** — canonical folders (Characters, Locations, Sessions, …) auto-map; **custom folders** (e.g. `Midnight Foxes`) require you to pick a target module before you can proceed.
 4. Optionally attach a **Fantasy-Calendar `.json`** (see [Calendars](#fantasy-calendars) below).
 5. Finish identity and access steps; import runs in the background after the campaign is created.
 
-The wizard **prefills** folder rows from the ZIP filename plus a small default seed list (`Characters`, `Locations`, `Session Notes`, `Quests`, `Maps`). It does **not** scan the archive for top-level folder names yet. Confirm that each **Source Folder Name** matches a real top-level folder in your ZIP, and add or adjust mappings as needed.
+The wizard scans the uploaded ZIP and lists **top-level content folders** (after stripping a shared wrapper folder like `Rays Pathfinder/` when present). Canonical names auto-map; unknown folders are highlighted for manual mapping.
 
-During import, the backend reads each file’s path, takes the **first path segment** as the source folder, and looks it up in your confirmed mapping table. Unlisted folders import as **Wiki/Generic**.
+During import, notes are placed into typed wiki hubs (Characters, Locations, Session Notes, …). **Unclassified notes are skipped**, not dumped into generic `/pages`. After import, review the **Import Report** page under Game → Rules/Resources for skipped files and classification warnings.
+
+### Classification precedence
+
+```text
+Hard skip (dot-folders, Todo.md, …)
+  → Explicit frontmatter type (type:, entityType:, …)
+  → Wizard folder mapping
+  → Canonical folder synonyms
+  → Frontmatter tags (supporting)
+  → Filename/content inference (loose root files only)
+  → Skip
+```
+
+Explicit frontmatter wins over folder path. Example: `type: location` in `Characters/Citadel.md` imports as a **Location**.
 
 ---
 
@@ -54,10 +68,8 @@ my-vault.zip
 
 - Only **`.md`** files are ingested as wiki pages.
 - Images (`.png`, `.jpg`, `.jpeg`, `.webp`) in the ZIP can be resolved for embeds.
-- The importer uses the **first path segment** of each file as the source folder. For `NPCs/Lord-Varian.md`, map `NPCs`. For `Lord-Varian.md` at the ZIP root (no folder), the source folder is the filename itself — prefer organizing notes into folders.
-- If your export wraps everything in one parent folder (`MyVault/NPCs/...`), either re-zip so category folders sit at the ZIP root, or map that wrapper name in the wizard (all notes under it share one module unless you split folders below it — nested folder names are **not** used for mapping).
-
-Imported pages are grouped under wiki folders titled with the **target module** name (e.g. `Characters`, `Game/Session Notes`).
+- If your export wraps everything in one parent folder (`Rays Pathfinder/Characters/...`), the importer strips that wrapper automatically when it is not itself a canonical folder name.
+- Imported pages attach to the **campaign wiki skeleton** (e.g. `World/Characters`, `Player Session Notes`) — not ad-hoc module folders or generic `/pages`.
 
 ---
 
@@ -89,10 +101,11 @@ Auto-match uses **case-insensitive substring** matching after normalizing unders
 
 | Target | Use when |
 |--------|----------|
-| **Wiki/Generic** | Lore that should stay ordinary wiki pages (default for unmapped folders) |
-| **Ignore Folder** | Skip all Markdown under that source folder (templates, scratch, duplicates) |
+| **Ignore Folder** | Skip all Markdown under that folder (`.obsidian`, templates, scratch) |
 
-There is **no Languages import module**. To file language lore under the Languages codex, map the folder to **Wiki/Generic** and set `entityCategory: languages` in frontmatter (see below).
+Custom folders (e.g. `Midnight Foxes`, `Act 3 Notes`) appear in the mapping UI — map them to the appropriate module. Unmapped custom folders block campaign creation.
+
+There is **no Languages import module**. To file language lore under the Languages codex, set `entityCategory: languages` in frontmatter on a mapped folder import.
 
 ### Default template types by module
 
@@ -115,6 +128,100 @@ Folder mapping sets wiki **template type** and **entity category** unless frontm
 
 ---
 
+## Kanka JSON export
+
+Use this path when importing a **Kanka campaign JSON export** (`.zip` from Kanka’s export tool). This is separate from Obsidian Markdown vault import and from Esiana backup restore.
+
+### Wizard workflow
+
+1. Hub → **Create campaign** → **Campaign Source** → **Kanka.io**.
+2. Upload the Kanka `.zip`. The wizard detects the format, lists **entity folders** for mapping, and shows **skipped modules** (abilities, items, settings, etc.).
+3. Review **Source Folder Mapping** — Kanka folder names (`characters`, `locations`, `organisations`, …) auto-map to Esiana modules where possible.
+4. Campaign title may prefill from `campaign.json` when the title field is empty.
+5. Finish identity and access steps; import runs in the background after creation.
+
+### ZIP layout
+
+```
+kanka-export.zip
+├── info.json
+├── campaign.json
+├── characters/
+│   └── anya-nightshadow_6401071.json
+├── locations/
+│   └── elderhelm_6359027.json
+├── organisations/
+│   └── guild_123.json
+├── maps/
+│   └── world_6358560.json   ← map image + pins (linked to imported entities)
+├── abilities/          ← skipped (system data)
+├── items/              ← skipped (system data)
+├── settings/           ← skipped (campaign config)
+├── tags/               ← skipped (metadata only)
+└── w/                  ← image assets (ingested when referenced)
+```
+
+Each entity file is JSON with HTML in `entity.entry` (and optional `posts`). Internal links like `[character:6362082]` are rewritten to `[[Entity Name]]` wikilinks when the target entity is in the same export.
+
+Map JSON files import as wiki pages with a linked **map asset** and **pins** at Kanka longitude/latitude positions. Pins link to imported location (or other entity) pages when `entity.entity_id` resolves in the same export.
+
+When the wizard does not supply a cover image, `campaign.json` `image` (a `w/` asset path) may be ingested as the Campaign Home hero banner.
+
+Re-importing the same Kanka export is **idempotent**: wiki pages, assets, map pins, and the import report upsert by stable Kanka provenance keys instead of duplicating content.
+
+### Skipped modules (v1)
+
+| Kanka folder | Reason |
+|--------------|--------|
+| `abilities` | System / sheet data — not lore pages |
+| `items` | System / inventory data |
+| `settings` | Campaign configuration |
+| `tags` | Metadata only |
+| `w` | Image assets only (resolved when referenced in body or portrait) |
+
+Skipped counts appear in the wizard and in the post-import **Import Report**.
+
+### Folder mapping
+
+Kanka export folders use lowercase names. Auto-match includes:
+
+| Kanka folder | Esiana module |
+|--------------|---------------|
+| `characters` | Characters |
+| `locations` | Locations |
+| `organisations` | Organizations |
+| `creatures` | Bestiary |
+| `races` | Ancestries |
+| `families` | Families (tree) |
+| `quests` | Game/Quests |
+| `maps` | Maps |
+| `journals` | Game/Journals |
+| `events` | Game/Events |
+| `timelines` | Game/Timelines |
+| `calendars` | Game/Calendars |
+| `notes` | Characters (misc notes) |
+
+Placement precedence matches Obsidian import: entity `type` in JSON → wizard folder mapping → folder synonyms → skip.
+
+### Character field mapping
+
+Kanka D&D-style sheet fields are **not** imported as full stat blocks. Esiana maps narrative-relevant fields only:
+
+| Kanka source | Esiana field |
+|--------------|--------------|
+| `Player Character` type | Active party participation; virtual path under `characters/party/` |
+| `NPC` type | Inactive NPC ally participation |
+| `Class` attribute | `profession` |
+| `Level` attribute | Import metadata / quick info |
+| `Player_Name` attribute | Import metadata only |
+| Appearance traits (section 1) | `appearance` metadata |
+| `character_races` | `ancestry` + deferred `ancestryId` |
+| `organisation_memberships` | deferred `primaryAffiliationId` |
+| `entityLocations` | deferred `currentLocationId` |
+| Other sheet attributes (Background, Alignment, attacks, spells, …) | Appended to biography as **Sheet notes** / **Notable gear** |
+
+---
+
 ## YAML frontmatter
 
 Esiana reads a standard `---` block at the top of each note.
@@ -128,6 +235,8 @@ Esiana reads a standard `---` block at the top of each note.
 | `tags` / `tag` | Tag list (comma-separated string or YAML list) |
 | `templateType` or `template` | Overrides module default template type |
 | `entityCategory` | Overrides module default entity category (e.g. `languages`) |
+| `type`, `entityType`, `entity_type`, `category`, `kind` | Obsidian-style entity type (normalized to Esiana categories) |
+| `visibility` / `audience` | `Public`, `Party`, or `DM_Only` (also `gm`, `players`) |
 | `esiana_created_at`, `esiana_updated_at` | Preserved created/updated timestamps when round-tripping Esiana exports |
 | `date` | Fallback created timestamp on import |
 | *Any other key* | Stored as infobox custom fields in import metadata — not auto-wired to entity relations |
