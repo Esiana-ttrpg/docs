@@ -58,7 +58,7 @@ For large deployments, optional S3-compatible object storage (R2, MinIO, etc.) c
 
 - Large battle maps are downscaled to **display** variant for the canvas; originals may be kept when preserve-full-res is on
 - Pin coordinates lock to display variant dimensions stored on the `Asset` row
-- Use **Locations** wiki folders during import to prep geo-linked lore ([Import formats](../import_formats.md))
+- Use **Locations** wiki folders during import to prep geo-linked lore ([Import formats](../data-management/import-formats.md))
 
 ---
 

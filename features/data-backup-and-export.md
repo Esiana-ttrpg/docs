@@ -80,7 +80,7 @@ Fails if you require members, session notes timeline, or ledger history to round
 
 For folder naming, front matter, and auto-matching modules when migrating from Obsidian or similar Markdown vaults:
 
-**[Campaign Ingestion & Markdown Import Guide](../import_formats.md)**
+**[Campaign Ingestion & Markdown Import Guide](../data-management/import-formats.md)**
 
 Supported wizard sources today:
 
@@ -112,7 +112,7 @@ Treat backups as the **canonical migration path** when moving between SQLite and
 
 ## Related docs
 
-- [Import formats](../import_formats.md)
+- [Import formats](../data-management/import-formats.md)
 - [Campaign hub](campaign-hub.md) — creation wizard
 - [Notifications](notifications.md) — async export alerts
 - [Database & persistence](../options/database-and-persistence.md) — Postgres migration via ZIP
