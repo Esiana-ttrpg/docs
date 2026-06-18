@@ -56,7 +56,7 @@ jobs:
           args: >
             --verbose --no-progress
             --exclude-path plans/**
-            --retry-wait-time 5s
+            --retry-wait-time 5
             --max-retries 3
             --timeout 20s
             --accept 200,206,429,999
@@ -82,7 +82,7 @@ jobs:
           node-version: "20"
 
       - name: Markdown lint
-        run: npx --yes markdownlint-cli2@0.22.1 "**/*.md" "!plans/**"
+        run: npx --yes markdownlint-cli2@0.22.1
 
   spell:
     needs: setup
