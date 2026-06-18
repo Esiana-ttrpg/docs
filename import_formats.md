@@ -27,14 +27,28 @@ For restoring a prior Esiana export, use **Esiana backup** in the same wizard �
 ## Wizard workflow
 
 1. Hub → **Create campaign** → **Campaign Source** → **Obsidian**.
-2. Upload a `.zip` of your vault. The **first path segment** of each `.md` file is the source folder name used for mapping (see [ZIP layout](#zip-layout)).
-3. Review **Source Folder Mapping** — every row needs a target module before you can proceed.
+2. Upload a `.zip` of your vault. The wizard **scans the ZIP** and lists discovered top-level folders for mapping (see [ZIP layout](#zip-layout)).
+3. Review **Source Folder Mapping** — canonical folders (Characters, Locations, Sessions, …) auto-map; **custom folders** (e.g. `Midnight Foxes`) require you to pick a target module before you can proceed.
 4. Optionally attach a **Fantasy-Calendar `.json`** (see [Calendars](#fantasy-calendars) below).
 5. Finish identity and access steps; import runs in the background after the campaign is created.
 
-The wizard **prefills** folder rows from the ZIP filename plus a small default seed list (`Characters`, `Locations`, `Session Notes`, `Quests`, `Maps`). It does **not** scan the archive for top-level folder names yet. Confirm that each **Source Folder Name** matches a real top-level folder in your ZIP, and add or adjust mappings as needed.
+The wizard scans the uploaded ZIP and lists **top-level content folders** (after stripping a shared wrapper folder like `Rays Pathfinder/` when present). Canonical names auto-map; unknown folders are highlighted for manual mapping.
 
-During import, the backend reads each file’s path, takes the **first path segment** as the source folder, and looks it up in your confirmed mapping table. Unlisted folders import as **Wiki/Generic**.
+During import, notes are placed into typed wiki hubs (Characters, Locations, Session Notes, …). **Unclassified notes are skipped**, not dumped into generic `/pages`. After import, review the **Import Report** page under Game → Rules/Resources for skipped files and classification warnings.
+
+### Classification precedence
+
+```text
+Hard skip (dot-folders, Todo.md, …)
+  → Explicit frontmatter type (type:, entityType:, …)
+  → Wizard folder mapping
+  → Canonical folder synonyms
+  → Frontmatter tags (supporting)
+  → Filename/content inference (loose root files only)
+  → Skip
+```
+
+Explicit frontmatter wins over folder path. Example: `type: location` in `Characters/Citadel.md` imports as a **Location**.
 
 ---
 
@@ -54,10 +68,8 @@ my-vault.zip
 
 - Only **`.md`** files are ingested as wiki pages.
 - Images (`.png`, `.jpg`, `.jpeg`, `.webp`) in the ZIP can be resolved for embeds.
-- The importer uses the **first path segment** of each file as the source folder. For `NPCs/Lord-Varian.md`, map `NPCs`. For `Lord-Varian.md` at the ZIP root (no folder), the source folder is the filename itself — prefer organizing notes into folders.
-- If your export wraps everything in one parent folder (`MyVault/NPCs/...`), either re-zip so category folders sit at the ZIP root, or map that wrapper name in the wizard (all notes under it share one module unless you split folders below it — nested folder names are **not** used for mapping).
-
-Imported pages are grouped under wiki folders titled with the **target module** name (e.g. `Characters`, `Game/Session Notes`).
+- If your export wraps everything in one parent folder (`Rays Pathfinder/Characters/...`), the importer strips that wrapper automatically when it is not itself a canonical folder name.
+- Imported pages attach to the **campaign wiki skeleton** (e.g. `World/Characters`, `Player Session Notes`) — not ad-hoc module folders or generic `/pages`.
 
 ---
 
@@ -89,10 +101,11 @@ Auto-match uses **case-insensitive substring** matching after normalizing unders
 
 | Target | Use when |
 |--------|----------|
-| **Wiki/Generic** | Lore that should stay ordinary wiki pages (default for unmapped folders) |
-| **Ignore Folder** | Skip all Markdown under that source folder (templates, scratch, duplicates) |
+| **Ignore Folder** | Skip all Markdown under that folder (`.obsidian`, templates, scratch) |
 
-There is **no Languages import module**. To file language lore under the Languages codex, map the folder to **Wiki/Generic** and set `entityCategory: languages` in frontmatter (see below).
+Custom folders (e.g. `Midnight Foxes`, `Act 3 Notes`) appear in the mapping UI — map them to the appropriate module. Unmapped custom folders block campaign creation.
+
+There is **no Languages import module**. To file language lore under the Languages codex, set `entityCategory: languages` in frontmatter on a mapped folder import.
 
 ### Default template types by module
 
@@ -128,6 +141,8 @@ Esiana reads a standard `---` block at the top of each note.
 | `tags` / `tag` | Tag list (comma-separated string or YAML list) |
 | `templateType` or `template` | Overrides module default template type |
 | `entityCategory` | Overrides module default entity category (e.g. `languages`) |
+| `type`, `entityType`, `entity_type`, `category`, `kind` | Obsidian-style entity type (normalized to Esiana categories) |
+| `visibility` / `audience` | `Public`, `Party`, or `DM_Only` (also `gm`, `players`) |
 | `esiana_created_at`, `esiana_updated_at` | Preserved created/updated timestamps when round-tripping Esiana exports |
 | `date` | Fallback created timestamp on import |
 | *Any other key* | Stored as infobox custom fields in import metadata — not auto-wired to entity relations |
