@@ -135,7 +135,7 @@ Use this path when importing a **Kanka campaign JSON export** (`.zip` from Kanka
 ### Wizard workflow
 
 1. Hub → **Create campaign** → **Campaign Source** → **Kanka.io**.
-2. Upload the Kanka `.zip`. The wizard detects the format, lists **entity folders** for mapping, and shows **skipped modules** (abilities, items, maps, etc.).
+2. Upload the Kanka `.zip`. The wizard detects the format, lists **entity folders** for mapping, and shows **skipped modules** (abilities, items, settings, etc.).
 3. Review **Source Folder Mapping** — Kanka folder names (`characters`, `locations`, `organisations`, …) auto-map to Esiana modules where possible.
 4. Campaign title may prefill from `campaign.json` when the title field is empty.
 5. Finish identity and access steps; import runs in the background after creation.
@@ -152,9 +152,10 @@ kanka-export.zip
 │   └── elderhelm_6359027.json
 ├── organisations/
 │   └── guild_123.json
+├── maps/
+│   └── world_6358560.json   ← map image + pins (linked to imported entities)
 ├── abilities/          ← skipped (system data)
 ├── items/              ← skipped (system data)
-├── maps/               ← skipped (not supported in v1)
 ├── settings/           ← skipped (campaign config)
 ├── tags/               ← skipped (metadata only)
 └── w/                  ← image assets (ingested when referenced)
@@ -162,13 +163,18 @@ kanka-export.zip
 
 Each entity file is JSON with HTML in `entity.entry` (and optional `posts`). Internal links like `[character:6362082]` are rewritten to `[[Entity Name]]` wikilinks when the target entity is in the same export.
 
+Map JSON files import as wiki pages with a linked **map asset** and **pins** at Kanka longitude/latitude positions. Pins link to imported location (or other entity) pages when `entity.entity_id` resolves in the same export.
+
+When the wizard does not supply a cover image, `campaign.json` `image` (a `w/` asset path) may be ingested as the Campaign Home hero banner.
+
+Re-importing the same Kanka export is **idempotent**: wiki pages, assets, map pins, and the import report upsert by stable Kanka provenance keys instead of duplicating content.
+
 ### Skipped modules (v1)
 
 | Kanka folder | Reason |
 |--------------|--------|
 | `abilities` | System / sheet data — not lore pages |
 | `items` | System / inventory data |
-| `maps` | Not supported in v1 |
 | `settings` | Campaign configuration |
 | `tags` | Metadata only |
 | `w` | Image assets only (resolved when referenced in body or portrait) |
@@ -188,6 +194,7 @@ Kanka export folders use lowercase names. Auto-match includes:
 | `races` | Ancestries |
 | `families` | Families (tree) |
 | `quests` | Game/Quests |
+| `maps` | Maps |
 | `journals` | Game/Journals |
 | `events` | Game/Events |
 | `timelines` | Game/Timelines |
