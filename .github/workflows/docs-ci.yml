@@ -17,21 +17,21 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           path: docs
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           repository: Esiana-ttrpg/esiana-core
           path: esiana-core
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           repository: Esiana-ttrpg/community-plugins
           path: community-plugins
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: workspace
           include-hidden-files: true
@@ -45,7 +45,7 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: workspace
 
@@ -73,11 +73,11 @@ jobs:
       run:
         working-directory: docs
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: workspace
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: "20"
 
@@ -88,12 +88,12 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: workspace
 
       - name: Spell check
-        uses: streetsidesoftware/cspell-action@v2.1.0
+        uses: streetsidesoftware/cspell-action@v8.4.0
         with:
           root: docs
           files: |
