@@ -34,6 +34,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: workspace
+          include-hidden-files: true
           path: |
             docs
             esiana-core
@@ -55,7 +56,6 @@ jobs:
           args: >
             --verbose --no-progress
             --exclude-path plans/**
-            --exclude-mail
             --retry-wait-time 5s
             --max-retries 3
             --timeout 20s
@@ -69,18 +69,20 @@ jobs:
   markdown:
     needs: setup
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docs
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: workspace
 
-      - name: Markdown lint
-        uses: DavidAnson/markdownlint-cli2-action@v23.2.0
+      - uses: actions/setup-node@v4
         with:
-          config: docs/.markdownlint-cli2.yaml
-          globs: |
-            docs/**/*.md
-            !docs/plans/**
+          node-version: "20"
+
+      - name: Markdown lint
+        run: npx --yes markdownlint-cli2@0.22.1 "**/*.md" "!plans/**"
 
   spell:
     needs: setup
