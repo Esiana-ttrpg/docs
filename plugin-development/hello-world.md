@@ -8,6 +8,8 @@ Step-by-step walkthrough — complements [Getting started](getting-started.md).
 
 ## 1. Copy the example (5 min)
 
+In your own repo (recommended) or under `community-plugins`:
+
 ```bash
 cd community-plugins
 cp -r example-plugin my-first-plugin
@@ -22,23 +24,26 @@ Edit `manifest.json`:
 
 ---
 
-## 2. Link into core (2 min)
+## 2. Load into core (2 min)
 
-From `esiana-core`:
+From `esiana-core`, either link a local package or install from the registry:
 
 ```bash
-npm run plugins:link -- ../community-plugins/my-first-plugin
-npm run dev:backend
+# Option A — copy sibling community-plugins packages into PLUGINS_DIR
+pnpm run plugins:link
+
+# Option B — Admin → Plugins → Sync Registry → Install example-plugin
+pnpm run dev:backend
 ```
 
-Core loads plugins from `plugins/` (symlink target). Restart backend after manifest changes.
+`plugins:link` is **local development materialization** — linked packages do not appear in the discovery catalog. Restart the backend after manifest changes.
 
 ---
 
 ## 3. Enable on a campaign (5 min)
 
 1. Log in as GM
-2. Campaign Settings → Integrations
+2. Campaign Settings → Integrations (campaign scope) or Admin → Plugins (global scope)
 3. Enable your plugin
 4. Grant capabilities listed in your manifest
 

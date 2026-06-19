@@ -112,7 +112,7 @@ Banner presets in UI: 1 hour, 3 hours, custom duration, or clear.
 
 | Field | Default | Purpose | Set by |
 |-------|---------|---------|--------|
-| `registryUrl` | community-plugins manifest URL | Official plugin registry JSON | Admin UI |
+| `registryUrl` | `https://github.com/Esiana-ttrpg/community-plugins/blob/main/registry.json` | Official plugin registry index (blob link; normalized to raw on fetch) | Admin UI |
 
 **Where:** Admin → Plugins & Integrations
 

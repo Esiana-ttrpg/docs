@@ -8,18 +8,20 @@
 
 ## Prerequisites
 
-- Esiana core running locally (`npm run dev` from [`esiana-core`](../../esiana-core))
+- Esiana core running locally (`pnpm run dev` from [`esiana-core`](../../esiana-core))
 - Node 20+
-- [`community-plugins`](../../community-plugins) checked out beside `esiana-core`
+- Your own plugin repo **or** [`community-plugins`](../../community-plugins) checked out beside `esiana-core` for first-party examples
 
 ---
 
 ## Quick path
 
-1. Copy [`example-plugin`](../../community-plugins/example-plugin/) to `my-first-plugin`
+1. Copy [`example-plugin`](../../community-plugins/example-plugin/) into your own repo (or `my-first-plugin` under `community-plugins`)
 2. Edit `manifest.json` — unique `id`, display `name`, `version`
-3. Link: `npm run plugins:link -- ../community-plugins/my-first-plugin` from `esiana-core`
-4. Restart backend; enable plugin in Campaign Settings → Integrations
+3. For local core dev:
+   - **Option A:** `pnpm run plugins:link` from `esiana-core` (copies sibling `community-plugins` packages into `PLUGINS_DIR`)
+   - **Option B:** Admin → Sync Registry → Install from the official catalog
+4. Restart backend; enable plugin in Campaign Settings → Integrations (campaign scope) or Admin → Plugins (global scope)
 5. Verify domain event hook in backend logs when editing a wiki page
 
 Full walkthrough: [Hello world](hello-world.md)
