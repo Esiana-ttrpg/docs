@@ -6,70 +6,86 @@ Add your plugin to the official [`community-plugins`](../../community-plugins/) 
 
 ---
 
-## 1. Package layout
+## How the catalog works
 
-```
-my-plugin/
-  manifest.json
-  backend/index.js      # optional
-  frontend/index.js     # optional
-  README.md
-```
+| Layer | What it is |
+|-------|------------|
+| **Registry** | [`registry.json`](../../community-plugins/registry.json) — discoverable entries |
+| **First-party code** | Packages under `community-plugins/<plugin>/` (Esiana-maintained) |
+| **External code** | Stays in **your** GitHub repo — registry PR adds an entry only |
+| **Runtime** | Host `PLUGINS_DIR` after Admin install (not vendored in `esiana-core`) |
 
-Manifest must include stable `id`, `scope` (`global` or `campaign`), `version`, and `description`.
+Default registry URL (operators paste in Admin):
+
+```text
+https://github.com/Esiana-ttrpg/community-plugins/blob/main/registry.json
+```
 
 ---
 
-## 2. Pin commit SHA
+## External contributors (plugin in your repo)
 
-Registry installs require an immutable 40-character git SHA. After pushing to `community-plugins`:
-
-```bash
-cd community-plugins
-node scripts/pin-registry-shas.mjs
-git add registry.json
-git commit -m "Pin registry SHAs"
-```
-
-Each entry in `registry.json` needs:
+1. Host `manifest.json` in your repository (root or subdirectory).
+2. Open a PR to `community-plugins` that adds **one entry** to `registry.json` — no plugin source files.
+3. Pin a 40-character `commitSha` from **your** repo.
+4. Set `manifestUrl` to the raw GitHub URL of your manifest.
+5. Set `source.repo`, `source.path`, and `source.type: "github"`.
 
 ```json
 {
   "id": "my-plugin",
-  "manifestUrl": "https://raw.githubusercontent.com/Esiana-ttrpg/community-plugins/main/my-plugin/manifest.json",
+  "name": "My Plugin",
+  "version": "1.0.0",
+  "description": "Short catalog description.",
+  "scope": "campaign",
+  "category": "utility",
+  "manifestUrl": "https://raw.githubusercontent.com/you/esiana-my-plugin/main/manifest.json",
   "source": {
     "type": "github",
-    "repo": "Esiana-ttrpg/community-plugins",
-    "commitSha": "<40-char-sha>",
-    "path": "my-plugin"
+    "repo": "you/esiana-my-plugin",
+    "commitSha": "<40-char-sha-from-your-repo>",
+    "path": "."
   },
   "installable": true
 }
 ```
 
+Maintainers review permissions, pinned SHA, and repository trustworthiness.
+
+**GitLab / self-hosted git:** use `"installable": false` for catalog-only listing, or Admin → Install from URL for global manifest installs.
+
 ---
 
-## 3. Operator install path
+## Esiana first-party (package in community-plugins)
 
-1. Admin → **Plugins & Integrations** — confirm registry URL (default: `community-plugins` `registry.json`)
-2. **Sync Registry** — discover new entry
+1. Add or update `community-plugins/<plugin>/` with `manifest.json`.
+2. Add the matching entry in `registry.json` with `source.repo: "Esiana-ttrpg/community-plugins"`.
+3. Run `node scripts/pin-registry-shas.mjs` from `community-plugins/`.
+4. Commit package + updated `registry.json`.
+
+---
+
+## Operator install path
+
+1. Admin → **Plugins & Integrations** — confirm registry URL (blob link above)
+2. **Sync Registry** — discover entries
 3. **Install** → **Enable** → grant capabilities on campaigns
 
-Self-hosted instances pull manifests from GitHub raw URLs at install time.
-
 ---
 
-## 4. Version bumps
+## Version bumps
 
-1. Bump `version` in `manifest.json`
-2. Push to `community-plugins`
-3. Re-run `pin-registry-shas.mjs` and commit updated SHAs
-4. Operators sync registry and upgrade from Admin
+| Maintainer type | Steps |
+|-----------------|-------|
+| External | Bump manifest version, push to your repo, open registry PR with new `commitSha` |
+| First-party | Bump manifest, push to `community-plugins`, run `pin-registry-shas.mjs` |
+
+Operators sync registry and upgrade from Admin.
 
 ---
 
 ## Further reading
 
+- [community-plugins CONTRIBUTING](../../community-plugins/CONTRIBUTING.md)
 - [Troubleshooting](troubleshooting.md)
-- [Security](security.md)
 - Engineering: [`esiana-core/docs/plugins/capability-matrix.md`](../../esiana-core/docs/plugins/capability-matrix.md)
