@@ -16,7 +16,7 @@
 
 ## Quick path
 
-1. Copy [`example-plugin`](../../community-plugins/example-plugin/) into your own repo (or `my-first-plugin` under `community-plugins`)
+1. Copy [`example-plugin`](../../community-plugins/examples/example-plugin/) into your own repo (or `my-first-plugin` under `community-plugins`)
 2. Edit `manifest.json` — unique `id`, display `name`, `version`
 3. For local core dev:
    - **Option A:** `pnpm run plugins:link` from `esiana-core` (copies sibling `community-plugins` packages into `PLUGINS_DIR`)

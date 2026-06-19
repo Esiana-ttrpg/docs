@@ -88,6 +88,6 @@ See [Storage](storage.md).
 - [Capabilities](capabilities.md)
 - [Publishing to registry](publishing-to-registry.md)
 - [Troubleshooting](troubleshooting.md)
-- [`example-plugin` README](../../community-plugins/example-plugin/README.md)
+- [`example-plugin` README](../../community-plugins/examples/example-plugin/README.md)
 
 **Endpoint reference:** open `/api/docs` on your running Esiana instance.

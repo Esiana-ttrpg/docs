@@ -12,7 +12,9 @@ Extend Esiana with runtime plugins at **instance** scope (system admin) or **cam
 - **Runtime routes** — `/api/plugin-runtime/{pluginId}/…`
 - **Official catalog** — [`community-plugins`](../../community-plugins/) (`registry.json`)
 - **Runtime packages** — installed under `PLUGINS_DIR` (default `esiana-core/plugins/`)
-- **Reference plugins** — `example-plugin`, `remote-object-storage`, `foundry-vtt-sync`, `wiki-opds-feed` (all in community-plugins)
+- **Official catalog** — [`community-plugins/registry.json`](../../community-plugins/registry.json) (3 installable plugins)
+- **Examples & stubs** — `examples/` and `stubs/` in community-plugins (local dev via `plugins:link`, not in registry)
+- **Reference plugins** — catalog: `demo-content-packs`, `remote-object-storage`, `wiki-opds-feed`; examples: `example-plugin`, `player-journal`, `settlement-life`; stub: `foundry-vtt-sync`
 - **OIDC / SSO** — built into core (Admin → Identity Providers); not a community plugin — see [Federated identity](../options/federated-identity.md)
 - **Storage registry** — pluggable storage drivers (`filesystem` default)
 - **Domain events & interceptors** — plugin lifecycle hooks (see in-repo doc)
