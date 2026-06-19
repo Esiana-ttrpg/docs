@@ -17,6 +17,6 @@ Build campaign-scoped extensions against a local Esiana instance.
 | [Publishing to registry](publishing-to-registry.md) | Catalog install via Admin |
 | [Troubleshooting](troubleshooting.md) | Common failures |
 
-REST reference: `/api/docs` on your running backend. Example plugin: [`community-plugins/example-plugin`](../../community-plugins/example-plugin/README.md).
+REST reference: `/api/docs` on your running backend. Example plugin: [`community-plugins/examples/example-plugin`](../../community-plugins/examples/example-plugin/README.md).
 
 Engineering appendices (in `esiana-core`): [capability matrix](../../esiana-core/docs/plugins/capability-matrix.md) · [security model](../../esiana-core/docs/plugins/security-model.md)

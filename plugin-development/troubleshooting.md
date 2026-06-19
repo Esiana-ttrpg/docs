@@ -48,6 +48,6 @@ Common failures when developing or installing plugins.
 ## Still stuck?
 
 - [Hello world](hello-world.md) — repeat verify steps
-- [`example-plugin` README](../../community-plugins/example-plugin/README.md)
+- [`example-plugin` README](../../community-plugins/examples/example-plugin/README.md)
 - `/api/docs` on your instance — plugin runtime routes
 - Engineering detail: [`esiana-core/docs/plugins/security-model.md`](../../esiana-core/docs/plugins/security-model.md)
