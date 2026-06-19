@@ -12,9 +12,12 @@
 |-------|---------|
 | `id` | Stable plugin identifier (slug) |
 | `name` | Display name |
-| `version` | Semver for your package |
+| `version` | Artifact semver for your package (display only in admin UI) |
 | `capabilities` / `permissions` | Granted powers — see [Capabilities](capabilities.md) |
-| `engines` | e.g. `{ "esiana-core": "^0.9.0" }` — semver gate at sync/enable; mismatch auto-disables. Target `^1.0.0` after core tags v1.0.0. |
+| `engines` | Hard runtime constraint, e.g. `{ "esiana-core": "^1.0.0" }` — enforced only when enabling/loading; not shown in registry browse UI |
+| `compatibility` | Optional history metadata: `{ "lastVerified": "2025-06-01T00:00:00.000Z", "lastVerifiedCore": "1.0.0" }` — informational trust signal; never enforced |
+| `lastUpdated` | Optional ISO date when the artifact last changed |
+| `tags` | Optional discovery tags (max 5) for registry search |
 | `backend.entry` | Node module for hooks |
 | `frontend.entry` | Vite bundle entry (optional) |
 | `events` | Domain event subscriptions |
