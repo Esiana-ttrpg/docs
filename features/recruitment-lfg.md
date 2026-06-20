@@ -106,7 +106,7 @@ Platform guide copy ships as bundled markdown in `esiana-core/frontend/src/conte
 | `campaignFormat`, `experienceRequired`, `ageRestriction`, `levelRange`, `scheduleTimezone` | Table prefs + schedule |
 | `genreThemes`, `externalTools`, `safetyTools`, `contentWarnings` | Recruitment settings |
 | `includeTableExpectations`, `includeRules`, `includeFAQ`, `includeSessionZero`, `includeHomebrew`, `includeSafetyGuidelines`, `includeCharacterCreation` | Public recruitment resource toggles |
-| Genre theme catalog | [Campaign genre themes](../campaign-themes.md) |
+| Genre theme catalog | [Campaign genre themes](../reference/campaign-themes.md) |
 | Apply rate limits | [Limits & quotas](../options/limits-and-quotas.md) |
 
 ## Recruitment settings workflow
@@ -169,7 +169,7 @@ See [Notifications](notifications.md).
 - [Recruitment lobby UX — deferred plan](../plans/recruitment_lobby_ux_deferred.plan.md) — product guardrails and P0–P5 backlog
 - [Deferred backlog (Recruitment & hub UX)](../../esiana-core/docs/deferred-backlog.md)
 - [Campaign hub](campaign-hub.md)
-- [Campaign genre themes](../campaign-themes.md)
+- [Campaign genre themes](../reference/campaign-themes.md)
 - [Notifications](notifications.md)
 - [Campaign settings](../options/campaign-settings.md)
 - [User account settings](../options/user-account-settings.md) — default recruitment pitch

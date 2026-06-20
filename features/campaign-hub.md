@@ -49,7 +49,7 @@ Steps typically include:
 2. **Metadata** — description, game system, language, visibility
 3. **Import (optional)** — Obsidian Markdown ZIP or Esiana backup ZIP
 
-See [Import formats](../import_formats.md) for folder structure before uploading.
+See [Import formats](../data-management/import-formats.md) for folder structure before uploading.
 
 ---
 
@@ -101,5 +101,5 @@ The **Shelf Horizon** epilogue dissolves into the page (gradient divider, no har
 
 - [Recruitment & LFG](recruitment-lfg.md)
 - [Data backup & export](data-backup-and-export.md)
-- [Import formats](../import_formats.md)
+- [Import formats](../data-management/import-formats.md)
 - [Campaign settings](../options/campaign-settings.md)

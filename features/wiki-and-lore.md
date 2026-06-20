@@ -62,7 +62,7 @@ Esiana’s wiki is a hierarchical, block-based lore system for characters, locat
 - Use **breadcrumbs** to navigate deep location hierarchies
 - **Rename** pages carefully — wikilink integrity guard updates link text on rename
 - **Parent deletion** uses secure workflows to prevent accidental cascading wipes
-- Import bulk lore via the [campaign wizard](campaign-hub.md) and [import guide](../import_formats.md)
+- Import bulk lore via the [campaign wizard](campaign-hub.md) and [import guide](../data-management/import-formats.md)
 
 ---
 
@@ -72,5 +72,5 @@ Esiana’s wiki is a hierarchical, block-based lore system for characters, locat
 - [Campaign hub](campaign-hub.md) — creation wizard and import
 - [Maps & cartography](maps-and-cartography.md) — link wiki locations to map pins
 - [Data backup & export](data-backup-and-export.md) — sovereign Markdown export in ZIP
-- [Import formats](../import_formats.md) — folder naming for Obsidian / Notion migration
+- [Import formats](../data-management/import-formats.md) — folder naming for Obsidian / Notion migration
 - [`esiana-core/docs/viewport-audit.md`](../esiana-core/docs/viewport-audit.md) — mobile UX notes

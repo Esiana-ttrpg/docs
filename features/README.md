@@ -26,7 +26,7 @@ For configuration (env vars, Admin console, campaign tabs), see [Options](../opt
 | Campaign Home widgets, sidebar layout | [Campaign Home & sidebar](campaign-home-and-sidebar.md) |
 | LFG listings, join requests | [Recruitment & LFG](recruitment-lfg.md) |
 | Bell inbox, session reminders, email (when configured) | [Notifications](notifications.md) |
-| ZIP backup, restore, Markdown import | [Data backup & export](data-backup-and-export.md) |
+| ZIP backup, restore, Markdown import | [Data backup & export](data-backup-and-export.md) · [Data management](../data-management/README.md) |
 | Install campaign-scoped plugins | [Plugins overview](plugins-overview.md) |
 
 ### Players & viewers

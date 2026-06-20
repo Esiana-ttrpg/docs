@@ -43,7 +43,7 @@ Linking sets `CampaignMember.identityPageId` and assigns USER ownership on chara
 | `gameSystem` | Stable slug (e.g. `dnd-5e`, `pathfinder-2e`, `other`) | Campaign UI |
 | `customGameSystemName` | Custom ruleset label when `gameSystem` is `other` | Campaign UI |
 
-See the [Game Systems Reference](../gamesystems.md) for the full picker catalog and stable slug identifiers.
+See the [Game Systems Reference](../reference/gamesystems.md) for the full picker catalog and stable slug identifiers.
 
 **In practice:** `isPublic` controls whether the campaign appears in the [Campaign hub](../features/campaign-hub.md) directory. `isPublicViewable` allows anonymous visitors to read pages marked **Public** visibility — distinct from party [discovery](discovery-and-revelation.md), which hides content until revealed.
 
@@ -84,7 +84,7 @@ When `allowPlayerChronologyManagement` is enabled, players can create and edit *
 | `scheduleFrequency`, `scheduleDay`, `scheduleTime` | OOC schedule display |
 | `currentSession`, `sessionDuration`, `estimatedLength` | Session metadata |
 | `maxSeats`, `maxPlayers` | Player caps |
-| `genreThemes`, `externalTools` | JSON arrays — genre themes use the [catalog](../campaign-themes.md) plus optional custom tags |
+| `genreThemes`, `externalTools` | JSON arrays — genre themes use the [catalog](../reference/campaign-themes.md) plus optional custom tags |
 | `safetyTools`, `contentWarnings`, `equipmentNeeded` | Text fields |
 | `includeTableExpectations`, `includeRules`, `includeFAQ`, `includeSessionZero`, `includeHomebrew`, `includeSafetyGuidelines`, `includeCharacterCreation` | Public recruitment resource sections |
 

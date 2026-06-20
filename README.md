@@ -1,176 +1,83 @@
-# Esiana Documentation Wiki
+# Esiana Documentation
 
-This wiki documents how to operate, extend, and integrate with Esiana — a self-hosted narrative infrastructure platform for TTRPG campaigns.
+How to install, operate, extend, and integrate Esiana — self-hosted narrative infrastructure for TTRPG campaigns.
 
-It is not a player-facing guide.
-
-Players interact through the application UI.  
-This documentation is for operators, developers, and advanced campaign designers.
+**Audience:** operators, developers, and advanced campaign designers. Players use the application UI; this is not a player guide.
 
 ---
 
-## Who this is for
+## Quick start (Docker)
 
-Choose your path:
+The fastest way to run Esiana: Docker Compose with Postgres and `ghcr.io/esiana-ttrpg/esiana`.
+
+```bash
+git clone https://github.com/Esiana-ttrpg/esiana-core.git
+cd esiana-core
+cp .env.example .env
+# Edit .env: set POSTGRES_PASSWORD and JWT_SECRET (openssl rand -hex 32)
+docker compose up -d
+```
+
+Open **http://localhost:8080**, register, and use Esiana. The first account becomes system admin.
+
+**Next:** [Installation](self-hosting/installation.md) · [Docker config](self-hosting/docker.md) · [Reverse proxy](self-hosting/reverse-proxy.md) · [Upgrades](self-hosting/upgrades.md)
+
+---
+
+## Choose your path
 
 | Audience | Start here |
 |----------|------------|
-| Self-hosting operators | [Self-hosting → Installation](self-hosting/installation.md) |
-| Plugin developers | [Plugin development → Getting started](plugin-development/getting-started.md) |
-| API integrators | [API → Overview](api/overview.md) + `/api/docs` |
-| Advanced GMs & writers | [Features → Campaign operations](features/campaign-hub.md) |
-| Platform learners | [Campaign model → Narrative foundation](architecture/narrative-foundation.md) |
+| Self-hosting operators | [Installation](self-hosting/installation.md) |
+| Plugin developers | [Getting started](plugin-development/getting-started.md) |
+| API integrators | [API overview](api/overview.md) · `/api/docs` on your instance |
+| Advanced GMs & writers | [Campaign hub](features/campaign-hub.md) |
+| Platform learners | [Campaign model](architecture/campaign-model.md) |
 | Core contributors | [Local development](options/installation.md) |
-| Migrating from Obsidian / Notion | [Import formats](import_formats.md) |
+| Migrating from Obsidian / Notion / Kanka | [Import formats](data-management/import-formats.md) |
+
+---
+
+## Documentation
+
+Repo folders are the **source of truth**. A future published docs site will use a lighter, curated sidebar (~15–20 items) focused on product workflows — not a mirror of every folder.
+
+### Hosting & administration
+
+Install, configure, and run your instance.
+
+- [Self-hosting](self-hosting/README.md) — Docker, Postgres, backups, upgrades, reverse proxy
+- [Options reference](options/README.md) — environment variables, Admin settings, OIDC, limits
+
+### Using Esiana
+
+What staff can do in a campaign and where to find it in the UI.
+
+- [Features catalog](features/README.md) — wiki, sessions, chronology, maps, discovery, Campaign Home
+- [Data management](data-management/README.md) — import formats, export, backups
+
+### Building & extending
+
+Architecture, APIs, and plugins for integrators and contributors.
+
+- [Architecture](architecture/README.md) — campaign model, narrative foundation, sovereignty
+- [API guides](api/README.md) — human-readable REST docs; live reference at `/api/docs`
+- [Plugin development](plugin-development/README.md) — manifests, capabilities, examples
 
 ---
 
 ## What Esiana is
 
-Esiana is a **campaign state and narrative continuity system**.
-
-It is designed for:
+Esiana is a **campaign state and narrative continuity system** for:
 
 - persistent world memory across sessions
-- structured but flexible lore systems
-- multi-player collaborative storytelling
+- structured lore with multi-player collaboration
+- knowledge revelation and player discovery
 - plugin-extensible campaign logic
-- self-hosted deployments (single GM → multi-table groups)
+- self-hosted deployments (single GM to multi-table groups)
 
 It is **not** a VTT and does not simulate tactical combat.
 
 ---
 
-## Start here (recommended reading order)
-
-If you're new:
-
-1. [Campaign model](architecture/campaign-model.md)
-2. [Narrative foundation](architecture/narrative-foundation.md)
-3. [Self-hosting installation](self-hosting/installation.md) — Docker Compose (`postgres` + `ghcr.io/esiana-ttrpg/esiana`)
-4. Explore a running instance via `/api/docs`
-
----
-
-## Wiki sections
-
-### 🧠 Architecture
-
-How Esiana works internally:
-
-- [Architecture catalog](architecture/README.md)
-- [Campaign model](architecture/campaign-model.md)
-- [Narrative foundation](architecture/narrative-foundation.md)
-- [Sovereign export model](architecture/sovereignty.md)
-- [Plugin architecture](architecture/plugin-architecture.md)
-
----
-
-### 🔌 API
-
-Human-readable API documentation:
-
-- [API catalog](api/README.md)
-- Live interactive reference: `/api/docs`
-
-> Note: API documentation is version-locked to your running instance.
-
----
-
-### 🧩 Plugin development
-
-Extend Esiana with custom systems:
-
-- [Plugin development overview](plugin-development/README.md)
-- [Getting started](plugin-development/getting-started.md)
-- [Hello world (example plugin)](plugin-development/hello-world.md)
-- [Capabilities](plugin-development/capabilities.md) · [Capability matrix (advanced)](../esiana-core/docs/plugins/capability-matrix.md)
-
----
-
-### 🏠 Self-hosting
-
-Install and operate Esiana:
-
-- [Self-hosting overview](self-hosting/README.md)
-- [Installation](self-hosting/installation.md)
-- [Docker configuration](self-hosting/docker.md)
-- [Upgrades](self-hosting/upgrades.md)
-- [Reverse proxy setup](self-hosting/reverse-proxy.md)
-- [Federated identity (OIDC)](options/federated-identity.md)
-
----
-
-### 🎲 Campaign features (advanced GMs)
-
-Narrative and world systems:
-
-- [Features catalog](features/README.md)
-- [Campaign hub](features/campaign-hub.md)
-- [Wiki & lore system](features/wiki-and-lore.md)
-- [Narrative threads](features/narrative-threads.md)
-- [Discovery & revelation mechanics](features/discovery-and-revelation.md)
-- [World advance system](features/world-advance.md)
-- [Session & notes system](features/sessions-and-notes.md)
-- [Chronology & calendars](features/chronology-and-calendars.md)
-- [Maps & cartography](features/maps-and-cartography.md)
-- [Recruitment / LFG tools](features/recruitment-lfg.md)
-- [Notifications](features/notifications.md)
-- [Backup & export system](features/data-backup-and-export.md)
-
----
-
-### ⚙️ Configuration & options
-
-System configuration reference:
-
-- [Options reference](options/README.md)
-- [Environment variables](options/environment-variables.md)
-- [OIDC configuration](options/federated-identity.md)
-- [Admin settings](options/system-admin-settings.md)
-- [Campaign settings](options/campaign-settings.md)
-- [User settings](options/user-account-settings.md)
-- [Limits & quotas](options/limits-and-quotas.md)
-
----
-
-### 🚀 Getting started
-
-Entry-level onboarding for contributors and integrators:
-
-- [Local development](options/installation.md)
-
----
-
-### 📦 Data migration
-
-Importing external campaign data:
-
-- [Import formats](import_formats.md)
-- [Data backup & export](features/data-backup-and-export.md)
-- [Import & export API](api/import-export.md)
-
----
-
-## Engineering records (esiana-core)
-
-Internal documentation for maintainers:
-
-| Topic | Location |
-|------|----------|
-| Docs split policy | [esiana-core/docs/README.md](../esiana-core/docs/README.md) |
-| Export & migration audits | [esiana-core/docs/audits/](../esiana-core/docs/audits/) |
-| Security audits | [esiana-core/docs/security/](../esiana-core/docs/security/) |
-| Deferred backlog | [esiana-core/docs/deferred-backlog.md](../esiana-core/docs/deferred-backlog.md) |
-| Plugin capability matrix | [esiana-core/docs/plugins/capability-matrix.md](../esiana-core/docs/plugins/capability-matrix.md) |
-| Pre-1.0 doc gaps | [known-gaps-1.0.md](known-gaps-1.0.md) |
-
----
-
-## Design notes
-
-Archived planning and system evolution notes live in:
-
-- [Plans archive](plans/README.md)
-
-These are not user-facing documentation.
+Maintainer engineering: [esiana-core/docs](../esiana-core/docs/README.md) · Plan archives: [plans/](plans/README.md) (not user-facing)
