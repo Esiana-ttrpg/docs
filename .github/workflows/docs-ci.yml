@@ -17,16 +17,16 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           path: docs
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           repository: Esiana-ttrpg/esiana-core
           path: esiana-core
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           repository: Esiana-ttrpg/community-plugins
           path: community-plugins
@@ -50,7 +50,7 @@ jobs:
           name: workspace
 
       - name: Link check
-        uses: lycheeverse/lychee-action@v2.8.0
+        uses: lycheeverse/lychee-action@v2.9.0
         with:
           workingDirectory: docs
           args: >
@@ -77,7 +77,7 @@ jobs:
         with:
           name: workspace
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "20"
 
