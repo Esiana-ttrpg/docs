@@ -1,68 +1,66 @@
 # API overview
 
-Human guide to Esiana's REST API.
+Esiana exposes a REST API for campaign narrative infrastructure. These guides explain the access model and common integration patterns; they do not reproduce the endpoint catalog.
 
 **Prerequisite:** [Campaign model](../architecture/campaign-model.md)
-
----
 
 ## Base URL
 
 | Environment | URL |
 |-------------|-----|
-| Local dev | `http://localhost:3001` |
-| Docker Compose | `http://localhost:8080/api` (nginx proxy) or backend `:3001` direct |
+| Local development | `http://localhost:3001` |
+| Docker Compose | `http://localhost:8080` through nginx, or `http://localhost:3001` directly |
 
----
+API paths already begin with `/api`. For example, the direct development health URL is `http://localhost:3001/api/health`.
 
-## Authentication
+## Interactive and machine-readable reference
 
-Session cookie (`esiana_token`) for browser clients, or **Bearer API token** with explicit scopes for integrations.
+Open `/api/docs` on the running instance for Swagger UI. The same release-locked contract is available as:
 
-See [Authentication](authentication.md).
+- `/api/docs/openapi.yaml`
+- `/api/docs/openapi.json`
 
----
+The backend serves the specification packaged with that release; it does not fetch the contract from this wiki. In production, documentation routes are disabled unless `OPENAPI_DOCS_ENABLED=true`. See [Environment variables](../options/environment-variables.md).
+
+Use the running instance's reference for exact paths, parameters, request bodies, response schemas, and status codes.
+
+## Authentication and authorization
+
+Browser clients normally use the `esiana_token` session cookie. Integrations can use a bearer API token on routes whose OpenAPI `security` declaration includes `bearerAuth`.
+
+Authentication establishes identity; it does not grant campaign access, content access, a campaign role, or system-administrator authority. See [Authentication](authentication.md) and [Access control](access-control.md).
 
 ## Campaign scope
 
-Most lore routes live under:
+Most narrative routes use:
 
 ```text
 /api/campaigns/{campaignHandle}/...
 ```
 
-`campaignHandle` is the campaign slug — not numeric id.
+These routes resolve `{campaignHandle}` as the campaign's URL handle and then require membership. Additional role, capability, ownership, and content-visibility checks may follow.
 
----
+Some container-management routes under `/api/campaigns/{id}` use the database campaign ID instead. Consult the parameter name and description in `/api/docs`; do not assume handles and IDs are interchangeable.
 
-## Interactive reference
+## First request
 
-Open **`/api/docs`** on your running Esiana instance. The OpenAPI spec is version-locked to that release — not fetched from this wiki.
+The health endpoint is public:
 
-Product version comes from root `package.json` (currently Beta **v0.9.0**; **v1.0.0** locks the public API contract). Plugin manifests declare compatibility via `engines.esiana-core`.
+```http
+GET /api/health
+```
 
-Disabled in production unless `OPENAPI_DOCS_ENABLED=true`. See [Environment variables](../options/environment-variables.md) and [Self-hosting: Docker](../self-hosting/docker.md).
-
----
-
-## Not in core (v1.0)
-
-- **Unified search** — no `/search` REST endpoint; use wiki hubs, link-index, or plugin search
-- **Webhooks** — outbound delivery queue deferred post-1.0
-
----
+For an authenticated integration, create an API token from account settings and send it as a bearer token. Before calling a campaign-scoped endpoint, use the campaign list to obtain the correct ID or handle and confirm that the token's owning user is a campaign member.
 
 ## Guides
 
-| Topic | Doc |
-|-------|-----|
-| Auth | [Authentication](authentication.md) |
-| Campaigns | [Campaigns](campaigns.md) |
-| Wiki | [Wiki pages](wiki-pages.md) |
-| Entities | [Entities](entities.md) |
-| Maps | [Maps](maps.md) |
+| Topic | Guide |
+|-------|-------|
+| Authentication and tokens | [Authentication](authentication.md) |
+| Authorization boundaries | [Access control](access-control.md) |
+| Requests and errors | [Request conventions](request-conventions.md) |
+| Campaign addressing | [Campaigns](campaigns.md) |
 | Assets | [Assets](assets.md) |
-| Backup / import | [Import & export](import-export.md) |
-| Plugins | [Plugins](plugins.md) |
+| Plugin API boundaries | [Plugins](plugins.md) |
 
 **Endpoint reference:** open `/api/docs` on your running Esiana instance.

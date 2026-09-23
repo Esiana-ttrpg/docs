@@ -15,11 +15,11 @@ Official Compose ships **PostgreSQL only** (`esiana` + `postgres`). SQLite is fo
 | Variable | Default | Purpose | Set by |
 |----------|---------|---------|--------|
 | `POSTGRES_PASSWORD` | (required) | PostgreSQL container password; also used in app `DATABASE_URL` | Compose + app |
-| `JWT_SECRET` | (required) | Session token signing secret | App |
+| `JWT_SECRET` | (required) | Signs session JWT cookies — generate with `openssl rand -hex 32`. **Not** interchangeable with `AUTH_SECRETS_KEY` | App |
 | `ESIANA_VERSION` | `latest` | GHCR image tag (`ghcr.io/esiana-ttrpg/esiana`) | Compose only |
 | `PUBLIC_ORIGIN` | `http://localhost:8080` | Single URL operators set in `.env`. Compose derives `FRONTEND_ORIGIN`, `CORS_ORIGIN`, and `BACKEND_PUBLIC_ORIGIN` — do not set those manually unless overriding | Compose → app |
 | `COMPOSE_HTTP_PORT` | `8080` | Host port mapped to esiana container port 80 | Compose only |
-| `AUTH_SECRETS_KEY` | (empty) | AES key for encrypting OIDC client secrets stored in Admin — required in production when using Identity Providers | App |
+| `AUTH_SECRETS_KEY` | (empty) | AES key for encrypting OIDC client secrets stored in Admin — `openssl rand -base64 32`. **Separate from** `JWT_SECRET` | App |
 | `TRUST_PROXY` | `false` | `true` when behind a reverse proxy with `X-Forwarded-*` headers | App |
 | `COOKIE_SECURE` | `false` | `true` for HTTPS-only session cookies | App |
 | `OPENAPI_DOCS_ENABLED` | `true` | `false` hides `/api/docs` on public hosts | App |
@@ -40,7 +40,7 @@ Defined in `esiana-core/backend/src/config/env.ts`.
 | `PORT` | `3001` | HTTP server port | Env only |
 | `DATABASE_URL` | `postgresql://esiana:esiana@localhost:5432/esiana` | Prisma connection string | Env only |
 | `DATABASE_PROVIDER` | `postgresql` | Read into app config; **does not switch Prisma today** — see [Database & persistence](database-and-persistence.md) | Env only |
-| `JWT_SECRET` | `dev-secret-change-me` | Auth token signing — **change in production** | Env only |
+| `JWT_SECRET` | `dev-secret-change-me` | Signs session JWT cookies — **change in production** (`openssl rand -hex 32`). Do not reuse for `AUTH_SECRETS_KEY` | Env only |
 | `JWT_EXPIRES_IN` | `7d` | Session token lifetime | Env only |
 | `COOKIE_NAME` | `esiana_token` | Session cookie name | Env only |
 | `COOKIE_SECURE` | `false` | HTTPS-only cookies (`true` behind TLS) | Env only |
@@ -60,16 +60,29 @@ Defined in `esiana-core/backend/src/config/env.ts`.
 
 ## Backend — identity & OIDC
 
-Required for production OIDC ([Federated identity](federated-identity.md)).
+Canonical OIDC contract: **[Federated identity (OIDC)](federated-identity.md)** — do not duplicate `OIDC_*` lists here.
+
+### Session signing vs stored IdP secrets
+
+| Variable | Purpose |
+|----------|---------|
+| `JWT_SECRET` | Application session / JWT cookie signing (required in production) |
+| `AUTH_SECRETS_KEY` | AES-256-GCM encryption for IdP **client secrets** persisted in the database |
+
+Generate **different** values for each. Do not copy `JWT_SECRET` into `AUTH_SECRETS_KEY`.
 
 | Variable | Default | Purpose | Set by |
 |----------|---------|---------|--------|
-| `AUTH_SECRETS_KEY` | (empty) | 32-byte base64 AES key for encrypting IdP client secrets | Env only |
+| `AUTH_SECRETS_KEY` | (empty) | Encrypt IdP client secrets at rest — `openssl rand -base64 32` | Env only |
 | `BACKEND_PUBLIC_ORIGIN` | `http://localhost:3001` | Public API URL (OIDC redirect host) | Env only |
 | `API_PUBLIC_ORIGIN` | (alias) | Same as `BACKEND_PUBLIC_ORIGIN` | Env only |
 | `FRONTEND_ORIGIN` | `http://localhost:5173` | Post-login redirect target; email deep links | Env only |
 
-**In practice:** `AUTH_SECRETS_KEY` is mandatory in production when storing OIDC client secrets. Generate with `openssl rand -base64 32`. `BACKEND_PUBLIC_ORIGIN` must match the URL your IdP accepts for the callback path.
+When using environment-managed OIDC (`OIDC_ENABLED=true`), set `OIDC_ISSUER_URL`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`, and related vars per [Federated identity](federated-identity.md). Optional: `OIDC_ALLOW_SIGNUP`, `OIDC_AUTO_REDIRECT`, `OIDC_USER_GROUP`, `OIDC_ADMIN_GROUP`.
+
+**Authentication mode:** `LOCAL_LOGIN_ENABLED` (default `true`) is documented under [Federated identity](federated-identity.md#local--oidc-hybrid) — it gates password login, not OIDC itself.
+
+**In practice:** `AUTH_SECRETS_KEY` is mandatory in production when storing OIDC client secrets. `BACKEND_PUBLIC_ORIGIN` must match the URL your IdP accepts for the callback path.
 
 ---
 

@@ -1,31 +1,34 @@
 # Plugins API
 
-Plugin host routes — install authority, campaign enablement, runtime HTTP.
+Esiana's core contract covers plugin management and discovery routes implemented by core. Runtime routes registered by installed plugins are extension-owned APIs.
 
 **Prerequisite:** [Campaign model](../architecture/campaign-model.md)
 
----
-
-## Routes
+## Core surfaces
 
 | Area | Path pattern |
-|------|----------------|
-| Admin plugin registry | `/api/admin/plugins/...` |
-| Campaign enablement | Campaign settings API |
-| Plugin runtime (slots) | `/api/plugin-runtime/:pluginId/...` |
+|------|--------------|
+| System plugin administration | `/api/admin/plugins/...` |
+| Global plugin catalog/runtime descriptors | `/api/plugins/...` |
+| Campaign plugin enablement and configuration | `/api/campaigns/{campaignId}/plugins/...` |
+| Identity-aware plugin runtime | `/api/plugin-runtime/:pluginId/...` |
+| Public plugin runtime | `/api/public/plugin-runtime/:pluginId/...` |
 
-Only system administrators **install** packages (registry sync or `PLUGINS_DIR`). Campaign admins **enable** and **configure** already-installed plugins per campaign — they cannot fetch new code.
+System administrators install packages. Campaign-level privileged users can enable and configure already-installed plugins for their campaign; campaign authority does not grant system installation authority.
 
-| Action | Who | API surface |
-|--------|-----|-------------|
-| Install / sync registry | System admin | `/api/admin/plugins/...` |
-| Enable + config template | Game Master | Campaign settings / campaign plugin routes |
-| Runtime HTTP | Enabled plugin | `/api/plugin-runtime/:pluginId/...` |
+Global plugin API bearer calls enforce `plugins:read` or `plugins:manage` as documented per operation. Those scopes do not bypass user, campaign, or content authorization.
 
----
+## Extension-owned routes
 
-## Author docs
+The core OpenAPI document does not enumerate dynamically registered plugin-host operations because their paths, schemas, and authorization rules belong to the installed extension and can change independently of core. Consult that plugin's documentation and manifest.
 
-[Plugin development](../plugin-development/getting-started.md) · [Plugin architecture](../architecture/plugin-architecture.md)
+The `/api/plugin-runtime` host attaches a valid session or bearer identity when supplied, but the host does not globally reject anonymous requests. Each plugin owns its route-level authentication and authorization contract and remains subject to Esiana's permission boundaries. Public plugin routes are mounted separately under `/api/public/plugin-runtime`.
 
-**Endpoint reference:** open `/api/docs` on your running Esiana instance.
+The static `/api/plugin-assets/{pluginId}/...` host is a core route for plugin-provided files and is included in the core OpenAPI contract.
+
+## Author documentation
+
+- [Plugin development](../plugin-development/getting-started.md)
+- [Plugin architecture](../architecture/plugin-architecture.md)
+
+**Core endpoint reference:** open `/api/docs` on your running Esiana instance.

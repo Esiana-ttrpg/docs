@@ -1,36 +1,34 @@
 # Campaigns API
 
-REST operations on campaign containers.
+Campaigns are Esiana's authorization and data-isolation boundary.
 
 **Prerequisite:** [Campaign model](../architecture/campaign-model.md)
 
----
+## Addressing campaigns
 
-## Campaign as tenant
+Narrative routes are normally addressed by URL handle:
 
-Each campaign is an isolated lore tenant addressed by **handle** (slug). All wiki, session, map, and plugin data is scoped to one campaign.
+```text
+/api/campaigns/{campaignHandle}/...
+```
 
-Authorization layers:
+Campaign-scope middleware resolves that handle and requires membership. Some container-management routes instead use the database campaign ID; `/api/docs` distinguishes `{id}` or `{campaignId}` from `{campaignHandle}`.
 
-| Layer | Scope |
-|-------|-------|
-| Application admin | System-wide (`SYSTEM_ADMIN`) |
-| Campaign admin | Container ownership, discoverability, membership |
-| Narrative authority | GM/writer/player roles and capabilities |
+## Authorization layers
 
----
+| Layer | Meaning |
+|-------|---------|
+| Application authentication | Identifies the session user or API-token owner |
+| Campaign membership | Grants access to the addressed campaign, subject to later checks |
+| Campaign capability | Permits an action such as editing, managing chronology, or uploading assets |
+| Content visibility | Filters individual pages, maps, assets, journals, and knowledge projections |
+| System administration | Separate application-wide `SYSTEM_ADMIN` authority |
 
-## Common patterns
+- List and create campaigns at `/api/campaigns`.
+- Bearer tokens act as their owning user; token possession does not bypass membership.
+- Mutations can require campaign roles or configurable capabilities.
+- Reads can apply content-level visibility after membership succeeds.
 
-- List and create campaigns at `/api/campaigns`
-- Campaign-scoped lore under `/api/campaigns/{campaignHandle}/...`
-- Membership and settings routes require appropriate role or token scope
-
----
-
-## See also
-
-- [Campaign model](../architecture/campaign-model.md)
-- Internal: [`campaign-access-model.md`](../../esiana-core/docs/architecture-internal/campaign-access-model.md)
+See [API access control](access-control.md) for the full boundary model.
 
 **Endpoint reference:** open `/api/docs` on your running Esiana instance.
