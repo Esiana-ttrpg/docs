@@ -17,6 +17,8 @@ Common permissions:
 | `plugin:data` | Campaign-scoped JSON KV |
 | `plugin:config` | Campaign plugin settings |
 | `plugin:secrets` | Encrypted store (excluded from export) |
+| `connections:use` | Redacted connection state and server-side credential injection |
+| `network:fetch` | Guarded outbound HTTP to exact manifest-declared origins |
 | `campaign:read-lore` | Revelation-aware lore reads |
 | `campaign:read-calendar` | Current in-world date |
 | `wiki:decorate` | Read-only wiki decoration hooks |

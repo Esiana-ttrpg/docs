@@ -2,6 +2,8 @@
 
 `manifest.json` declares identity, capabilities, and entry points for a plugin package.
 
+Connection providers declare `outboundOrigins` as exact HTTPS origins, such as `["https://api.example.com"]`. Paths, wildcards, embedded credentials, queries, and fragments are rejected; HTTP is reserved for loopback development fixtures. Only these origins may receive credentials injected by `context.connections.request`.
+
 **Prerequisite:** [Campaign model](../architecture/campaign-model.md)
 
 ---

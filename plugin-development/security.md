@@ -26,6 +26,12 @@ Esiana uses **controlled extensibility for a trusted-admin ecosystem** — not a
 4. **Slot-only mount** — no shell or route replacement.
 5. **HTTPS exfiltration** is a known trust-boundary limitation for Tier 1 plugins with `connect-src`.
 
+## Connection credentials
+
+Connection APIs never return raw OAuth tokens, API keys, or bearer tokens. This does not remove credential power: a trusted backend plugin with `connections:use` and `network:fetch` may exercise the credential at reviewed `outboundOrigins` and inspect returned data. Review provenance, permissions, and every declared origin before installation or campaign enablement.
+
+Credential requests must carry the real Express request that passed core authentication and the campaign jail. The host derives campaign and user identity from a private request binding; plugin-supplied owner or campaign identifiers are not accepted. Provider `resourceOrigins` further narrow which manifest origins may receive resource credentials.
+
 ---
 
 ## Interceptor quarantine
