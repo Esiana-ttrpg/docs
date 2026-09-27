@@ -46,7 +46,7 @@ Track in-world time with custom fantasy calendars, timeline events, and a unifie
 | Calendar JSON import | Chronology UI or campaign wizard drop-zone |
 | Event visibility | Per-event: Public, Party, GM only |
 
-> Calendars and timelines use **JSON configuration**, not plain Markdown folders. Do not organize them as text folders during import — use the wizard drop-zone or chronology import ([Import formats](../import_formats.md)).
+> Calendars and timelines use **JSON configuration**, not plain Markdown folders. Do not organize them as text folders during import — use the wizard drop-zone or chronology import ([Import formats](../data-management/import-formats.md)).
 
 ---
 

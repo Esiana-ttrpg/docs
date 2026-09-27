@@ -24,6 +24,6 @@ Guarantees: [Sovereign export](../architecture/sovereignty.md)
 
 `GET /api/import-providers` returns `{ core, plugins }` — core built-in pipelines plus plugin-registered providers. See `/api/docs` for the version-locked schema.
 
-User guide: [Data backup & export](../features/data-backup-and-export.md) · [Import formats](../import_formats.md)
+User guide: [Data backup & export](../features/data-backup-and-export.md) · [Import formats](../data-management/import-formats.md)
 
 **Endpoint reference:** open `/api/docs` on your running Esiana instance.
