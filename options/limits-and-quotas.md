@@ -63,6 +63,8 @@ All windows and max counts configurable — defaults below.
 | LFG apply (per campaign) | 10 | 1 h | `RATE_LIMIT_APPLY_CAMPAIGN_*` |
 | LFG apply (global) | 20 | 1 h | `RATE_LIMIT_APPLY_GLOBAL_*` |
 | API token mint | 10 | 24 h | `RATE_LIMIT_TOKEN_MINT_*` |
+| OIDC start | 20 | 15 min | `RATE_LIMIT_OIDC_START_*` |
+| OIDC callback | 40 | 15 min | `RATE_LIMIT_OIDC_CALLBACK_*` |
 
 Full variable names: [Environment variables](environment-variables.md).
 

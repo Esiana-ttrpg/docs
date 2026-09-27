@@ -113,6 +113,8 @@ After the identity provider authenticates the user:
 
 PKCE, **state**, and **nonce** on every login; `openid-client` validates issuer, audience, signature, expiration, and issued-at. Never log secrets, codes, or tokens.
 
+OIDC **start** and **callback** routes are rate-limited per client IP and provider (`RATE_LIMIT_OIDC_START_*`, `RATE_LIMIT_OIDC_CALLBACK_*`) to bound authorize redirects and callback validation spam. See [Limits & quotas](limits-and-quotas.md).
+
 ### Groups and roles
 
 - `OIDC_USER_GROUP` optional allowlist; `OIDC_ADMIN_GROUP` satisfies allowlist and grants admin when mapped.
