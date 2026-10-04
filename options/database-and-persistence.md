@@ -166,7 +166,7 @@ From `esiana-core` root:
 
 - [Self-hosting: Installation](../self-hosting/installation.md) — Docker Compose quick start
 - [Installation](installation.md) — local Node dev install
-- [Deployment & Docker](deployment-and-docker.md) — container architecture
+- [Self-hosting with Docker](../self-hosting/docker.md) — container architecture
 - [Environment variables](environment-variables.md)
 - [`esiana-core/backend/prisma/README.md`](../esiana-core/backend/prisma/README.md)
 - [Data backup & export](../features/data-backup-and-export.md)

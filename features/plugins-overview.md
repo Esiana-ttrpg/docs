@@ -79,4 +79,4 @@ Extend Esiana with runtime plugins at **instance** scope (system admin) or **cam
 - [System admin settings](../options/system-admin-settings.md)
 - [Campaign settings](../options/campaign-settings.md) → Integrations tab
 - [Environment variables](../options/environment-variables.md)
-- [Deployment & Docker](../options/deployment-and-docker.md) — mount `PLUGINS_DIR` volume
+- [Self-hosting with Docker](../self-hosting/docker.md) — mount `PLUGINS_DIR` volume

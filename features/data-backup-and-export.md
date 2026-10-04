@@ -116,4 +116,4 @@ Treat backups as the **canonical migration path** when moving between SQLite and
 - [Campaign hub](campaign-hub.md) — creation wizard
 - [Notifications](notifications.md) — async export alerts
 - [Database & persistence](../options/database-and-persistence.md) — Postgres migration via ZIP
-- [Deployment & Docker](../options/deployment-and-docker.md) — persistent upload volumes
+- [Self-hosting with Docker](../self-hosting/docker.md) — persistent upload volumes
