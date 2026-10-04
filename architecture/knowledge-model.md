@@ -1,46 +1,11 @@
-# Knowledge model
+# Knowledge Model
 
-Deep dive on **Knowledge** — see [Campaign model § Knowledge](campaign-model.md#knowledge).
+Campaigns run on two kinds of truth: what is so, and what is believed. The wiki handles the first — Winterfort stands on the river, garrisoned by the North Watch. Knowledge handles the second: the party *believes* the watch is loyal, suspects the grain shipments, and has heard three different accounts of who founded the city. Esiana keeps beliefs as first-class records rather than footnotes because long mysteries live or die on who believes what.
 
----
+Knowledge attaches to entities as three kinds of records. Claims are checkable statements with sources and confidence: who says so, how sure the telling is, whether the party holds it as known, suspected, contested, or disproven. Past names record what things were called before — the Gray Man before he was unmasked — so old notes, aliases, and rumors keep resolving after revelations. Citations tie claims to their provenance, because "the innkeeper said so" and "the ledger proves it" deserve different weight and the system should remember which was which.
 
-## What knowledge is
+The point of this machinery is the party's mind as an object the GM can consult. Before the tavern scene, the GM can see exactly what this party believes about the Cartel — including the confident falsehood they have carried for six sessions — and play the scene against that understanding rather than against notes. Rumors move beliefs through regions and factions; revelation changes what is visible; but knowledge is what tracks the distance between the world's truth and the table's truth, in both directions.
 
-Sovereign lore facts attached to entities:
+Knowledge travels with the campaign. Claims and past names export in the sovereign archive and restore intact, because a migrated campaign that forgot everything the party believed would be a lobotomized one. Presentational caches rebuild on restore rather than shipping with the archive — an implementation detail with one visible consequence: immediately after a restore, derived badges and groupings may take a moment to settle while the system recomputes them from the preserved records.
 
-| Construct | Role |
-|-----------|------|
-| **Lore claims** | Attributed statements with sources |
-| **Historical aliases** | Past names for an entity |
-| **Citations** | Provenance linking claims to sources |
-
-Knowledge is stored in interpretive overlay tables — not duplicated as unstructured wiki prose alone.
-
----
-
-## Export and import
-
-Lore claims and historical aliases round-trip in sovereign ZIP as **`sovereign/knowledge.json`**. This is Tier A remediation — GM portable archives must preserve party-facing lore state.
-
-Fog **presence rows** are Tier B: visibility metadata round-trips; projection rows rebuild on restore.
-
-**In practice:** Party-facing belief states (`KNOWN`, `SUSPECTED`, …) on lore claims drive codex badges and Discovery inspector grouping — see [Discovery & revelation](../features/discovery-and-revelation.md).
-
----
-
-## Extension after schema freeze
-
-Post-1.0 work should extend via:
-
-- UI projections over existing tables
-- `ContentPresenceState` with entity types `historical_alias`, `lore_interpretation`, `lore_claim`
-- `stableKey` for imports and reveal workflows
-
-Avoid parallel claim/alias systems.
-
----
-
-## See also
-
-- [Sovereign export](sovereignty.md)
-- [Discovery system](discovery-system.md)
+The daily use of all this — writing claims, spreading rumors, checking the party's beliefs — lives in the discovery and threads guides. Think of this page as the theory: truth in the wiki, belief in knowledge, and the productive tension between them is where mystery comes from.

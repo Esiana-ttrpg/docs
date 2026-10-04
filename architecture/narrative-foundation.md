@@ -1,73 +1,15 @@
-# Narrative foundation
+# Narrative Foundation
 
-Esiana's narrative platform is organized in four layers. Vocabulary for world data: [Campaign model](campaign-model.md).
+Esiana's narrative machinery sounds like a lot of systems — threads, lifecycles, quests, scenes, downtime, world advance, diagnostics — until you see the shape underneath. Everything is organized in four layers, each answering a harder question than the last, each built only from the layers below. Read this page once and the feature list stops looking like a catalog and starts looking like an argument.
 
----
+The bottom layer is canon and time: the wiki as the single store of what is true, the campaign clock saying what day it is, calendars giving that day meaning, snapshots freezing moments, and the relationship web derived from pages rather than maintained apart. This layer answers *what exists and when*. Its defining discipline is singularity — one store, every view computed — which is why editing a page updates the map, the timeline, and the recap together, and why the system resists every temptation to keep a second copy of anything.
 
-## Layer 1 — Canon and temporal infrastructure
+The second layer is narrative state: quests, scenes, objectives, threads, and storyboards as structured metadata on wiki entities. This layer answers *where is the story*. A thread's lifecycle, a quest's availability, a scene's place in the arc — all live as state on the pages they describe, not in a parallel quest database. Resolving a thread updates the thread page's state, and every surface reading that state (hubs, widgets, party lists) follows. The practical payoff is that narrative bookkeeping never drifts from the lore it describes, because it *is* the lore, annotated.
 
-**What it is:** Wiki as canonical substrate, campaign clock, calendars, temporal snapshots, entity graph, unified narrative projection semantics.
+The third layer is the living world: havens, projects, ledgers, reputation, scheduled effects, and world advance — the operational satellites orbiting canon. This layer answers *what happens while nobody looks*. It is deliberately adjacent to canon rather than inside it: downtime rows and batch effects reference wiki truth but accumulate their own history, so the world can move between sessions without rewriting what the table established in them. World advance is this layer's set piece — time passes, the batch proposes, the GM disposes, canon absorbs the result.
 
-**In practice:** When the campaign date changes, surfaces re-filter lore, map pins, and timeline cards through the same projection rules — not by duplicating content per era.
+The top layer is diagnostics: structural readings-over of the whole edifice for the GM's benefit. Orphaned clues with no payoff, narrative dead ends, circular dependencies, stale promises, density gaps where the story thins. These are deterministic observations, not intelligence — the system flags that the foreshadowing has no linked payoff, never that the foreshadowing is bad. The layer answers *what might I have missed*, and it answers from structure alone, which is both its honesty and its limit.
 
-**Shipped pillars:**
+The stack runs canon → state → living world → diagnostics, and failures cascade downward in diagnosability: a confusing diagnostic usually means thin state, and thin state usually means unwritten canon. When something feels off in a high layer, look one layer down. Nine times in ten, the fix is writing a page.
 
-| Pillar | Role |
-|--------|------|
-| Knowledge / fog / revelation | Visibility state on entities; map presence resolver |
-| Discovery | Codex, hub banners, party epistemic projection |
-| Historical aliases | Names entities were known by over time |
-| Lore citations | Claims with sources on entities |
-| Continuity warnings | Structural batch diagnostics for GMs |
-| Narrative threads | Thread hub; lifecycle rebuilt on restore |
-| Since-last-visit | Region snapshots for returning players |
-| Atlas / maps | Temporal projection, fog, Visual Atlas v1 |
-
-**Deferred polish:** map marker clustering, cached Visual Atlas manifests, Layer 6 intelligence (session prep, pacing).
-
----
-
-## Layer 2 — Narrative state engine
-
-Quest arcs, scenes, objectives, storyboards — orchestration metadata on wiki entities. Lifecycle tables rebuild from page metadata on import; not a parallel content DB.
-
-**In practice:** [Narrative threads](../features/narrative-threads.md) are wiki pages with lifecycle metadata — resolving a thread updates state objects, not a separate quest database.
-
----
-
-## Layer 3 — Living world
-
-Downtime havens, projects, reputation, scheduled effects, [world advance](../features/world-advance.md) — operational satellites around the wiki canon.
-
-**In practice:** [World advance](../features/world-advance.md) batches faction and economic deltas when time passes; it does not replace advancing the campaign clock in [Chronology](../features/chronology-and-calendars.md).
-
----
-
-## Layer 4 — Diagnostics
-
-Narrative density, orphan analysis, dead-end detection, circular dependencies — deterministic GM-facing diagnostics (not AI by default).
-
-**In practice:** Diagnostics flag structural risks (orphaned clues, dead ends) for staff review — they do not auto-rewrite lore.
-
----
-
-## Layer stack
-
-```mermaid
-flowchart TB
-  L4[Layer 4 Diagnostics]
-  L3[Layer 3 Living World]
-  L2[Layer 2 Narrative State Engine]
-  L1[Layer 1 Canon and Temporal]
-  L1 --> L2 --> L3 --> L4
-```
-
----
-
-## See also
-
-- [Discovery & revelation (feature guide)](../features/discovery-and-revelation.md)
-- [Campaign model](campaign-model.md)
-- [Discovery system](discovery-system.md)
-- [Temporal runtime](temporal-runtime.md)
-- Engineering sign-off: [`esiana-core/docs/audits/narrative-foundation-signoff.md`](../../esiana-core/docs/audits/narrative-foundation-signoff.md)
+Feature guides for the working surfaces: narrative threads for layer two's daily use, world advance and downtime for layer three, discovery and revelation for the lenses spanning all of them.
