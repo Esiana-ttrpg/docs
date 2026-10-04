@@ -34,6 +34,20 @@ Removing an instance plugin disables it in every campaign that used it, immediat
 
 ## Related features
 
-- Campaign settings, for the Integrations tab
-- Data backup and export, for what plugin data survives a move
-- System admin settings, for the instance side of configuration
+## Deep dives
+
+| Topic | Document |
+|-------|----------|
+| Catalog & authoring | [`community-plugins/README.md`](../../community-plugins/README.md) |
+| Runtime directory | [`esiana-core/plugins/README.md`](../esiana-core/plugins/README.md) |
+| Plugin ecosystem architecture | [`esiana-core/docs/plugins/phase-10-ecosystem.md`](../esiana-core/docs/plugins/phase-10-ecosystem.md) |
+| OPDS wiki feed study | [`esiana-core/docs/plugins/opds-wiki-feed-study.md`](../esiana-core/docs/plugins/opds-wiki-feed-study.md) |
+
+---
+
+## Related docs
+
+- [System admin settings](../options/system-admin-settings.md)
+- [Campaign settings](../options/campaign-settings.md) → Integrations tab
+- [Environment variables](../options/environment-variables.md)
+- [Self-hosting with Docker](../self-hosting/docker.md) — mount `PLUGINS_DIR` volume

@@ -64,7 +64,7 @@ CORS_ORIGIN=https://esiana.example.com
 FRONTEND_ORIGIN=https://esiana.example.com
 ```
 
-Alternatively, proxy `/api` directly to `backend:3001` and serve static files from the frontend container — see [Deployment & Docker](deployment-and-docker.md).
+Alternatively, proxy `/api` directly to `backend:3001` and serve static files from the frontend container — see [Self-hosting with Docker](../self-hosting/docker.md).
 
 ---
 
@@ -137,8 +137,8 @@ Admin → General → **Maintenance mode** blocks non-admin access during upgrad
 
 ## Related docs
 
-- [Quick install](quick-install.md)
+- [Self-hosting installation](../self-hosting/installation.md)
 - [Installation](installation.md)
-- [Deployment & Docker](deployment-and-docker.md)
+- [Self-hosting with Docker](../self-hosting/docker.md)
 - [Environment variables](environment-variables.md)
 - [System admin settings](system-admin-settings.md)

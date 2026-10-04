@@ -36,6 +36,68 @@ Read this section as the honest boundary of the guarantee. Sovereign export is n
 
 ## Related features
 
-- Import formats, for vault, Kanka, and calendar imports in detail
-- Campaign hub, for the creation wizard where imports and restores begin
-- Notifications, for background export alerts
+---
+
+## Who can use it
+
+| Role | Capabilities |
+|------|--------------|
+| **DM / Co-DM** | Export, async export, in-campaign restore (Campaign Settings → Data & backup) |
+| **System admin** | System-wide DB backup, per-campaign full backup ZIP |
+
+---
+
+## Where to find it
+
+| Action | Location |
+|--------|----------|
+| Campaign export (sync) | Campaign Settings → Data & backup → Download |
+| Background export | Campaign Settings → Data & backup → Export in background |
+| Restore from backup | Campaign Settings → Data & backup → Restore from backup |
+| Import on create | Global hub → Create campaign wizard |
+| System backup | Admin → System Utilities |
+| Calendar JSON export | Campaign Settings → Data & backup (per calendar) |
+
+---
+
+## Import formats
+
+For folder naming, front matter, and auto-matching modules when migrating from Obsidian or similar Markdown vaults:
+
+**[Campaign Ingestion & Markdown Import Guide](../data-management/import-formats.md)**
+
+Supported wizard sources today:
+
+- **Obsidian** — Markdown ZIP with `[[Wikilinks]]`
+- **Esiana backup** — prior `esiana-campaign-backup-v2` ZIP
+
+Notion, OneNote, and Google Docs ingestion are not supported; export Markdown from those tools and use the Obsidian path if folder structure matches.
+
+---
+
+## Backup ZIP layout (`esiana-campaign-backup-v2`)
+
+```
+manifest.json
+sovereign/
+  wiki/              # hierarchical .md files
+  relations.json     # links, tags, tree, map pins
+  operational.json   # downtime satellites, PluginData, plugin settings (optional in older zips)
+  media/
+    manifest.json
+    {assetId}.{ext}
+esiana/              # admin full export only
+  campaign.json
+```
+
+Treat backups as the **canonical migration path** when moving between SQLite and PostgreSQL ([Database & persistence](../options/database-and-persistence.md)).
+
+---
+
+## Related docs
+
+- [Import formats](../data-management/import-formats.md)
+- [Campaign hub](campaign-hub.md) — creation wizard
+- [Notifications](notifications.md) — async export alerts
+- [Database & persistence](../options/database-and-persistence.md) — Postgres migration via ZIP
+- [Self-hosting with Docker](../self-hosting/docker.md) — persistent upload volumes
