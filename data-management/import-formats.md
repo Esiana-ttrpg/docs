@@ -1,42 +1,22 @@
-# Markdown vault import
+# Markdown Vault Import
 
-Guide for importing an external Markdown archive when **creating a campaign** via the hub wizard. This path is for Obsidian-style vault exports (`.zip` of `.md` notes and assets).
+If your campaign already exists as notes somewhere else — an Obsidian vault, a Kanka export — you should not retype it. Esiana imports external archives during campaign creation, mapping your folders onto its own organization and converting your links, images, and structure along the way. This guide covers the two vault paths: Obsidian-style Markdown and Kanka JSON. Restoring a prior Esiana backup is a different wizard card with its own behavior, documented in the backup and export guide rather than here.
 
-For restoring a prior Esiana export, use **Esiana backup** in the same wizard — that pipeline is documented in [Data backup & export](../features/data-backup-and-export.md), not here.
-
----
-
-## What this covers
-
-- Obsidian (or compatible) Markdown ZIP upload on campaign creation
-- Folder → module mapping in the wizard
-- YAML frontmatter, wikilinks, and embedded images
-- Optional Fantasy-Calendar `.json` on the same wizard step
-
-## What this does not cover
-
-| Source | Status |
-|--------|--------|
-| **Esiana backup ZIP** (`esiana-campaign-backup-v2`) | Separate wizard card — [Data backup & export](../features/data-backup-and-export.md) |
-| **Notion, Logseq, OneNote, Google Docs** | No direct importer. Export Markdown (or Obsidian-compatible Markdown), then use the Obsidian ZIP path if folder layout fits. |
-| **Kanka.io** | JSON campaign export via the wizard **Kanka.io** card (see [Kanka JSON export](#kanka-json-export) below). Markdown export is not supported in v1. |
-| **Content packs / sample data** | Separate wizard sources — not vault import. |
-
----
+A few boundaries up front. Notion, Logseq, OneNote, and Google Docs have no direct importer; export Markdown from those tools and use the Obsidian path if the folder layout fits. Kanka imports from its JSON campaign export, not from Markdown. Content packs and sample data are separate wizard sources, not vault imports. Custom calendars never come from Markdown folders — calendars arrive as Fantasy-Calendar JSON, either on the same wizard step or later from chronology, and folders named for calendars simply become ordinary wiki pages.
 
 ## Wizard workflow
 
 1. Hub → **Create campaign** → **Campaign Source** → **Obsidian**.
-2. Upload a `.zip` of your vault. The wizard **scans the ZIP** and lists discovered top-level folders for mapping (see [ZIP layout](#zip-layout)).
-3. Review **Source Folder Mapping** — canonical folders (Characters, Locations, Sessions, …) auto-map; **custom folders** (e.g. `Midnight Foxes`) require you to pick a target module before you can proceed.
-4. Optionally attach a **Fantasy-Calendar `.json`** (see [Calendars](#fantasy-calendars) below).
-5. Finish identity and access steps; import runs in the background after the campaign is created.
+2. Upload a `.zip` of your vault. The wizard scans it and lists discovered top-level folders for mapping (see ZIP layout below).
+3. Review **Source Folder Mapping** — familiar folders (Characters, Locations, Sessions, …) map themselves; anything idiosyncratic (your `Midnight Foxes` folder) waits for you to pick its destination before creation can proceed.
+4. Optionally attach a **Fantasy-Calendar `.json`** on the same step.
+5. Finish identity and access steps; the import runs in the background after the campaign is created.
 
-The wizard scans the uploaded ZIP and lists **top-level content folders** (after stripping a shared wrapper folder like `Rays Pathfinder/` when present). Canonical names auto-map; unknown folders are highlighted for manual mapping.
-
-During import, notes are placed into typed wiki hubs (Characters, Locations, Session Notes, …). **Unclassified notes are skipped**, not dumped into generic `/pages`. After import, review the **Import Report** page under Game → Rules/Resources for skipped files and classification warnings.
+The wizard strips a shared wrapper folder when your whole export sits inside one parent, and places imported notes into the campaign's typed hubs — Characters, Locations, Session Notes, and so on — rather than a generic pile. Notes it cannot classify are skipped, not dumped; after import, an Import Report page under the rules and resources area lists skipped files and classification warnings, which is your punch list for finishing the job by hand.
 
 ### Classification precedence
+
+When several signals disagree about what a note is, explicit beats implicit in this order — frontmatter first, then your wizard mapping, then folder-name synonyms, then tags, then filename guesswork, then skipping:
 
 ```text
 Hard skip (dot-folders, Todo.md, …)
@@ -130,7 +110,7 @@ Folder mapping sets wiki **template type** and **entity category** unless frontm
 
 ## Kanka JSON export
 
-Use this path when importing a **Kanka campaign JSON export** (`.zip` from Kanka’s export tool). This is separate from Obsidian Markdown vault import and from Esiana backup restore.
+Use this path for a **Kanka campaign JSON export** — the `.zip` from Kanka's own export tool. It is separate from both Obsidian vault import and Esiana backup restore.
 
 ### Wizard workflow
 
@@ -222,9 +202,9 @@ Kanka D&D-style sheet fields are **not** imported as full stat blocks. Esiana ma
 
 ---
 
-## YAML frontmatter
+## Frontmatter and links
 
-Esiana reads a standard `---` block at the top of each note.
+Esiana reads a standard `---` block at the top of each note. Frontmatter wins over folder mapping for template and category, so a note that declares itself is believed over the folder it sits in.
 
 ### Recognized fields
 
@@ -295,12 +275,8 @@ Supported image extensions: `.png`, `.jpg`, `.jpeg`, `.webp`.
 
 ## Fantasy calendars
 
-Custom calendars are **not** imported from Markdown folders. Use either:
-
-- The **Fantasy-Calendar JSON** drop zone on the campaign wizard import step, or
-- Chronology → import after the campaign exists
-
-See [Chronology & calendars](../features/chronology-and-calendars.md). JSON must be exported from [Fantasy-Calendar.com](https://www.fantasy-calendar.com/) (or compatible `fantasy-calendar` spec).
+Custom calendars never come from Markdown folders. Supply them as JSON — the drop zone on the wizard import step, or chronology import after the campaign exists
+(see the chronology guide). JSON must be exported from [Fantasy-Calendar.com](https://www.fantasy-calendar.com/) or a compatible spec.
 
 Markdown folders mapped to **Game/Calendars** or **Game/Timelines** become ordinary wiki pages under those module folders — they do **not** configure the chronology engine.
 

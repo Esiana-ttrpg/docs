@@ -1,130 +1,19 @@
-# Campaign model
+# Campaign Model
 
-How Esiana thinks about world data. Read this before API or plugin documentation.
+How Esiana thinks about your world — the handful of ideas everything else is built from. You do not need this page to play, but GMs who grasp it stop fighting the tool and start wielding it: every feature behaves the way it does because of one of the concepts below.
 
----
+A campaign is a sealed container. Everything belonging to one table's world — lore, sessions, maps, membership, discovery state — lives inside that campaign and nowhere else. Campaigns never share content implicitly; anything crossing the boundary, like a public listing or a shared recruiting directory, is an explicit surface with its own rules. Think of it as one leased house per table: what happens inside stays inside unless someone opens a window on purpose.
 
-## Campaign
+Inside the container, the wiki page is the atom. Every person, place, faction, quest, session note, and map description is a page with text, a place in the hierarchy, a visibility, and a shape suited to its kind. Nothing else stores story content. Maps, timelines, relationship webs, and dashboards are all *views* computed from pages — which is why editing the wiki updates everything, and why deleting a page ripples everywhere. Edit the world; the views follow.
 
-A **campaign** is an isolated tenant. All lore, sessions, maps, plugins, and membership for one tabletop world live inside a single campaign container, addressed by **handle** (slug) in URLs and API paths:
+Entities are what pages describe when they describe a *thing*: characters, locations, organizations, quests, objects. An entity is simply a page with a fitting shape plus structured details, and the web of relationships between entities is derived from links and details rather than maintained separately. You never edit "the graph." You write that Varian serves the Iron Gauntlet, and the graph knows.
 
-```text
-/api/campaigns/{campaignHandle}/...
-```
+Three lenses then decide what any given viewer sees. Visibility is permission: Public, Party, or GM-only, set per page. Discovery is knowledge: whether the party has found this thing yet, regardless of permission. Editorial status is the GM's commentary: active, rumored, missing, secret — where this stands in the story. A page passes all three lenses before reaching a reader's eyes, which is why the same campaign looks different to the GM and the party without anyone maintaining two versions.
 
-Campaigns do not share wiki content, discovery state, or plugin data. Cross-campaign features (shared universe chronology, public directory) are explicit product surfaces — not implicit data leakage.
+Knowledge is the layer for beliefs and provenance: checkable claims about the world ("the Cartel controls the docks"), the past names things were known by, and the sources behind each claim. This is where the campaign tracks not just what is true but what the party *believes* — including confidently wrong beliefs worth preserving until the reveal.
 
-**See also:** [Campaigns API guide](../api/campaigns.md)
+Time is the final lens. The campaign clock says what day it is; every dated surface — timelines, maps, gated lore — renders itself as of that now. Nothing is duplicated per era. When the date moves, the world re-renders, which is what makes time skips cheap and flashback browsing possible.
 
----
+Put together, the flow runs one direction: pages hold the canon, relationships and knowledge derive from pages, the lenses filter per viewer and per date, and every surface — wiki, timeline, map, recap — shows the result. Learn this direction and Esiana's behavior stops surprising you: content lives in exactly one place, and everything else is a way of looking at it.
 
-## Wiki page
-
-The **wiki page** is Esiana's canonical content substrate. Each page has:
-
-- **TipTap block JSON** — prose, images, infoboxes, layout grids
-- **Hierarchy** — `parentId` for folders and nesting
-- **Visibility tier** — Public / Party / GM-only (role visibility, distinct from discovery)
-- **Template** — character, location, organization, session note, map, etc.
-
-Graphs, maps, diplomacy views, and storyboards are **derived projections** on wiki metadata — not parallel content databases.
-
-**See also:** [Wiki pages API guide](../api/wiki-pages.md)
-
----
-
-## Entity
-
-An **entity** is a typed narrative thing in the campaign: character, location, organization, quest arc, object, and so on. In practice, an entity is usually a **wiki page with a template** plus structured **metadata**.
-
-The entity graph (`EntityRelation`) is **derived only** — synced from wiki links, metadata JSON, calendar prerequisites, and map pin targets. Edit the wiki; relations follow.
-
-**See also:** [Entities API guide](../api/entities.md) · [Entity graph (internal)](../../esiana-core/docs/architecture-internal/entity-graph.md)
-
----
-
-## Metadata
-
-**Metadata** is structured JSON stored on wiki pages (and some operational records). It drives:
-
-- Org membership, character relationships, quest lifecycle
-- Map asset references and pin targets
-- Import module typing and export round-trip
-
-Plugins extend behavior through metadata and overlay tables — not by replacing the wiki as source of truth.
-
----
-
-## Discovery
-
-**Discovery** is what a viewer has *found* epistemically — party knowledge, codex entries, revelation fog. It answers: *does this actor know this exists?*
-
-Discovery is separate from:
-
-- **GM editorial status** — draft, published, archived on a page
-- **Role visibility** — Public / Party / GM-only tiers
-
-Browse surfaces, search, links, and party-knowledge views use a shared discovery projection contract.
-
-**See also:** [Discovery system](discovery-system.md) · [Discovery & revelation (operations)](../features/discovery-and-revelation.md)
-
----
-
-## Knowledge
-
-**Knowledge** is sovereign lore attached to entities:
-
-- **Lore claims** — attributed statements with sources
-- **Historical aliases** — names an entity was known by over time
-- **Citations** — provenance for claims
-
-Knowledge round-trips in sovereign campaign export (`sovereign/knowledge.json`). It is narrative fact, not membership or admin records.
-
-**See also:** [Knowledge model](knowledge-model.md) · [Sovereign export](sovereignty.md)
-
----
-
-## Temporal projection
-
-**Temporal projection** decides what is visible *when* for a given viewer:
-
-- **Campaign clock** — current in-world date
-- **Revelation fog** — undiscovered content hidden or redacted
-- **Role tiers** — party vs GM visibility
-- **Surface policy** — wiki, timeline, map, and lore adapters compose the same primitives differently
-
-Projection is intentional asymmetry with a single code path per axis — not perfect historical simulation on every surface.
-
-**See also:** [Temporal runtime](temporal-runtime.md) · [Narrative foundation](narrative-foundation.md)
-
----
-
-## How the pieces fit
-
-```mermaid
-flowchart TB
-  subgraph tenant [Campaign tenant]
-    WikiPage[WikiPage blocks + hierarchy]
-    Meta[Metadata JSON]
-    WikiPage --> Meta
-    Meta --> Entity[Entity types and relations]
-  end
-  subgraph overlays [Projection layers]
-    Discovery[Discovery epistemic]
-    Knowledge[Knowledge claims aliases]
-    Temporal[Temporal projection]
-  end
-  Entity --> Discovery
-  Entity --> Knowledge
-  Discovery --> Temporal
-  Knowledge --> Temporal
-  Temporal --> Surfaces[Wiki Timeline Maps API]
-```
-
----
-
-## See also
-
-- [Narrative foundation](narrative-foundation.md) — L1–L4 platform layers
-- [API overview](../api/overview.md) — REST surface
-- [Plugin development](../plugin-development/getting-started.md) — extensions
+Related guides: the discovery system, knowledge, and temporal runtime pages each take one lens deeper; the narrative foundation page shows how the platform layers these ideas; and the API overview covers the same model in integrator terms.
