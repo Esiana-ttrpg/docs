@@ -8,15 +8,26 @@ Typed narrative entities — characters, locations, organizations, and more.
 
 ## Entity model
 
-An entity is typically a **wiki page with a template** plus **metadata JSON**. The entity graph is derived from wiki links and metadata — not authored separately.
+An entity is typically a **wiki page with a template** plus **metadata JSON**.
+The entity graph is derived from wiki links and metadata — not authored
+separately.
 
-Entity routes share campaign wiki paths with template-specific metadata endpoints.
+Start with [Wiki pages](wiki-pages.md) for page mechanics (including character
+fields, character sheets, aliases, and tags), then use
+[Narrative knowledge](narrative-knowledge.md) for the derived layer:
+
+- `GET /api/campaigns/{campaignHandle}/entity-graph` — seeded neighborhood queries over synced relations.
+- `GET /api/campaigns/{campaignHandle}/entity-graph/projection` — filtered relation projections.
+- `GET /api/campaigns/{campaignHandle}/entity-graph/diagnostics` — cycles, orphans, dangling and
+  unreachable checks.
+- `POST /api/campaigns/{campaignHandle}/entity-graph/rebuild` — refreshes relations after bulk changes.
 
 ---
 
 ## Relations
 
-`EntityRelation` edges sync from wiki links, metadata fields, calendar prerequisites, and map pin targets. Query neighborhood via entity-graph routes.
+`EntityRelation` edges sync from wiki links, metadata fields, calendar
+prerequisites, and map pin targets. Query neighborhood via entity-graph routes.
 
 Internal: [`entity-graph.md`](../../esiana-core/docs/architecture-internal/entity-graph.md)
 

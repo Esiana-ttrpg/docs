@@ -1,190 +1,56 @@
 # Campaign Settings
 
-Per-campaign configuration lives on the `Campaign` model and is edited through **Campaign Settings** tabs. URL: `/campaigns/:handle/settings`.
+Campaign Settings is where the people who run a campaign shape it: who belongs, who can do what, how it looks, what it says to strangers, and where its data lives. If the features are the rooms of the house, settings are the wiring, the locks, and the paint. This page explains every area, who may touch it, and what changing things actually means.
 
-**Access:** Game Masters and Writers only. Players and Observers link their character from **Campaign Home** (not Settings).
+Settings open from inside a campaign, and editing them is a staff privilege — game masters and writers, generally, with the most consequential actions reserved further. Players never see this page; they link their characters from Campaign Home instead.
 
----
+## General: identity of the campaign
 
-## Player character identity
+General holds the campaign's public identity: its name, description, game system, and language. The name matters more than it looks — it generates the campaign's address, and renaming later regenerates that address and breaks old links, so choose the permanent name early and treat renames as moves, not edits.
 
-| Who | Where |
-|-----|--------|
-| **Player** (`PARTICIPANT`) | Campaign Home → **Link your character** card (when unmapped) |
-| **Game Master / Writer** | Settings → Access & Roles → member roster identity column, or character page **Party character** rail while editing |
+Game system is descriptive, chosen from a picker with an "Other" fallback for unlisted systems and a custom name field. It tells browsers and recruits what you play; it does not change Esiana's behavior. Two visibility-adjacent choices live nearby in spirit: whether the campaign is listed publicly, and whether anonymous visitors may read its Public pages. Listing controls discovery of the campaign itself; anonymous reading controls what outsiders can see without joining. Neither affects members, and neither overrides page-level visibility — an unlisted campaign's Public pages are still Public to anyone with the link.
 
-Linking sets `CampaignMember.identityPageId` and assigns USER ownership on character wiki pages.
+## Access and roles: who belongs and what they may do
 
----
+This is the most consequential tab. It holds the invite link (generate it, share it, rotate it when it leaks — old links die on rotation), the member roster with roles, per-member character identity bindings, and ownership transfer.
 
-## Settings tabs
+Roles run game master, writer, player, observer, from most to least power. The practical differences: game masters configure everything including members and data; writers work the content — wiki, maps, chronology, sessions — without ownership transfer or destructive backup powers; players read and contribute within the collaboration permissions; observers read and change nothing. Assigning the owner role is not done here at all — ownership moves only through the transfer handshake, where the current owner initiates, the recipient accepts before expiry, and either side can cancel or decline. The current owner cannot leave or be removed until ownership moves; that refusal is load-bearing, preventing ownerless campaigns.
 
-| Tab | Purpose |
-|-----|---------|
-| **General** | Name, visibility, description, game system, language |
-| **Access & Roles** | Invite link, members, roles, identity pages, ownership transfer |
-| **Appearance** | Campaign theme preset and appearance profile, plus sidebar section layout |
-| **Recruitment** | Listing, schedule, table preferences, safety/tools, and applications |
-| **Integrations** | Campaign plugin management (install, configure, registry) |
-| **Advanced** | Views/followers metrics and data backup/restore actions |
+Character identity binding deserves attention because it affects sessions directly: linking a member to a character page sets whose name speaks in session notes and whose face appears on the roster. Players link themselves from Campaign Home; staff can bind anyone from the roster, provided the page exists in the campaign and is visible to that member's role.
 
----
+Collaboration permissions tune what non-staff can do, and the one most tables meet is player chronology management — off by default. Enabling it lets players create and edit party-visible timeline events, which suits collaborative tables with a player chronicler and suits nobody else. Page editing more broadly follows role plus these permissions: if a player cannot edit something they should be able to, this tab is the first place to look.
 
-## General
+Invite delivery has two forms: the link itself, and emailed invitations the GM sends from here. Email delivery needs the instance to have mail configured; without it, copy the link manually.
 
-| Field | Default / notes | Set by |
-|-------|-----------------|--------|
-| `name` | Campaign title | Campaign UI |
-| `slug` | URL segment (`/c/:slug`) | Campaign UI (on create) |
-| `description` | Optional blurb | Campaign UI |
-| `isPublic` | Listed in hub directory | Campaign UI |
-| `isPublicViewable` | Anonymous read of public content | Campaign UI |
-| `language` | `English` | Campaign UI |
-| `gameSystem` | Stable slug (e.g. `dnd-5e`, `pathfinder-2e`, `other`) | Campaign UI |
-| `customGameSystemName` | Custom ruleset label when `gameSystem` is `other` | Campaign UI |
+## Appearance and sidebar: how the campaign looks and navigates
 
-See the [Game Systems Reference](../reference/gamesystems.md) for the full picker catalog and stable slug identifiers.
+Appearance sets the campaign's visual identity — a theme preset (light, dark, automatic, or a genre dressing like fantasy, parchment, or cyberpunk) and an appearance profile for finer palette control. A campaign theme can override personal themes when the campaign asserts its look, which is usually what a GM wants for table immersion and occasionally what a player wants to escape.
 
-**In practice:** `isPublic` controls whether the campaign appears in the [Campaign hub](../features/campaign-hub.md) directory. `isPublicViewable` allows anonymous visitors to read pages marked **Public** visibility — distinct from party [discovery](discovery-and-revelation.md), which hides content until revealed.
+The sidebar settings shape navigation: which sections appear under world lore and game management, in what order, under what headings. Rename headings to the table's vocabulary, push daily surfaces high, bury what you rarely open. Sidebar order is navigation only — it never changes anyone's permissions. Campaign Home layout (widgets, hero, arrangement) is edited from Campaign Home itself rather than here, but it belongs to the same curation impulse.
 
----
+## Recruitment: the public face
 
-## Access control
+The Recruitment tab is the campaign's listing office, covered in full in its own guide: looking-for-group toggle, tagline and premise, schedule, table preferences, safety and tools, exposed wiki documents, and the applications queue. The status block at the top reports what is configured and what still needs setup, because half-built listings recruit nobody. Turning the toggle off unlists immediately without disturbing members or pending applications.
 
-| Field | Purpose | Set by |
-|-------|---------|--------|
-| `inviteToken` | Secret invite link | Campaign UI |
-| Member roles | **Game Master**, **Writer**, Player, Observer (`GAMEMASTER`, `WRITER`, …) | Campaign UI |
-| `identityPageId` | Wiki page linked for display name in sessions | Campaign Home (players) or Settings → Access roster (staff) |
-| Ownership transfer | Two-step Game Master → Writer handshake | Campaign UI + `/transfer-ownership` |
-| `allowPlayerChronologyManagement` | `false` | Access & Roles → Collaboration permissions — **Manage chronology events** for Players |
+## Templates and integrations
 
-Invite link base URL uses `VITE_APP_BASE_URL` or browser origin ([Environment variables](environment-variables.md)).
+Templates control which page templates the new-page menu offers: the built-in set for characters, locations, and the rest, your custom Template Studio creations, or both. Hiding the built-ins declutters creation for established campaigns with their own conventions; it never touches existing pages.
 
-### Role capabilities (summary)
+Integrations manages campaign plugins — which installed plugins this campaign uses and how each is configured. Installation itself happens at the instance level; if a plugin is missing here, the administrator has not installed it, and no campaign setting conjures it.
 
-| Role | Typical edit scope |
-|------|-------------------|
-| **Game Master** | Full campaign settings, members, backup, plugins, all narrative tools |
-| **Writer** | Wiki, maps, chronology, sessions — no ownership transfer or destructive backup |
-| **Player** | Party-visible wiki (policy-dependent), own session notes, character link |
-| **Observer** | Read-only within visibility rules |
+## Data and backup
 
-**In practice:** Page **visibility** (Public / Party / GM only) controls who can read a page once they know it exists. **Discovery** ([Discovery & revelation](../features/discovery-and-revelation.md)) can hide pages from browse, search, and links until the Game Master reveals them — orthogonal to visibility.
+Data and backup holds the sovereign archive controls: immediate download, background export with notification on completion, and restore from a prior archive, plus per-calendar JSON export. These are destructive-adjacent powers — especially restore, which replaces in place — and live here rather than scattered across features so the blast radius is obvious. The full practice, including what archives do and do not carry, is documented in the backup guide.
 
-When `allowPlayerChronologyManagement` is enabled, players can create and edit **party-visible** chronology events; Game Masters retain DM-only events and calendar structure.
+Advanced surfaces nearby include views and follower metrics. They inform; they do not govern.
 
----
+## Things to know
 
-## Recruitment
+Settings changes apply to the future far more often than to the past: tightening visibility does hide content immediately, but renaming, re-theming, and re-permissioning reshape going forward, not retroactively. Ownership transfer is the only settings flow with an expiry — an unaccepted offer lapses, by design. Invite rotation is the correct response to any leak, and it costs nothing. And when something "should work" for a player but does not, check role, then collaboration permissions, then page visibility, in that order — nine times in ten the answer is in this tab.
 
-| Field | Purpose |
-|-------|---------|
-| `isLookingForGroup` | Show in LFG directory |
-| `scheduleFrequency`, `scheduleDay`, `scheduleTime` | OOC schedule display |
-| `currentSession`, `sessionDuration`, `estimatedLength` | Session metadata |
-| `maxSeats`, `maxPlayers` | Player caps |
-| `genreThemes`, `externalTools` | JSON arrays — genre themes use the [catalog](../reference/campaign-themes.md) plus optional custom tags |
-| `safetyTools`, `contentWarnings`, `equipmentNeeded` | Text fields |
-| `includeTableExpectations`, `includeRules`, `includeFAQ`, `includeSessionZero`, `includeHomebrew`, `includeSafetyGuidelines`, `includeCharacterCreation` | Public recruitment resource sections |
+## Related features
 
-See [Recruitment & LFG](../features/recruitment-lfg.md).
-
-Recruitment UI:
-- **Marketplace Listing** (top) — LFG toggle, DM profile link, and compact configured / needs-setup status (no percentage meter)
-- **Listing** — campaign identity (format + collapsible genre themes) and public recruitment resources
-- **Schedule** — includes frequency/day/time and campaign timing metadata
-- **Table Preferences** — includes experience level, age/language preferences, and seat limits
-- **Safety & Tools** — includes safety tools, content warnings, and external tool stack
-- **Applications** — includes incoming applicant moderation workflow
-
-Public recruitment resources can map from common wiki-title aliases:
-- `tableExpectations`: `table expectations`, `how we play`, `table culture`, `social contract`, `table-expectations`
-- `rules`: `rules`, `expectations`, `houserules`, `house-rules`, `table-rules`, `tablerules`
-- `sessionZero`: `session zero`, `sessionzero`, `session0`, `session-0`
-- `homebrew`: `homebrew`, `hb`
-- `faq`: `faq`, `questions`
-- `safetyGuidelines`: `safety guidelines`, `safety`, `content safety`
-- `characterCreation`: `character creation guide`, `character creation`, `chargen`, `character-creation`, `playerguide`, `player-guide`
-
----
-
-## Sidebar (`sidebarConfig` JSON)
-
-Structure:
-
-```json
-{
-  "headers": { "worldLore": "...", "gameManagement": "..." },
-  "worldLoreOrder": ["..."],
-  "gameManagementOrder": ["..."]
-}
-```
-
-Reorder World Lore and Game Management nav items; customize section header labels.
-
----
-
-## Campaign Home (`dashboardConfig` JSON)
-
-Structure:
-
-```json
-{
-  "hero": { "coverImageUrl": null, "summary": null },
-  "widgets": [
-    { "id": "sessionClock", "x": 0, "y": 0, "w": 4, "h": 4, "enabled": true }
-  ]
-}
-```
-
-Widget IDs: `sessionClock`, `worldClock`, `announcements`, `questLedger`, `activityLoop`, `fantasyCalendar`.
-
-Edited via Campaign Home customize mode — see [Campaign Home & sidebar](../features/campaign-home-and-sidebar.md).
-
----
-
-## Themes
-
-| Field | Purpose |
-|-------|---------|
-| `themePreset` | `light`, `dark`, `auto`, `fantasy`, `cyberpunk`, `parchment` |
-| `appearanceProfile` | JSON — foundation, genre, identity palette, tinting |
-
-Campaign theme can override user/system appearance when configured.
-
----
-
-## Templates (`templateSettings` JSON)
-
-| Field | Purpose |
-|-------|---------|
-| `hideSystemDefaultsInStudio` | Hide global templates in Template Studio |
-| `excludeSystemDefaultsFromPageCreate` | Skip system defaults in new page picker |
-
----
-
-## Data & backup
-
-| Action | Notes |
-|--------|-------|
-| Sync export | Immediate ZIP download |
-| Background export | Queues job; notification when ready |
-| Restore | Upload prior backup ZIP |
-
-See [Data backup & export](../features/data-backup-and-export.md).
-
----
-
-## Campaign plugins (Integrations tab)
-
-Install plugins scoped to this campaign via the registry sync flow ([Plugins overview](../features/plugins-overview.md)).
-
----
-
-## Related docs
-
-- [Discovery & revelation](../features/discovery-and-revelation.md)
-- [Features catalog](../features/README.md)
-- [User account settings](user-account-settings.md) — identity display in sessions
-- [System admin settings](system-admin-settings.md) — instance-wide limits
+- Recruitment and LFG, for the listing tab in depth
+- Data backup and export, for the archive controls in depth
+- Plugins overview, for what Integrations can offer
+- Discovery and revelation, for the visibility model access settings build on

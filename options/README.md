@@ -1,8 +1,8 @@
 # Options Reference
 
-This section documents **where and how** Esiana is configured — environment variables, Admin console fields, campaign settings tabs, and user account preferences.
+This section documents **where and how** Esiana is configured — environment variables, admin console, campaign settings tabs, and user account preferences. Each layer has its own audience: operators own the environment, system admins own the console, game masters own their campaigns, and every user owns their account.
 
-For feature walkthroughs (wiki, sessions, maps), see [Features](../features/README.md).
+For feature walkthroughs (wiki, sessions, maps), see the Features catalog.
 
 ---
 

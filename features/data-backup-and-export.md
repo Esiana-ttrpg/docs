@@ -1,56 +1,40 @@
 # Data Backup & Export
 
-Esiana emphasizes **data sovereignty** — download your world as portable archives and import from common TTRPG note tools. Backups are tiered: lore-sovereign export is the product's canonical path; full operational clone is a stricter bar Esiana does not fully meet.
+Your campaign is months of evenings. It should be able to leave Esiana — in open formats, readable without Esiana, restorable somewhere else — because software you cannot leave is software you do not own. Esiana treats that portability as a product guarantee, not a feature: the lore-sovereign export path is canonical, maintained, and tested, and this page is honest about exactly where it ends.
 
----
+Start with the mental model. There are two different promises that sound similar. The first is *lore sovereignty*: everything the table wrote and made — pages, lore, relations, media, pins, downtime projects, plugin content — leaves as readable Markdown plus structured data, and comes back intact. Esiana meets this promise; it is the thing to rely on. The second is *full clone*: every operational trace — memberships, session history, ledgers, activity feeds — transferred one click to a twin campaign. Esiana does not fully meet this one, deliberately in some cases (memberships should not silently duplicate) and incompletely in others. Plan around the distinction: back up for sovereignty always, and never assume a restore resurrects the table's social state.
 
-## Portability tiers
+## How it works
 
-| Tier | What | Sovereign ZIP | Restore |
-|------|------|---------------|---------|
-| **Lore sovereign** | Wiki Markdown + YAML frontmatter, entity metadata, relations, media, map pins, lore claims + historical aliases | Yes | Yes |
-| **Wiki-linked operational** | Downtime haven/project simulation rows, plugin KV (`PluginData`), plugin enablement settings | Yes (`sovereign/operational.json`) | Yes |
-| **Full clone** | Members, session timeline, ledger history, activities, calendar events, dashboard widgets | No (admin full bundle captures subset; restore replays less) | Partial |
+The sovereign archive is a ZIP containing your wiki as Markdown files with structured headers, a relations file describing links, tags, tree, and map pins, a knowledge file with lore claims and past names, an operational file with downtime and plugin content, and the media itself. It is designed to be meaningful opened in a text editor, not just to Esiana's importer. Restoring replays it: pages return with their IDs where possible, relations rebuild, media reattaches, downtime rows and plugin content come back.
 
-**Score for "Can I export and back up my campaign?"** — **Mostly yes** for lore sovereignty and wiki-linked plugin/downtime state. Fails only if you require one-click full-state clone including members and session ops history.
+Exports come in two speeds. The immediate download builds the archive now and hands it over — right for ordinary backups before a big arc. The background export queues the job and notifies you when the download is ready — right for large campaigns where building takes minutes. Restoring works two ways as well: into a fresh campaign from the creation wizard (the migration path), or into an existing campaign from its data settings (the replace-in-place path). The administrator can additionally back up any campaign directly, and keeps system-level database backups outside any campaign's UI.
 
----
+Imports run alongside. An Obsidian-style Markdown vault imports at campaign creation with folder mapping; a Kanka JSON export imports through its own wizard card with entity conversion; a Fantasy-Calendar file supplies custom time. The import formats guide covers each path's mapping rules, what is skipped, and how to prepare. Calendar JSON also exports and imports independently of campaign archives.
 
-## What works (routine GM need)
+## Using backup and export
 
-- **Sovereign ZIP export** (`esiana-campaign-backup-v2`) — Markdown wiki + frontmatter, relations, media, map pins, `sovereign/knowledge.json` (lore claims + aliases), operational layer
-- **Sync + async export** from Campaign Settings → Data & backup
-- **Restore on new campaign** via creation wizard (Esiana backup card)
-- **Restore in existing campaign** via Campaign Settings → Data & backup → Restore from backup
-- **Obsidian ZIP import** on campaign creation (Markdown vault export)
-- **Fantasy-Calendar JSON** export/import (separate from campaign ZIP)
+Build the habit first: download a sovereign archive before every major arc and before any migration, upgrade, or plugin surgery. The routine is thirty seconds from the campaign's data settings — download now for small campaigns, background export for large ones — and the archive is the thing you will be grateful for exactly once, completely.
 
----
+Migrating hosts or moving between database backends uses the same path: export sovereign ZIP on the old instance, create a campaign from backup on the new one, and verify — pages, media, links, entity details, downtime rows, plugin entries — before retiring the source. Treat the archive as the canonical migration vehicle rather than copying database files.
 
-## Honest limitations
+Restoring over an existing campaign deserves a warning it gets below: it replaces in place. Prefer restoring into a fresh campaign when the goal is a copy, a test, or a migration; reserve in-place restore for genuine rollback.
 
-- **Sovereign export ≠ full campaign clone** — omits members, session timeline, ledger entries, reputation events, map layer/scene rows, content presence DB projection, activities, and most non-wiki operational history. Admin full ZIP captures more JSON but restore replays a subset.
-- **Plugin data** round-trips only when plugins store campaign state in `PluginData`; external stores are not included.
+To verify an archive actually holds your world, restore it to a scratch campaign and compare: wiki pages and their media, links resolving, character and quest details present, downtime projects intact, plugin content where expected. Anything members-only in the social sense — roster, session history, ledger trails — will be absent by design, and its absence confirms the archive is behaving, not broken.
 
-**In practice:** A plugin that writes to an external database or SaaS will **not** appear in your sovereign ZIP. Before uninstalling or migrating hosts, export plugin-specific data through that plugin's own tools or API. Campaign-scoped `PluginData` and enablement flags in `sovereign/operational.json` do round-trip — verify each plugin's storage model in its manifest README.
-- **GM-only fields** — `dmSecrets` are stripped on export (privacy by design).
-- **Legacy templates** — `sovereign/templates/` from pre-v0.9.0 zips is ignored on restore (Template Studio removed).
-- **Cross-campaign restore** — Wiki page IDs are globally unique. Restoring a backup into a *new* campaign while the source campaign still exists can collide on page IDs; prefer in-campaign restore or restore after retiring the source campaign. Wizard restore targets an empty new campaign and replays preserved IDs in place.
-- **Postgres instance backup** — not wired in admin UI; `pg_dump` remains operator manual.
+## Campaign configuration
 
----
+Backup controls live in Campaign Settings under data and backup, available to the GM: immediate download, background export, and restore from a prior archive. Calendar export sits alongside per calendar. There is nothing to configure about the format — sovereignty means the archive is standard every time — only when to take one and where to restore it.
 
-## Falsification test
+## Administration
 
-To verify lore + operational portability:
+Administrators hold the instance side: per-campaign full backups beyond the sovereign path, system database backups through their own tooling, storage statistics, pruning of unreferenced media, and the background task queue where imports and exports run. Database-engine backup (the Postgres dump) remains operator tooling outside the app UI. On upgrades, the maintenance flow is admin business: announce, back up, upgrade, verify.
 
-1. Export sovereign ZIP from Campaign Settings.
-2. Restore to a **new** campaign via the creation wizard (or in-campaign restore for replace-in-place).
-3. Assert: wiki pages, media URLs, wikilinks, entity frontmatter (character, quest, thread, scene, etc.), downtime haven/project rows, and `PluginData` entries match.
+## Things to know
 
-Automated coverage: `campaignBackupRestore.integration.test.ts` and `campaignBackupRoundTrip.test.ts`.
+Read this section as the honest boundary of the guarantee. Sovereign export is not a full clone: memberships, session timelines, ledger and reputation trails, map layer configurations, revelation-projection internals, activity feeds, and most non-wiki operational history do not round-trip. Secrets marked GM-only are stripped on export by design. Plugin content round-trips only when the plugin stores it through Esiana's own campaign mechanisms — a plugin keeping its own external database takes its data with it, so export through that plugin's tools before migrating. Very old archives may contain a legacy templates folder that restore now ignores. Page identifiers are globally unique, so restoring a backup into a *new* campaign while the source still exists can collide — prefer in-place restore or retire the source first. And Notion, OneNote, and Google Docs have no direct importer: export Markdown from those tools and use the vault path if the folder layout fits.
 
-Fails if you require members, session notes timeline, or ledger history to round-trip.
+## Related features
 
 ---
 
