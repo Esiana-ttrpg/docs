@@ -124,6 +124,6 @@ Configuration is via `.env` files and Admin UI — there is no standalone Esiana
 
 - [Self-hosting: installation](../self-hosting/installation.md) — Docker Compose self-hosting
 - [Environment variables](environment-variables.md)
-- [Deployment & Docker](deployment-and-docker.md)
+- [Self-hosting with Docker](../self-hosting/docker.md)
 - [Database & persistence](database-and-persistence.md)
 - [`esiana-core/README.md`](../esiana-core/README.md) — monorepo overview

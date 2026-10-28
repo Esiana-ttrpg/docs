@@ -1,75 +1,13 @@
-# Sovereign export
+# Sovereign Export
 
-What can leave Esiana in a portable campaign archive — and what cannot.
+What can leave Esiana in a portable archive — and what cannot. This page states the guarantee precisely; the operator guide covers the daily practice of backups and restores.
 
-Esiana treats **lore sovereignty** as a product guarantee: GMs can export narrative content in open formats and restore it elsewhere.
+The guarantee is lore sovereignty: everything the table wrote and made leaves as readable Markdown plus structured data, and comes back intact somewhere else. Wiki pages of every kind — characters, locations, organizations, families, objects, lineages, adventures with their quests and scenes, session notes, journals — travel as Markdown with their structure preserved. Lore claims and past names travel alongside. Downtime havens and projects travel too, as do map pins and media, calendar definitions, and plugin content stored through Esiana's own mechanisms. Open the archive in a text editor and it reads as your campaign; restore it and the campaign reassembles — pages, links, relations, lore state, downtime rows — because the archive carries the canon, and everything derived rebuilds from canon on arrival.
 
----
+The boundary is operational and social state, excluded by design in most cases. Memberships and role grants do not transfer — a restored campaign has no roster until people join it. Session-timeline operations, activity feeds, webhooks and their queues, plugin secret stores, and instance configuration stay behind. Financial and standing trails (ledgers, reputation histories) do not round-trip. Secrets marked GM-only are stripped on export. These exclusions are not gaps in the format; they reflect that a campaign archive carries the *world*, not the table's administration of it.
 
-## Pipelines
+A few partial areas deserve plain words. Map pins and assets travel; detailed map layer configurations may not fully serialize. Revelation internals rebuild from preserved visibility records, which can take a moment to settle after restore. Plugin content survives exactly when the plugin stored it through Esiana — plugins with their own external stores take their data with them, so check each plugin's own export story before migrating. Very old archives may carry a legacy templates folder that restore now ignores.
 
-| Pipeline | Audience |
-|----------|----------|
-| **Sovereign ZIP** | GM portable archive (Markdown + JSON) |
-| **Content pack** | Plugin and sample-data seeding |
-| **Obsidian ZIP** | External vault import |
+The honest summary: sovereignty covers lore and everything built from it, which is the part of a campaign that took the time. The table itself — members, history of play, operational trails — starts fresh, which is the correct shape for a world changing hands or hosts.
 
-Operator guide: [Data backup & export](../features/data-backup-and-export.md)
-
----
-
-## Included in sovereign export
-
-These entity types round-trip in the GM sovereign path:
-
-- Characters, locations, organizations, families
-- Objects, species/ancestry pages
-- Adventures (quest/arc/scene/objective pages)
-- Session notes, journals
-- **Lore claims and historical aliases** (`sovereign/knowledge.json`)
-- Downtime havens and projects (`sovereign/operational.json`)
-- Plugin KV data (`PluginData`)
-
----
-
-## Rebuilt on restore
-
-Projection and derived state — acceptable when metadata is sufficient:
-
-- Narrative lifecycle tables (from page metadata)
-- Entity relation graph (from wiki links and metadata)
-- Narrative thread lifecycle
-- Map pins and assets (partial — see gaps below)
-- Calendar JSON (separate from page tree)
-- Content presence / fog rows (visibility metadata round-trips; projection rows rebuild)
-
----
-
-## Not included
-
-Operational and administrative records — by design:
-
-- Campaign memberships and role grants
-- Standing / reputation tables
-- Session timeline operations (separate from note content)
-- Webhooks and delivery queues
-- Plugin secrets store
-- System admin configuration
-
----
-
-## Known gaps (acceptable for 1.0)
-
-| Area | Tier | Notes |
-|------|------|-------|
-| Map layers | B | Pins and assets yes; layer config not fully serialized |
-| Fog presence rows | B | Visibility metadata round-trips |
-| Reputation / ledger | C | Post-1.0 |
-
----
-
-## See also
-
-- [Campaign model](campaign-model.md) — Knowledge section
-- [Import & export API](../api/import-export.md)
-- Engineering audit: [`esiana-core/docs/audits/pre-1.0-export-audit.md`](../../esiana-core/docs/audits/pre-1.0-export-audit.md)
+Operator practice — taking exports, restoring into fresh or existing campaigns, migrating hosts, verifying round-trips — is documented step by step in the backup and export guide.

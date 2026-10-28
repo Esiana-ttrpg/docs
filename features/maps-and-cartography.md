@@ -1,72 +1,49 @@
 # Maps & Cartography
 
-Interactive high-resolution maps with coordinate pins linked to wiki entities.
+A campaign map in Esiana is a shared picture of the world with memory. You upload an illustrated map — a continent, a city, a dungeon level — pin the places that matter to the wiki pages describing them, and the map remembers what the party has discovered and when. Months later, when the players ask "have we been to Elderhelm?", the map can answer.
 
----
+Maps are deliberately world-history views, not battle grids. There is no fog-of-war painting, no token movement, no combat integration. If you need tactical play, use a virtual tabletop alongside Esiana; use Esiana's maps so everyone remembers the world the tactics happened in.
 
-## What it does
+## How it works
 
-- **Maps hub** — list campaign cartography assets
-- **Map viewer** — Leaflet canvas over display-resolution imagery
-- **Map pins** — `x`, `y` coordinates linked to wiki pages or nested maps
-- **Pin revelation** — pins respect discovery/presence like wiki entities
-- **Temporal scrub** — view map state at a campaign date
-- **Ghost Mode** — Game Master preview of party-visible pins only (map viewer toolbar)
-- **Hover previews** — pin cards summarizing linked entities
-- **Map settings** — display name, visibility, wiki location binding
-- **Asset pipeline** — automatic display + thumbnail variants; optional full-resolution preserve for DMs
+A map starts as an uploaded image. Esiana keeps your original and automatically prepares lighter display and thumbnail versions so the viewer stays fast even with large battle-poster-sized uploads. Every map has a name, a visibility, and optionally a linked wiki page — usually the location the map depicts, so the map and the lore point at each other.
 
----
+Pins are the heart of the feature. A pin sits at a point on the map and points at something: a wiki page (the city of Elderhelm), another map (the city detail map nested inside the continent), or a brand-new page Esiana creates for you on the spot when you drop a pin and name a place you have not written up yet. Hovering a pin shows a small card summarizing its target, so players can orient themselves without opening six tabs.
 
-## Who can use it
+Two systems govern what each viewer sees. Visibility works like wiki visibility: Public, Party, or GM-only maps and pins. Discovery works like wiki discovery: pins for places the party has not found are hidden or redacted for players, while the GM sees everything. A GM-only handout map never leaks; a Party map of the region shows only the settlements the party actually knows. GMs can preview exactly the party's view — including a ghost mode that overlays what is hidden — before screen-sharing at the table.
 
-| Role | Capabilities |
-|------|--------------|
-| **DM / Co-DM** | Upload maps, place pins, configure visibility |
-| **Party** | View maps and pins at permitted visibility |
-| **Viewer** | Public-visible maps only |
+Maps also have a time dimension. Scene objects — regions, labels, routes drawn on the map — can carry date ranges, and presentation presets save favorite views ("the North at the start of Act II"). Scrubbing the campaign date re-renders the map as it was: borders drawn, routes established, places founded or ruined. This is the same campaign clock that drives chronology, so advancing time updates maps, timelines, and gated lore together.
 
----
+## Using maps
 
-## Where to find it
+A typical setup flows like this:
 
-| Area | Route / nav |
-|------|-------------|
-| Maps hub | `/c/:campaignSlug/maps` |
-| Map viewer | `/c/:campaignSlug/maps/:mapId` |
-| Map settings | Map viewer → Settings |
-| Wiki-bound maps | Wiki pages in Maps category with `mapAssetId` |
+1. Upload the map image from the maps area of your campaign. Give it a display name ("The Northern Marches") and set visibility — Party for the shared world map, GM-only for the secret cult network.
+2. Link the map to its wiki page if it depicts a known location, so readers of the location find the map and viewers of the map find the lore.
+3. Drop pins on the places that matter and point each at its wiki page. If a page does not exist yet, create it from the pin — Esiana files it under the right folder with Party visibility, and you flesh it out later.
+4. Hide what the party has not discovered. Pins for unvisited places stay hidden for players until revealed, individually or with a bulk reveal when the party surveys the region.
+5. At the table, open the viewer, set the campaign date if the era matters, and share your screen. Hover cards do the exposition for you.
 
----
+Ongoing care is light. When the party founds an outpost, add a pin. When war redraws a border, confirm the new overlay so the change sticks. Before deleting a wiki page, check its linked map objects — the page tells you what points at it, and deleting the target strands the pin.
 
-## Key options
+## Campaign configuration
 
-| Option | Where |
-|--------|-------|
-| Map upload size limit | [System admin settings](../options/system-admin-settings.md) → `mapMaxUploadSizeMb` |
-| Display max edge | Admin Uploads or `MAP_DISPLAY_MAX_EDGE` env |
-| Thumbnail max edge | Admin Uploads or `MAP_THUMB_MAX_EDGE` env |
-| Preserve full resolution | Admin Uploads or `MAP_PRESERVE_FULL_RES` env |
-| Page visibility | Wiki page visibility applies to linked content |
-| Pin revelation | Per-pin presence — [Discovery & revelation](discovery-and-revelation.md) |
+Map behavior is mostly per-map rather than campaign-wide: each map carries its own name, visibility, and wiki binding, and each pin its own target and revelation state. GMs with map-editing permission manage all of it from the viewer and its settings panel. Whether a given member *can* edit maps follows their campaign role and collaboration permissions — players in a typical campaign view maps without editing them.
 
-For large deployments, optional S3-compatible object storage (R2, MinIO, etc.) can offload media — see [`esiana-core/docs/deployment/object-storage.md`](../esiana-core/docs/deployment/object-storage.md).
+## Administration
 
----
+Two instance-level concerns touch maps. Upload size limits cap how large a map image can be, and image-processing settings control how aggressively uploads are downscaled and whether full-resolution originals are kept for GM download. Both are set by the instance administrator; a campaign cannot exceed them. Installations with heavy media use can store files in S3-compatible object storage instead of local disk, which is also an administrator decision and invisible to campaigns either way.
 
-## Upload tips
+## Players
 
-- Large battle maps are downscaled to **display** variant for the canvas; originals may be kept when preserve-full-res is on
-- Pin coordinates lock to display variant dimensions stored on the `Asset` row
-- Use **Locations** wiki folders during import to prep geo-linked lore ([Import formats](../data-management/import-formats.md))
+Players experience maps as the party's collective memory of geography. You see the maps you are allowed to see, with the pins your party has discovered, rendered at the current campaign date. Hover any pin for its summary card. You cannot see hidden pins, GM-only maps, or full-resolution originals reserved for the GM — and unlike a VTT, nothing here moves in real time, so treat the map as the world-as-known, not the battlefield.
 
----
+## Things to know
 
-## Related docs
+Upload the highest-quality image you have; Esiana derives the fast versions itself, and downscaling at upload is gentler than a compressed re-upload later. Pin coordinates lock to the stored image dimensions, so replacing a map image with different dimensions can displace pins — prefer editing the existing map over swapping files. Deleting a map asset cleans up its pins and wiki bindings, which is convenient and irreversible, so be certain first. And remember the boundary: Esiana maps answer "what does the world look like and what do we know about it," never "where exactly is each combatant standing."
 
-- [Discovery & revelation](discovery-and-revelation.md)
-- [Wiki & lore](wiki-and-lore.md)
-- [System admin settings](../options/system-admin-settings.md)
-- [Limits & quotas](../options/limits-and-quotas.md)
-- [Environment variables](../options/environment-variables.md)
-- [`esiana-core/docs/deployment/object-storage.md`](../esiana-core/docs/deployment/object-storage.md)
+## Related features
+
+- Discovery and revelation, for the hidden-until-revealed layer pins obey
+- Wiki and lore, for the pages pins point at
+- Chronology and calendars, for the campaign date maps render against

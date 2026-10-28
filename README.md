@@ -1,8 +1,8 @@
 # Esiana Documentation
 
-How to install, operate, extend, and integrate Esiana — self-hosted narrative infrastructure for TTRPG campaigns.
+How to install, operate, extend, integrate — and play — Esiana: self-hosted narrative infrastructure for TTRPG campaigns.
 
-**Audience:** operators, developers, and advanced campaign designers. Players use the application UI; this is not a player guide.
+**Audience:** game masters and players, operators, developers, and advanced campaign designers. The feature guides are written for the table; the operations and extension tracks are written for the people who run and build the software.
 
 ---
 
@@ -28,6 +28,7 @@ Open **http://localhost:8080**, register, and use Esiana. The first account beco
 
 | Audience | Start here |
 |----------|------------|
+| Game masters & players | [Features catalog](features/README.md) |
 | Self-hosting operators | [Installation](self-hosting/installation.md) |
 | Plugin developers | [Getting started](plugin-development/getting-started.md) |
 | API integrators | [API overview](api/overview.md) · `/api/docs` on your instance |
@@ -51,9 +52,9 @@ Install, configure, and run your instance.
 
 ### Using Esiana
 
-What staff can do in a campaign and where to find it in the UI.
+Guides for the table — game masters, players, and campaign managers.
 
-- [Features catalog](features/README.md) — wiki, sessions, chronology, maps, discovery, Campaign Home
+- [Features catalog](features/README.md) — wiki, sessions, chronology, maps, discovery, downtime, journals, Campaign Home
 - [Data management](data-management/README.md) — import formats, export, backups
 
 ### Building & extending

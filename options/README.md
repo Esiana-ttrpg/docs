@@ -1,8 +1,8 @@
 # Options Reference
 
-This section documents **where and how** Esiana is configured — environment variables, Admin console fields, campaign settings tabs, and user account preferences.
+This section documents **where and how** Esiana is configured — environment variables, admin console, campaign settings tabs, and user account preferences. Each layer has its own audience: operators own the environment, system admins own the console, game masters own their campaigns, and every user owns their account.
 
-For feature walkthroughs (wiki, sessions, maps), see [Features](../features/README.md).
+For feature walkthroughs (wiki, sessions, maps), see the Features catalog.
 
 ---
 
@@ -36,7 +36,7 @@ Developers hacking on core: [Installation](installation.md) instead of Docker.
 
 | Page | Covers |
 |------|--------|
-| [Quick install](quick-install.md) | Redirect → self-hosting installation |
+| [Self-hosting installation](../self-hosting/installation.md) | Docker Compose quick start |
 | [Installation](installation.md) | Local Node dev setup |
 | [Environment variables](environment-variables.md) | All backend + frontend env vars |
 | [Federated identity (OIDC)](federated-identity.md) | External IdP setup, `AUTH_SECRETS_KEY`, user link flows |
@@ -44,6 +44,6 @@ Developers hacking on core: [Installation](installation.md) instead of Docker.
 | [Campaign settings](campaign-settings.md) | General, access, recruitment, sidebar, themes, backup |
 | [User account settings](user-account-settings.md) | Profile, appearance, notifications, API tokens |
 | [Database & persistence](database-and-persistence.md) | Prisma provider, migrations, backups |
-| [Deployment & Docker](deployment-and-docker.md) | Image layout, Compose architecture |
+| [Self-hosting with Docker](../self-hosting/docker.md) | Image layout, Compose architecture |
 | [Reverse proxy & security](reverse-proxy-and-security.md) | Caddy/nginx, CORS, cookies, rate limits |
 | [Limits & quotas](limits-and-quotas.md) | Upload MB, map edges, compile limits, polling |

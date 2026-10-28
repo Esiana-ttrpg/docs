@@ -1,156 +1,37 @@
 # User Account Settings
 
-Each user manages their profile, appearance, notifications, developer API keys, and account credentials from **User Settings** (`/settings`). Campaign memberships are managed separately on **Your Campaigns** (`/campaigns`).
+User Settings is the one place that is entirely yours: your identity, your appearance, your reusable GM preferences, your notifications, your API keys, and your sign-in security. Campaign memberships live separately, on the campaigns page — settings here follow you across every table you join.
 
----
+## Profile and identity
 
-## Settings sections
+Your profile is how the platform sees you: display name, avatar, pronouns, bio, social links, timezone. The public profile shows a subset to the world; the rest stays in-app. Two overrides matter. First, a campaign can bind you to a character identity page, in which case sessions and rosters show the character, not your profile name — your profile does not change, it is simply not what that table displays. Second, your timezone drives how scheduled times render for you, so set it honestly if your table spans continents.
 
-| Section | Route | Purpose |
-|---------|-------|---------|
-| Profile & Identity | `/settings?tab=profile` | Public identity, avatar, bio, social links, timezone |
-| Appearance | `/settings?tab=appearance` | Personal theme profile |
-| Campaign Defaults | `/settings?tab=campaignDefaults` | GM style tags, table/safety prefs, doc templates, default pitch |
-| Notifications | `/settings?tab=notifications` | In-app and email notification preferences |
-| Developer Keys | `/settings?tab=developer` | API tokens and daily quota |
-| Account & Security | `/settings?tab=account` | Email, password, delete account |
+## Campaign defaults: your reusable GM kit
 
-Deep links use the `tab` query parameter (for example, notification emails link to `/settings?tab=notifications`).
-
-On smaller viewports, settings sections use a responsive navigation pattern: horizontal tabs with scroll on tablet, icon-aware dropdown on mobile.
-
----
-
-## Profile & Identity
-
-| Field | Purpose | Set by |
-|-------|---------|--------|
-| `displayName` | Shown name (unless campaign identity page overrides) | User UI |
-| `avatarUrl` | Profile image | User UI |
-| `pronouns` | Optional pronouns | User UI |
-| `publicBio` | Bio on public profile | User UI |
-| `statusBlurb` | Short status line | User UI |
-| Social links | Bluesky, Discord, GitHub, Reddit, Mastodon, other | User UI |
-| Timezone | IANA timezone for scheduling display | User UI |
-
-**Public profile:** `/users/:id`
-
----
-
-## Your Campaigns
-
-Campaign memberships (DM / player roles, leave table) live at **`/campaigns`**, not in User Settings. Access from the profile dropdown in the header.
-
----
-
-## Campaign Defaults
-
-User Settings → **Campaign Defaults** (`/settings?tab=campaignDefaults`) stores reusable GM preferences:
-
-| Area | Purpose |
-|------|---------|
-| GM Style Tags | Public profile chips (also shown on `/users/:id`) |
-| Table Defaults | Beginner friendly, rules light/heavy, voice required, etc. |
-| Safety Defaults | Session Zero, X-Card, Lines & Veils, and related toggles |
-| Default genre themes | Copied when importing recruitment preferences |
-| Default recruitment docs | Editable templates at `/settings/campaign-defaults/:slug` |
-| Default recruitment pitch | Pre-fills LFG application messages |
-
-**New campaign import:** The campaign wizard can import saved docs and recruitment preferences into a freshly created campaign (wiki pages under Rules/Resources plus recruitment fields).
-
-API: `GET/PATCH /api/user/campaign-defaults`, `GET/PUT /api/user/template-resources/:kind`
-
----
+Anyone who runs games accumulates a kit: the safety tools they always use, the table style they run, the genre themes they prefer, the documents they hand every new group, the pitch they send with applications. Campaign Defaults stores that kit so each new campaign starts from your standards instead of a blank form. Style tags appear on your public profile; table and safety defaults, genre themes, document templates, and the default recruitment pitch flow into the creation wizard and new listings. Set this up once, preferably before you need it — the wizard can only import what already exists.
 
 ## Appearance
 
-Personal theme profile independent of campaigns:
-
-- Foundation (light/dark), genre overlay, identity palette, background tint
-- Option to **allow campaign or system theme override**
-
-Campaign identity display uses linked wiki page when set by DM ([Campaign settings](campaign-settings.md) → Access).
-
----
+Your personal theme — foundation, genre overlay, palette, background tint — follows you everywhere, with one caveat: campaigns and the instance can assert their own look over yours. A campaign theme set by its GM wins on that campaign's pages; the instance default frames everything else. If the app looks different inside one campaign than everywhere else, that is the campaign's theme doing its job, and there is a personal option governing whether you allow such overrides.
 
 ## Notifications
 
-Per notification type:
+Per event type, choose in-app, email, both, or neither, plus a global mute-until for time away. Email needs two things outside your control: the instance must have mail configured, and your account needs a current address. Without the first, email toggles wait quietly; everything still arrives in the inbox. Notification emails deep-link back into settings, so a stray "manage preferences" click lands where it should. The full event catalog and the administrator's side are covered in the notifications guide.
 
-- **In-app** toggle
-- **Email** toggle (requires instance SMTP)
+## Developer keys
 
-**Global mute-until** — suppress all notifications until a timestamp.
+Developer Keys mints personal API tokens for automation and integrations: name the token, pick a duration of 30, 90, or 365 days, and grant the narrowest scopes that work. The secret is shown exactly once at creation — lose it and you mint again rather than recover it. Tokens act as you and expire on schedule; revoking kills one immediately. Minting is rate-limited against abuse. Your daily API usage for the account is visible on the same screen, aggregated across every campaign your tokens touch. The authentication guide explains scopes and bearer use for integrators; most humans never need this tab, and that is fine.
 
-See [Notifications feature](../features/notifications.md) and [`esiana-core/docs/notifications.md`](../esiana-core/docs/notifications.md).
+## Account and security
 
----
+Email, password, linked external sign-ins, and account deletion live under Account & Security, deliberately apart from the public profile. Passwords need eight characters minimum; changing yours signs older sessions out. External providers can be linked when emails match and unlinked while another sign-in method remains — the page refuses to strand you with no way in, including refusing to remove your last method or delete around an active lock. Forgot-password sends a one-hour reset link when the instance has mail; it always reports success whether or not the address exists, so no one can probe for accounts. Deleting the account itself removes the avatar, the record, and the session — campaigns you ran need new owners first, since ownership cannot evaporate.
 
-## Developer API keys
+## Things to know
 
-Create bearer tokens for automation and integrations.
+Your settings are yours, but their effects are contextual: name, theme, and notification choices bend wherever a campaign or instance asserts its own. Campaign Defaults only help future campaigns — nothing here retrofits tables you already run. And the security posture is conservative on purpose: single-use secrets, expiring resets, no account enumeration, no last-method removal. When the page refuses something, it is protecting the account, not malfunctioning.
 
-### Token options
+## Related features
 
-| Option | Values |
-|--------|--------|
-| **Name** | User-defined label |
-| **Duration** | 30, 90, or 365 days |
-| **Scopes** | See below |
-
-### Scopes
-
-| Scope | Access |
-|-------|--------|
-| `campaign:read` | Read campaign data |
-| `campaign:write` | Mutate campaign data |
-| `plugins:read` | Read plugin state |
-| `plugins:manage` | Install/configure plugins |
-
-**Empty scopes = legacy full access** (grants all operations). Prefer explicit scopes for new tokens.
-
-### Rate limits
-
-Token creation is rate-limited: default **10 mints per 24 hours** (`RATE_LIMIT_TOKEN_MINT_*`). See [Limits & quotas](limits-and-quotas.md).
-
-### Usage
-
-Send `Authorization: Bearer <token>` on API requests. Tokens support `lastUsedAt` tracking (throttled updates).
-
-### Daily API quota (account)
-
-User Settings → **Developer Keys** shows your personal API usage for the current UTC day (aggregated across all campaigns where your tokens are used). The UI calls `GET /api/user/developer/quota`.
-
-Default limit: **50,000** token-authenticated requests per UTC day per account (enforced for monitoring; see rate-limit docs).
-
-### Instance monitoring (system admins)
-
-Global API health, traffic, and top accounts are in **Admin → API Usage** (`/admin/analytics/usage`), not in campaign settings.
-
----
-
-## Account & Security
-
-Email, password change, linked identity providers, and account deletion are under **Account & Security** (`/settings?tab=account`), separate from public profile fields.
-
-### Federated sign-in
-
-When the operator configures OIDC ([Federated identity](federated-identity.md)):
-
-- **Link provider** — connect an IdP account when emails match
-- **Unlink provider** — remove a linked IdP when another sign-in method remains
-- **Password hybrid** — OIDC-only users may add a local password; users with both may remove password if OIDC remains
-
-**Forgot password:** Sign-in modal → **Forgot password?** sends a reset link when SMTP is configured (always returns success to avoid email enumeration). Complete reset at `/reset-password?token=…` (link expires in 1 hour). Federated-only accounts (`passwordAuthEnabled: false`) do not receive reset mail; change-password UI is hidden for those users.
-
-Password change is rate-limited (`RATE_LIMIT_PASSWORD_CHANGE_*`). Forgot/reset uses `RATE_LIMIT_PASSWORD_RESET_*`.
-
----
-
-## Related docs
-
-- [Environment variables](environment-variables.md) — `FRONTEND_ORIGIN`, rate limits
-- [Campaign settings](campaign-settings.md) — identity wiki pages
-- [Recruitment & LFG](../features/recruitment-lfg.md) — recruitment settings responsive nav
-- [Plugins overview](../features/plugins-overview.md) — plugin API scopes
-- [Reverse proxy & security](reverse-proxy-and-security.md)
+- Campaign settings, for the per-table counterpart to everything here
+- Notifications, for the event catalog behind the toggles
+- Recruitment and LFG, for the pitch your defaults pre-fill

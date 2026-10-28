@@ -1,207 +1,42 @@
 # System Admin Settings
 
-Settings managed in **Admin console** and stored in the `SystemSetting` table (`id = GLOBAL_CONFIG`). API: `GET/PATCH /api/admin/settings`.
+The admin console governs the instance every campaign runs on: who may register, how mail flows, how large uploads may be, what the site looks like, which plugins exist, and who else administrates. If campaign settings are the wiring of one house, these are the utilities for the street. This page is for system administrators; campaign GMs will find their controls under Campaign Settings instead.
 
-Serialized in `esiana-core/backend/src/lib/systemSettings.ts`. Operators and system admins configure the instance here.
+## Registration: open or closed doors
 
----
+Two controls decide who can walk in. Open registration allows anyone to create an account; closing it makes the instance invite-only in practice. Restricting email domains narrows self-registration to chosen organizations without blocking accounts the admin creates directly. The first account ever registered becomes system admin automatically and initializes system settings — on a fresh instance, register first and configure second. On a closed table's private server, close registration and admit by invite link; on a community server, domain restriction keeps the audience coherent without manual approvals.
 
-## Registration
+## Email delivery
 
-| Field | Default | Purpose | Set by |
-|-------|---------|---------|--------|
-| `allowRegistrations` | `true` | Open vs closed registration | Admin UI |
-| `allowedDomains` | (empty) | Comma/space-separated email domains; empty = all allowed | Admin UI |
+Outbound mail — notification emails users opt into, password resets, emailed campaign invitations — flows through the SMTP settings here: server, port, credentials, sender address, and a test button that mails the admin to verify the whole path. Email links back into the app also need the instance's public base URL configured, or links arrive pointing somewhere useless. Without mail, nothing breaks: in-app notifications carry on, password resets cannot send, and invitations fall back to shareable links. When users report missing email, check this panel before anything else — the cause is configuration far more often than code.
 
-**Where:** Admin → General Settings → Registration
+## Uploads, images, and remote media
 
-**In practice:** Set `allowRegistrations` to `false` and use invite-only onboarding when you want a closed table. `allowedDomains` restricts self-registration to corporate or guild email domains without blocking admin-created accounts.
+Upload ceilings protect the server from the friendliest threat, the 200-megabyte battle map. A general upload limit covers files broadly, with a separate map limit that falls back to the general one when unset. Image handling then shapes what arrives: maximum display and thumbnail dimensions bound the derived variants viewers actually load, a preserve-originals switch keeps full-resolution files for GM download, and allowed image types gate formats. Lower the display bound on small servers to spare memory during processing; raise limits deliberately, watching disk.
 
----
+Remote fetching is its own surface. URL imports let import and paste flows pull remote media into instance storage, bounded by per-fetch size and timeout, with plain-HTTP fetches off by default. Keep them off in production unless the table needs them — fetching arbitrary remote URLs is the kind of surface that deserves intention.
 
-## SMTP (email delivery)
+Relation-graph caps bound how many nodes and edges the wiki relations panel renders, within a fixed range. Dense campaigns with heavy wikilink webs can slow that sidebar; lowering the caps trades completeness for responsiveness on constrained hardware.
 
-| Field | Default | Purpose | Set by |
-|-------|---------|---------|--------|
-| `host` | (empty) | SMTP server | Admin UI |
-| `port` | `587` | SMTP port | Admin UI |
-| `user` | (empty) | SMTP username | Admin UI |
-| `password` | (empty) | SMTP password | Admin UI |
-| `secure` | `false` | TLS / SSL | Admin UI |
-| `fromAddress` | (empty) | From header for outbound mail | Admin UI |
+## Status, branding, and footer
 
-When SMTP is configured, users can enable **email** per notification type. Includes **Send test email to me** in Admin. The same SMTP settings power **password reset emails** and **campaign invite-by-email** (Game Master sends from Campaign Settings → Access & Roles).
+Maintenance mode blocks everyone but administrators behind a maintenance page — the correct posture during upgrades. A site-wide banner with optional expiry announces windows, downtime, or table news without editing any campaign. Branding sets the instance title, logo, favicon, theme preset, and accent palette, plus footer text and links (terms, privacy, community profiles). Campaigns may still assert their own themes over the instance look, and users over that only where permitted — instance branding frames, it does not dictate.
 
-**Where:** Admin → General Settings → SMTP  
-**Related:** [Notifications feature](../features/notifications.md), [`esiana-core/docs/notifications.md`](../esiana-core/docs/notifications.md)
+## Notifications, identity, and plugins
 
-Also set `FRONTEND_ORIGIN` in backend `.env` so email links point to your public URL ([Environment variables](environment-variables.md)).
+The bell polling interval and default timezone for scheduling live here; identity providers live under their own admin section for external sign-in, documented separately. The plugin registry URL decides where installable plugins come from, defaulting to the community catalog — campaigns then install from the synced registry or local packages, never from arbitrary URLs of their own choosing.
 
-**In practice:** Without SMTP, in-app notifications still work; email is optional per user preference.
+## The rest of the console
 
----
+Several admin areas run outside the global settings store but belong in the same mental model: identity providers for external sign-in; release version checks against upstream; system utilities for full backups, storage statistics, media pruning, and logs; the background task queue where imports and exports run; the campaign list with per-campaign backup and deletion; global default page templates offered to every campaign; user and role management; and API usage analytics by token. Deleting a user or a campaign here is immediate and administrative — it does not ask the campaign's permission, because instance authority outranks campaign authority by design.
 
-## Uploads & cartography
+## Things to know
 
-| Field | Default | Purpose | Set by |
-|-------|---------|---------|--------|
-| `maxUploadSizeMb` | `10` | General upload limit | Admin UI |
-| `mapMaxUploadSizeMb` | (falls back to general) | Map upload limit | Admin UI |
-| `mapDisplayMaxEdge` | `8192` | Display variant max edge (512–16384) | Admin UI **overrides** env |
-| `mapThumbMaxEdge` | `2048` | Thumbnail max edge (128–4096) | Admin UI **overrides** env |
-| `mapPreserveFullRes` | `true` | Keep full-res originals | Admin UI **OR** `MAP_PRESERVE_FULL_RES` env |
-| `allowedImageTypes` | `png,jpeg,webp` | Comma-separated MIME families allowed on upload | Admin UI |
-| `maxImageWidth` | `16384` | Reject or downscale wider images | Admin UI |
-| `maxImageHeight` | (schema default) | Reject or downscale taller images | Admin UI |
+Admin settings bind every campaign on the instance: upload ceilings, mail behavior, branding frame, plugin availability. Campaigns cannot exceed them, only operate within them. Environment variables provide fallbacks and overrides beneath several of these settings — where both exist, the admin console value generally wins at runtime, which surprises operators who set an environment variable and see no change. And destructive admin actions (user deletion, campaign deletion, media pruning) are immediate; the console assumes the administrator means it.
 
-Runtime resolution: `getMapProcessingSettings()` prefers Admin DB values, then env fallbacks.
+## Related features
 
-**Where:** Admin → Assets & Uploads (upload limits, URL imports) and Admin → General Settings → Relations graph caps
-
-**In practice:** Large battle maps are downscaled to the **display** variant for the Leaflet canvas. When `mapPreserveFullRes` is on, Game Masters can still download originals. Lower `mapDisplayMaxEdge` on small VPS instances to reduce memory during map processing.
-
----
-
-## URL imports
-
-| Field | Default | Purpose | Set by |
-|-------|---------|---------|--------|
-| `urlImportsEnabled` | `true` | Allow fetching remote images/assets during import | Admin UI |
-| `urlImportAllowHttp` | `false` | Permit non-HTTPS download URLs | Admin UI |
-| `urlImportMaxDownloadMb` | `50` | Max bytes per remote fetch | Admin UI |
-| `urlImportTimeoutSeconds` | `15` | Network timeout per fetch | Admin UI |
-
-**Where:** Admin → Assets & Uploads → URL imports
-
-**In practice:** When enabled, import and paste workflows can pull remote media into your storage. Keep `urlImportAllowHttp` off in production to reduce SSRF risk on misconfigured networks.
-
----
-
-## Relations graph
-
-| Field | Default | Purpose | Set by |
-|-------|---------|---------|--------|
-| `relationsMaxVisibleNodes` | (unset → code fallback) | Cap nodes rendered in wiki relations panel | Admin UI |
-| `relationsMaxVisibleEdges` | (unset → code fallback) | Cap edges rendered in relations panel | Admin UI |
-
-Valid range in Admin UI: **20–100** per field.
-
-**Where:** Admin → General Settings → Relations graph
-
-**In practice:** Dense campaigns with hundreds of wikilinks may slow the relations sidebar; lower these caps on constrained hardware. See [Limits & quotas](limits-and-quotas.md).
-
----
-
-## Status & maintenance
-
-| Field | Default | Purpose | Set by |
-|-------|---------|---------|--------|
-| `maintenanceMode` | `false` | Block non-admin access | Admin UI |
-| `systemBannerText` | (empty) | Instance-wide banner message | Admin UI |
-| `systemBannerExpiresAt` | (null) | Banner expiry (ISO timestamp) | Admin UI |
-
-Banner presets in UI: 1 hour, 3 hours, custom duration, or clear.
-
-**Where:** Admin → General Settings → Status
-
-**In practice:** `maintenanceMode` returns a maintenance page to all users except system admins — use during upgrades ([Upgrades](../self-hosting/upgrades.md)).
-
----
-
-## Plugins & integrations
-
-| Field | Default | Purpose | Set by |
-|-------|---------|---------|--------|
-| `registryUrl` | `https://github.com/Esiana-ttrpg/community-plugins/blob/main/registry.json` | Official plugin registry index (blob link; normalized to raw on fetch) | Admin UI |
-
-**Where:** Admin → Plugins & Integrations
-
-Campaigns install plugins from the synced registry via Campaign Settings → Integrations. Custom manifest URLs are not a separate admin toggle — use registry sync or local `PLUGINS_DIR` packages.
-
-See [Plugins overview](../features/plugins-overview.md) and [`esiana-core/plugins/README.md`](../esiana-core/plugins/README.md).
-
----
-
-## Identity providers
-
-OIDC / SSO is configured in **Admin → Identity Providers** (separate API from `GLOBAL_CONFIG`). See [Federated identity](federated-identity.md).
-
----
-
-## Branding & appearance
-
-| Field | Default | Purpose | Set by |
-|-------|---------|---------|--------|
-| `globalTitle` | `Esiana` | Site title | Admin UI |
-| `globalLogoUrl` | (null) | Header logo URL | Admin UI |
-| `faviconUrl` | (null) | Favicon URL | Admin UI |
-| `globalThemePreset` | `dark` | Instance theme preset | Admin UI |
-| `globalPalette` | `ocean` | Accent palette | Admin UI |
-| `applyBackgroundTint` | `false` | Tint page background from palette | Admin UI |
-
-### Valid theme presets
-
-`light`, `dark`, `auto`, `fantasy`, `cyberpunk`, `parchment`
-
-### Valid global palettes
-
-**Dark foundation:** `ocean`, `midnight`, `forest`, `ember`, `deep_space`  
-**Light foundation:** `sunset`, `desert`, `arctic`  
-**Holiday / identity:** `trans`, `pride`, `halloween`, `christmas`
-
-**Where:** Admin → Appearance
-
-Users can override with personal appearance profiles unless campaign theme takes precedence — see [User account settings](user-account-settings.md).
-
----
-
-## Footer
-
-| Field | Default | Purpose | Set by |
-|-------|---------|---------|--------|
-| `customText` | (empty) | Footer markdown / text | Admin UI |
-| `tosUrl` | (empty) | Terms of service link | Admin UI |
-| `privacyPolicyUrl` | (empty) | Privacy policy link | Admin UI |
-| `discordUrl` | (empty) | Discord link | Admin UI |
-| `githubUrl` | (empty) | GitHub link | Admin UI |
-| `alignment` | `center` | Footer alignment | Admin UI |
-
-**Where:** Admin → Appearance → Footer
-
----
-
-## Notifications (admin)
-
-| Field | Default | Purpose | Set by |
-|-------|---------|---------|--------|
-| `pollIntervalSeconds` | `60` | Bell badge poll interval (30–300 s) | Admin UI |
-| `defaultTimezone` | system default | Default IANA timezone for scheduling | Admin UI |
-
-Polling pauses while the browser tab is hidden.
-
-**Where:** Admin → General Settings → Notifications
-
----
-
-## Other admin sections (no GLOBAL_CONFIG fields)
-
-These use separate APIs but belong in the operator mental model:
-
-| Section | Features |
-|---------|----------|
-| **Identity Providers** | OIDC CRUD, group→role mapping — [Federated identity](federated-identity.md) |
-| **Update Core** | GitHub release version check |
-| **System Utilities** | Full DB backup, storage stats, prune unused media, logs |
-| **Background Tasks** | Import/export job queue |
-| **Campaigns** | List, backup, delete any campaign |
-| **Page Templates** | Global default wiki templates |
-| **Memberships** | Users, roles, delete accounts |
-| **API Usage** | Request analytics by token |
-
----
-
-## Related docs
-
-- [Environment variables](environment-variables.md) — env fallbacks and overrides
-- [Campaign settings](campaign-settings.md) — per-campaign overrides (themes, plugins)
-- [Limits & quotas](limits-and-quotas.md)
+- Campaign settings, for the per-campaign counterpart
+- Notifications, for the mail-dependent user experience
+- Plugins overview, for the registry these settings feed
+- Data backup and export, for the instance-side backup duties
