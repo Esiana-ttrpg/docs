@@ -18,8 +18,19 @@
       "addWords": true
     }
   ],
-  "dictionaries": ["project-terms", "ttrpg-terms", "technical-terms"],
-  "ignorePaths": ["plans/**", ".github/**", "options/compose.*"],
+  "dictionaries": [
+    "project-terms",
+    "ttrpg-terms",
+    "technical-terms"
+  ],
+  "ignorePaths": [
+    "plans/**",
+    ".github/**",
+    "public/options/compose.*",
+    "node_modules/**",
+    "dist/**",
+    ".astro/**"
+  ],
   "ignoreRegExpList": [
     "file:///.*",
     "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}",
