@@ -3,6 +3,7 @@ Chronicle
 codex
 elderhelm
 Esiana
+Frostfall
 Kanka
 nightshadow
 Winterfort

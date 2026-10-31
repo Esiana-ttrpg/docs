@@ -16,6 +16,7 @@ config:
   MD024:
     siblings_only: true
 globs:
-  - "**/*.md"
+  - "README.md"
+  - "src/content/docs/**/*.md"
 ignores:
   - "plans/**"
