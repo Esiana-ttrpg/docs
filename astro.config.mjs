@@ -13,6 +13,7 @@ export default defineConfig({
     mermaid({ autoTheme: true, enableLog: false }),
     starlight({
       title: 'Esiana Documentation',
+      favicon: '/favicon.png',
       description: 'Install, operate, extend, and explore Esiana campaign narrative infrastructure.',
       editLink: { baseUrl: 'https://github.com/Esiana-ttrpg/docs/edit/main/' },
       social: [
