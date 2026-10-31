@@ -1,5 +1,11 @@
 version: 2
 updates:
+  # Dependabot uses the npm ecosystem for pnpm-lock.yaml as well.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
   - package-ecosystem: github-actions
     directory: /
     schedule:
