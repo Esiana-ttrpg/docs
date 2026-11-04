@@ -21,12 +21,16 @@ export default defineConfig({
     mermaid({ autoTheme: true, enableLog: false }),
     starlight({
       title: 'Esiana Documentation',
-      favicon: '/favicon.png',
+      logo: { src: './public/favicon.svg', alt: 'Esiana', replacesTitle: false },
+      favicon: '/favicon.svg',
       description: 'Install, operate, extend, and explore Esiana campaign narrative infrastructure.',
       editLink: { baseUrl: 'https://github.com/Esiana-ttrpg/docs/edit/main/' },
       social: [
-        { icon: 'github', label: 'Documentation repository', href: 'https://github.com/Esiana-ttrpg/docs' },
+        { icon: 'github', label: 'Esiana on GitHub', href: 'https://github.com/Esiana-ttrpg/esiana-core' },
+        { icon: 'discord', label: 'Join the Esiana Discord', href: 'https://discord.gg/2K4bQVNbUZ' },
+        { icon: 'reddit', label: 'Visit the Esiana Reddit community', href: 'https://www.reddit.com/r/esiana/' },
       ],
+      components: { SocialIcons: './src/components/header/SocialIcons.astro' },
       pagefind: true,
       expressiveCode: {
         shiki: { langAlias: { env: 'dotenv', caddy: 'text', caddyfile: 'text' } },
