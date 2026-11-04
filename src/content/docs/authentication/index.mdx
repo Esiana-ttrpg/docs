@@ -1,0 +1,64 @@
+---
+title: Authentication & SSO
+description: Choose local accounts, OpenID Connect, or both for an Esiana instance.
+sidebar:
+  order: 0
+---
+
+Esiana supports local email-and-password accounts, external OpenID Connect (OIDC), or both. Authentication proves identity; campaign membership, roles, and content visibility still control access.
+
+## Choose a sign-in model
+
+| Model | Configuration |
+|-------|---------------|
+| Local accounts | Enabled by default with `LOCAL_LOGIN_ENABLED=true` |
+| Admin-managed OIDC | Leave `OIDC_ENABLED` unset; configure **Admin → Identity Providers** |
+| Environment-managed OIDC | Set `OIDC_ENABLED=true` and the required `OIDC_*` variables |
+| Hybrid | Keep local login enabled and configure OIDC |
+
+Do not disable local login until an OIDC provider has been tested. Esiana refuses to start when its environment configuration would leave no sign-in method available.
+
+## What administrators need
+
+OIDC sends the browser to an identity provider, validates the response, and creates an Esiana session. Esiana uses discovery from one issuer URL, requests `openid profile email` by default, and applies PKCE, state, and nonce protections.
+
+Before configuration, gather:
+
+- Esiana's final public HTTPS origin.
+- An OIDC client ID and client secret.
+- The provider's issuer URL and working discovery document.
+- The exact callback URL.
+- Optional group-claim details for access or administrator mappings.
+
+The callback pattern is:
+
+```text
+{BACKEND_PUBLIC_ORIGIN}/api/auth/oidc/{providerId}/callback
+```
+
+For `https://esiana.example.com` and provider ID `authentik`, register `https://esiana.example.com/api/auth/oidc/authentik/callback`.
+
+## Accounts and provisioning
+
+External accounts are keyed by the Esiana provider ID and the provider's stable `sub` claim. Email is profile data and is never used to silently merge accounts.
+
+- First-time OIDC sign-in creates a user only when registration policy allows it.
+- If the email belongs to a local account, sign in locally and link the provider from account settings.
+- Linking requires an authenticated Esiana session and a matching provider email.
+- Configured group-to-role mappings are reevaluated at login and can both grant and remove `SYSTEM_ADMIN`.
+
+## Security checklist
+
+- Use HTTPS and set the public origin before registering callbacks.
+- Generate different values for `JWT_SECRET` and `AUTH_SECRETS_KEY`.
+- Keep client secrets out of source control.
+- Keep local sign-in available until external sign-in and recovery are tested.
+- Do not treat reverse-proxy identity headers as an Esiana session; use OIDC.
+
+## Continue
+
+- [OIDC configuration](oidc-configuration.mdx)
+- [Authentik](providers/authentik.mdx), [Pocket ID](providers/pocket-id.mdx), and [Authelia](providers/authelia.mdx)
+- [Caddy](providers/caddy.mdx) reverse proxy guidance
+- [Authentication troubleshooting](troubleshooting.mdx)
+- [API authentication](../api/authentication.md) for sessions and personal API keys

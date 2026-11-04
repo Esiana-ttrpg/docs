@@ -51,7 +51,7 @@ For configuration references (environment variables, admin console, campaign tab
 | Feature | Where |
 |---------|-------|
 | Registration, SMTP, maintenance, branding | Admin → General / Appearance |
-| External sign-in providers | Admin → Identity Providers — [Federated identity](../options/federated-identity.md) |
+| External sign-in providers | Admin → Identity Providers — [Authentication & SSO](../authentication/index.mdx) |
 | Plugin registry, system backup | Admin → Plugins / Utilities |
 | Global page templates | Admin → Page Templates |
 | User management, API usage | Admin → Memberships / API Usage |

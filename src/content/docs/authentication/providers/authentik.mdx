@@ -1,0 +1,43 @@
+---
+title: Authentik
+description: Connect Esiana to an Authentik OAuth2/OpenID Connect provider.
+---
+
+This follows Authentik's OAuth2/OpenID provider model. It is not maintained as an automated Esiana integration test; verify it with a non-administrator account before relying on it for recovery.
+
+## 1. Prerequisites
+
+- Working HTTPS URLs for Esiana and Authentik.
+- Esiana `PUBLIC_ORIGIN` set to its public URL.
+- Permission to create an Authentik provider and application.
+
+## 2. Provider configuration
+
+Create an **OAuth2/OpenID Provider** and application. Use a confidential client and register Esiana's exact callback:
+
+```text
+https://esiana.example.com/api/auth/oidc/authentik/callback
+```
+
+Authentik's default per-provider issuer is `https://auth.example.com/application/o/{application-slug}/`. Use the issuer Authentik reports. Do not substitute the discovery URL for the issuer.
+
+## 3. Esiana configuration
+
+In **Admin → Identity Providers**, choose the Authentik template, use provider ID `authentik`, and enter the issuer, client ID, and secret. Environment-managed deployments use `OIDC_*` and fixed provider ID `oidc`, so their callback ends in `/oidc/callback`.
+
+## 4. Redirect URL and scopes
+
+Use `openid profile email`. If group mappings are required, configure Authentik to release groups, add any required scope, and set Esiana's groups claim to the released claim name.
+
+## 5. Test sign-in
+
+Keep local login enabled. In a private browser window, use the Authentik button and verify account creation or linking. Test administrator group changes in both directions.
+
+## 6. Troubleshooting
+
+- **Discovery fails:** compare the issuer, trailing slash, and Authentik issuer mode.
+- **Redirect mismatch:** copy Esiana's exact callback into allowed Redirect URIs.
+- **Groups missing:** inspect Authentik property/scope mappings and Esiana's claim name.
+- **Connection fails:** ensure discovery resolves from the Esiana backend container.
+
+See [Authentik's OAuth2/OIDC provider documentation](https://docs.goauthentik.io/add-secure-apps/providers/oauth2/) and [Esiana troubleshooting](../troubleshooting.mdx).

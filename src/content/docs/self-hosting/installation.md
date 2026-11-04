@@ -82,7 +82,7 @@ See [Capacity and sizing](capacity-and-sizing.md) for hardware guidance.
 |-------|-------|
 | [Docker](docker.md) | Services, volumes, GHCR upgrades, troubleshooting |
 | [Reverse proxy](reverse-proxy.md) | HTTPS production (Caddy, nginx) |
-| [Federated identity (OIDC)](../options/federated-identity.md) | External sign-in |
+| [Authentication & SSO](../authentication/index.mdx) | External sign-in |
 | [Plugins overview](../features/plugins-overview.md) | Runtime plugins and registry |
 | [Environment variables](../options/environment-variables.md) | Full `.env` reference |
 | [Upgrades](upgrades.md) | Image pulls and migrations |

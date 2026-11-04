@@ -1,0 +1,63 @@
+---
+title: Authentication Troubleshooting
+description: Diagnose OIDC discovery, callback, claim, provisioning, and proxy failures.
+sidebar:
+  order: 9
+---
+
+Keep local login enabled and retain a working administrator session while troubleshooting external sign-in.
+
+## Provider button is missing
+
+- Confirm the provider is enabled.
+- `OIDC_ENABLED=false` force-disables every provider.
+- `OIDC_ENABLED=true` exposes only the environment provider with ID `oidc`.
+- Check startup logs for an invalid environment contract or missing production `AUTH_SECRETS_KEY`.
+
+## Discovery fails
+
+- Enter the issuer, not an endpoint or discovery URL.
+- Confirm the provider publishes discovery for that issuer.
+- Test DNS and TLS from the Esiana backend container.
+- Match provider-specific trailing-slash and issuer-mode rules.
+
+## Redirect URI mismatch
+
+The registered URI must exactly match:
+
+```text
+{BACKEND_PUBLIC_ORIGIN}/api/auth/oidc/{providerId}/callback
+```
+
+Admin-managed providers use the chosen ID. Environment-managed OIDC always uses `oidc`. Correct `PUBLIC_ORIGIN` if callbacks contain localhost, HTTP, or an internal hostname.
+
+## State, nonce, or PKCE failure
+
+- Do not start on one hostname and finish on another.
+- Ensure the proxy preserves cookies and callback query parameters.
+- Allow authorization-code flow and PKCE `S256`.
+- Retry from a fresh private window after changes.
+
+## Email or account conflict
+
+Esiana does not auto-link by email. Sign in with the existing method and link the provider in account settings. The provider email must match the Esiana account email.
+
+New accounts need an email-like claim and must pass registration/domain policy. Esiana checks `email`, then `preferred_username`, then `upn`.
+
+## Group or role mapping fails
+
+- Request the provider's group scope where required.
+- Set Esiana's groups claim to the actual released claim name or path.
+- Confirm the claim contains provider-supported group values.
+- Administrator mappings synchronize on login; test both adding and removing the group.
+- Administrator-group membership does not bypass disabled signup.
+
+## Proxy authentication does not sign in
+
+Trusted headers from Caddy, Authelia, or another gateway do not create an Esiana session. Use the gateway's OIDC provider and register Esiana as a client.
+
+## Recovery
+
+If external providers are unavailable, restore local login and restart. Avoid setting both `LOCAL_LOGIN_ENABLED=false` and `OIDC_ENABLED=false`; Esiana rejects that contract.
+
+See [Limits and quotas](../options/limits-and-quotas.md) for rate limits and [Reverse proxy and security](../options/reverse-proxy-and-security.md) for cookies, origins, and HTTPS.

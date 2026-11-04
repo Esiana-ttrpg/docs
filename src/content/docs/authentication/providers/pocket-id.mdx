@@ -1,0 +1,43 @@
+---
+title: Pocket ID
+description: Connect Esiana to a Pocket ID OIDC client.
+---
+
+Pocket ID exposes a discovery-based OIDC provider. This is not maintained as an automated Esiana integration test; test recovery before disabling local login.
+
+## 1. Prerequisites
+
+- Public HTTPS URLs for Esiana and Pocket ID.
+- Esiana `PUBLIC_ORIGIN` set correctly.
+- Pocket ID administrator access.
+
+## 2. Provider configuration
+
+Open **Administration → OIDC Clients**, add a confidential client named Esiana, and register:
+
+```text
+https://esiana.example.com/api/auth/oidc/pocket-id/callback
+```
+
+Copy the client ID and secret. Pocket ID's issuer is its `APP_URL`, such as `https://id.example.com`; discovery is below it at `/.well-known/openid-configuration`.
+
+## 3. Esiana configuration
+
+Add a generic provider with ID `pocket-id`, display name `Pocket ID`, issuer, client ID, and secret. Environment-managed instances use `OIDC_*` and callback provider ID `oidc`.
+
+## 4. Redirect URL and scopes
+
+Request `openid profile email`. Add `groups` only for group restrictions or mappings and set Esiana's claim to `groups`. Pocket ID can restrict the client to selected groups on its Access tab.
+
+## 5. Test sign-in
+
+Use a private browser session. Verify the consent screen, email, creation or linking, and any group restriction while retaining a tested local administrator session.
+
+## 6. Troubleshooting
+
+- **Callback rejected:** it must match exactly.
+- **Discovery/token exchange fails:** the issuer must resolve from Esiana's backend container.
+- **User not allowed:** review allowed user groups.
+- **Groups missing:** request `groups` and verify membership.
+
+See [Pocket ID's Connect an app guide](https://pocket-id.org/docs/setup/connect-an-app) and [Esiana troubleshooting](../troubleshooting.mdx).
