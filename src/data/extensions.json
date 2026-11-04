@@ -1,0 +1,66 @@
+[
+  {
+    "name": "D&D 5e Character Sheet",
+    "category": "plugin",
+    "platform": "Campaign plugin",
+    "description": "A complete D&D 5e character sheet with multiclass-friendly spellcasting, backed by portable Esiana character fields.",
+    "maintainer": "Esiana Team",
+    "url": "https://github.com/Esiana-ttrpg/community-plugins/tree/main/dnd-5e",
+    "linkLabel": "View project"
+  },
+  {
+    "name": "Grimmory Source Provider",
+    "category": "plugin",
+    "platform": "Campaign plugin",
+    "description": "Search a connected Grimmory library and cite books directly from campaign wiki pages.",
+    "maintainer": "Esiana Team",
+    "url": "https://github.com/Esiana-ttrpg/community-plugins/tree/main/grimmory",
+    "linkLabel": "View project"
+  },
+  {
+    "name": "Wiki OPDS Feed",
+    "category": "plugin",
+    "platform": "Campaign plugin",
+    "description": "Publish public campaign wiki pages as a read-only OPDS catalog for compatible e-readers and reading apps.",
+    "maintainer": "Esiana Team",
+    "url": "https://github.com/Esiana-ttrpg/community-plugins/tree/main/wiki-opds-feed",
+    "linkLabel": "View project"
+  },
+  {
+    "name": "Demo Content Packs",
+    "category": "plugin",
+    "platform": "Content pack",
+    "description": "Ready-to-import campaign examples that demonstrate Esiana's narrative, discovery, map, and campaign-memory features.",
+    "maintainer": "Esiana Team",
+    "url": "https://github.com/Esiana-ttrpg/community-plugins/tree/main/demo-content-packs",
+    "linkLabel": "Browse content packs"
+  },
+  {
+    "name": "Remote Object Storage",
+    "category": "plugin",
+    "platform": "Instance plugin",
+    "description": "Store Esiana media in S3-compatible services including AWS S3, MinIO, Cloudflare R2, Wasabi, and DigitalOcean Spaces.",
+    "maintainer": "Esiana Team",
+    "url": "https://github.com/Esiana-ttrpg/community-plugins/tree/main/remote-object-storage",
+    "linkLabel": "View project"
+  },
+  {
+    "name": "Foundry VTT Sync",
+    "category": "plugin",
+    "platform": "Campaign integration",
+    "description": "Connect Esiana to the companion Foundry VTT module for campaign-scoped content synchronization.",
+    "maintainer": "Esiana Team",
+    "url": "https://github.com/Esiana-ttrpg/community-plugins/tree/main/foundry-vtt-sync",
+    "linkLabel": "View project"
+  },
+  {
+    "name": "Enve Game Master",
+    "category": "companion",
+    "platform": "iPhone & iPad · TestFlight",
+    "description": "A private campaign workspace and AI Dungeon Master for iPhone and iPad. Run the table, track the world between sessions, and resume with every consequence intact.",
+    "maintainer": "Enve Media",
+    "url": "https://envemedia.com/game-master/",
+    "linkLabel": "Visit Enve Game Master",
+    "status": "beta"
+  }
+]

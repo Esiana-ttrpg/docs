@@ -1,0 +1,47 @@
+---
+interface Props {
+  name: string;
+  platform: string;
+  description: string;
+  maintainer: string;
+  url: string;
+  linkLabel: string;
+  image?: string;
+  status?: 'beta' | 'experimental';
+}
+
+const { name, platform, description, maintainer, url, linkLabel, image, status } = Astro.props;
+const initials = name.split(/\s+/).slice(0, 2).map((word) => word[0]).join('');
+---
+<article>
+  {image ? (
+    <img src={image} alt="" loading="lazy" />
+  ) : (
+    <div class="monogram" aria-hidden="true">{initials}</div>
+  )}
+  <div class="content">
+    <div class="meta">
+      <span>{platform}</span>
+      {status && <span class:list={['status', status]}>{status === 'beta' ? 'Beta' : 'Experimental'}</span>}
+    </div>
+    <h3>{name}</h3>
+    <p class="description">{description}</p>
+    <p class="maintainer">Maintained by {maintainer}</p>
+    <a href={url} target="_blank" rel="noopener noreferrer">{linkLabel} <span aria-hidden="true">↗</span><span class="sr-only">: {name}</span></a>
+  </div>
+</article>
+
+<style>
+  article { display: flex; min-width: 0; height: 100%; flex-direction: column; overflow: hidden; border: 1px solid var(--sl-color-hairline); border-radius: .75rem; background: color-mix(in srgb, var(--sl-color-bg-nav) 72%, transparent); }
+  img, .monogram { width: 100%; aspect-ratio: 16 / 7; border-bottom: 1px solid var(--sl-color-hairline); }
+  img { display: block; object-fit: cover; }
+  .monogram { display: grid; place-items: center; background: linear-gradient(135deg, color-mix(in srgb, var(--sl-color-accent) 25%, var(--sl-color-bg)), var(--sl-color-bg-nav)); color: var(--sl-color-text-accent); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; letter-spacing: -.05em; }
+  .content { display: flex; flex: 1; flex-direction: column; padding: 1.35rem; }
+  .meta { display: flex; min-height: 1.5rem; align-items: center; flex-wrap: wrap; gap: .45rem .75rem; color: var(--sl-color-gray-2); font-size: var(--sl-text-xs); }
+  .status { border: 1px solid var(--sl-color-hairline); border-radius: 999px; padding: .12rem .48rem; color: var(--sl-color-text-accent); }
+  h3 { margin: .65rem 0; color: var(--sl-color-white); font-size: var(--sl-text-xl); line-height: 1.25; }
+  p { margin: 0; }
+  .description { flex: 1; line-height: 1.65; }
+  .maintainer { margin-top: 1rem; color: var(--sl-color-gray-2); font-size: var(--sl-text-sm); }
+  a { margin-top: 1rem; color: var(--sl-color-text-accent); text-underline-offset: .25em; }
+</style>

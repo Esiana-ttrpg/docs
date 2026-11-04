@@ -48,6 +48,7 @@ export default defineConfig({
           { label: 'Configuration reference', items: [{ autogenerate: { directory: 'options' } }] },
         ], collapsed: true },
         { label: 'Integrations & Providers', items: [
+          { slug: 'extensions' },
           { slug: 'options/federated-identity' },
           { label: 'Plugin development', items: [{ autogenerate: { directory: 'plugin-development' } }] },
         ], collapsed: true },
