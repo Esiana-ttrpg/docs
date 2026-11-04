@@ -1,0 +1,29 @@
+---
+import inventory from '../../data/feature-images.json';
+interface Props { id: string; priority?: boolean; compact?: boolean; sizes?: string }
+const { id, priority = false, compact = false, sizes: requestedSizes } = Astro.props;
+const entry = inventory.find((image) => image.id === id);
+if (!entry || entry.maturity === 'in-development') throw new Error(`Unavailable showcase image: ${id}`);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const variants = entry.variants;
+const full = `${base}/${variants[variants.length - 1].src}`;
+const preview = variants.find((variant) => variant.width >= (compact ? 480 : 960)) ?? variants[variants.length - 1];
+const sizes = requestedSizes ?? (compact ? '(max-width: 45rem) 90vw, (max-width: 65rem) 30vw, 375px' : '(max-width: 80rem) 90vw, 1184px');
+---
+<figure>
+  <a class="screenshot" href={full} data-feature-image aria-label={`Enlarge screenshot: ${entry.alt}`}>
+    <img src={`${base}/${preview.src}`} srcset={variants.map((variant) => `${base}/${variant.src} ${variant.width}w`).join(', ')} sizes={sizes} alt={entry.alt} width={entry.width} height={entry.height} loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : 'auto'} decoding="async" />
+    <span class="enlarge" aria-hidden="true">Enlarge ↗</span>
+  </a>
+  {id === 'branding' && <figcaption>Instance-wide theme and branding settings.</figcaption>}
+  {id === 'world-development' && <figcaption>World Development workspace with suggestions switched off.</figcaption>}
+</figure>
+<style>
+  figure { margin: 0; min-width: 0; }
+  .screenshot { display: block; position: relative; overflow: hidden; border: 1px solid var(--sl-color-gray-5); border-radius: .65rem; background: var(--sl-color-bg); box-shadow: 0 .5rem 1.5rem color-mix(in srgb, var(--sl-color-black) 14%, transparent); }
+  img { display: block; width: 100%; height: auto; margin: 0; }
+  .enlarge { position: absolute; inset: auto .6rem .6rem auto; padding: .25em .65em; border: 1px solid var(--sl-color-gray-4); border-radius: .3rem; background: var(--sl-color-bg); color: var(--sl-color-white); font-size: var(--sl-text-xs); }
+  a:focus-visible { outline: 3px solid var(--sl-color-text-accent); outline-offset: 5px; }
+  figcaption { margin-top: .6rem; font-size: var(--sl-text-xs); color: var(--sl-color-gray-2); }
+  @media (prefers-reduced-motion: no-preference) { .screenshot { transition: border-color .2s, box-shadow .2s; } .screenshot:hover { border-color: var(--sl-color-text-accent); box-shadow: 0 .7rem 2rem color-mix(in srgb, var(--sl-color-black) 22%, transparent); } }
+</style>

@@ -1,0 +1,32 @@
+---
+import type { Feature } from '../../data/feature-showcase';
+import FeatureGallery from './FeatureGallery.astro';
+import FeatureCard from './FeatureCard.astro';
+interface Props { feature: Feature }
+const { feature } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section id={feature.id} aria-labelledby={`${feature.id}-title`} class:list={[feature.emphasis, feature.layout]}>
+  <header>
+    <p class="eyebrow">{feature.category}</p>
+    <h2 id={`${feature.id}-title`}>{feature.title}</h2>
+    <p class="description">{feature.description}</p>
+    {!feature.companions && <a href={`${base}/${feature.documentationUrl}`}>Explore the guide <span aria-hidden="true">↗</span><span class="sr-only">: {feature.title}</span></a>}
+  </header>
+  {feature.companions ? <div class="cards" style={`--columns: ${feature.companions.length}`}>
+    {feature.companions.map((card) => <FeatureCard {...card} />)}
+  </div> : <FeatureGallery images={feature.images} layout={feature.layout} />}
+  {feature.invitation && <p class="invitation">{feature.invitation.text} <a href={feature.invitation.url}>{feature.invitation.label}</a>.</p>}
+</section>
+<style>
+  section { padding-block: clamp(3rem, 7vw, 6rem); border-top: 1px solid var(--sl-color-hairline); scroll-margin-top: 7rem; }
+  header { max-width: 47rem; margin-bottom: 2.25rem; }
+  .eyebrow { margin: 0 0 1rem; font-size: var(--sl-text-sm); font-weight: 600; color: var(--sl-color-text-accent); letter-spacing: .08em; text-transform: uppercase; }
+  h2 { margin: 0; color: var(--sl-color-white); font-size: clamp(1.85rem, 4vw, 3.15rem); line-height: 1.12; letter-spacing: -.035em; text-wrap: balance; }
+  .description { margin: 1.25rem 0; font-size: var(--sl-text-lg); line-height: 1.7; text-wrap: pretty; }
+  header > a { color: var(--sl-color-text-accent); text-underline-offset: .25em; }
+  .cards { display: grid; gap: 2.5rem 1.5rem; }
+  .invitation { max-width: 47rem; margin: 1.5rem 0 0; line-height: 1.7; }
+  .invitation a { color: var(--sl-color-text-accent); text-underline-offset: .25em; }
+  @media (min-width: 45rem) { .cards { grid-template-columns: repeat(var(--columns), minmax(0, 1fr)); } }
+</style>
