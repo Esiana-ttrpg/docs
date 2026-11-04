@@ -2,7 +2,7 @@
 title: "Browse all features"
 description: "A compact index of Esiana’s feature guides for players, game masters, and hosts."
 sidebar:
-  order: 1
+  hidden: true
 ---
 
 Looking for a particular guide? Start here, or [explore the visual showcase](index.mdx).
