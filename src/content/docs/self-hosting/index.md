@@ -14,6 +14,6 @@ Install, deploy, and operate Esiana on your own infrastructure.
 | [Upgrades](upgrades.md) | Image pulls, migrations, rollback |
 | [Capacity and sizing](capacity-and-sizing.md) | Campaign tiers, hardware guidance, profiling |
 | [Environment variables](../options/environment-variables.md) | Full `.env` reference (Docker, demo, seed, debug) |
-| [Federated identity (OIDC)](../options/federated-identity.md) | External sign-in for self-hosted instances |
+| [Authentication & SSO](../authentication/index.mdx) | External sign-in for self-hosted instances |
 
 Configuration reference (env vars, Admin UI): [Options](../options/index.md).

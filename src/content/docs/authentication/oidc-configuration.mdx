@@ -1,0 +1,69 @@
+---
+title: OIDC Configuration
+description: Configure Esiana's OIDC management mode, callbacks, claims, and secrets.
+sidebar:
+  order: 1
+---
+
+Esiana uses standard OIDC discovery from one issuer URL. It does not require provider-specific authorization, token, or JWKS URL settings.
+
+## Management mode
+
+| `OIDC_ENABLED` | Mode | Behavior |
+|----------------|------|----------|
+| Unset or empty | Admin-managed | Configure providers in **Admin → Identity Providers** |
+| `true` | Environment-managed | One provider with ID `oidc`, managed by `OIDC_*` variables |
+| `false` | Force disabled | Disable every OIDC provider, including Admin settings |
+
+Leaving `OIDC_ENABLED` unset is not the same as setting it to `false`.
+
+## Environment-managed provider
+
+```env
+OIDC_ENABLED=true
+OIDC_PROVIDER_NAME="OpenID Connect"
+OIDC_ISSUER_URL=https://id.example.com
+OIDC_CLIENT_ID=esiana
+OIDC_CLIENT_SECRET=replace-with-provider-secret
+```
+
+Production deployments also need correct origins and separate secrets:
+
+```env
+PUBLIC_ORIGIN=https://esiana.example.com
+JWT_SECRET=replace-with-a-random-session-secret
+AUTH_SECRETS_KEY=replace-with-a-32-byte-base64-key
+```
+
+Generate `AUTH_SECRETS_KEY` with `openssl rand -base64 32`. Generate `JWT_SECRET` separately.
+
+| Optional variable | Default | Purpose |
+|-------------------|---------|---------|
+| `LOCAL_LOGIN_ENABLED` | `true` | Local login, registration, and password recovery |
+| `OIDC_ALLOW_SIGNUP` | Instance registration policy | Permit first-time OIDC account creation |
+| `OIDC_AUTO_REDIRECT` | `false` | Send login directly to OIDC |
+| `OIDC_USER_GROUP` | Unset | Require this group or the administrator group |
+| `OIDC_ADMIN_GROUP` | Unset | Grant `SYSTEM_ADMIN` while present |
+
+## Admin-managed providers
+
+1. Open **Admin → Identity Providers**.
+2. Add an OIDC provider and choose a stable provider ID.
+3. Enter the display name, issuer, client ID, secret, and scopes.
+4. Copy the displayed redirect URI into the provider.
+5. Enable and test it before changing local login.
+
+Default scopes are `openid profile email`. For group rules, ensure the provider releases a group claim, add any provider-required group scope, and configure Esiana's **Groups claim** (default `groups`).
+
+## Identity and linking
+
+Esiana identifies an account by `(provider ID, sub)` and never auto-links by email. New users need an email-like claim from `email`, `preferred_username`, or `upn`, and still pass registration/domain policy. Linking from account settings requires the provider email to match the signed-in Esiana account.
+
+The callback validates issuer, audience, signature, expiry, issued-at time, PKCE verifier, state, and nonce. Optional group allowlists run before creation. Administrator group mappings are authoritative at each login.
+
+## Related configuration
+
+- [Environment variables](../options/environment-variables.md)
+- [Reverse proxy](../self-hosting/reverse-proxy.md)
+- [Limits and quotas](../options/limits-and-quotas.md)
+- [Troubleshooting](troubleshooting.mdx)

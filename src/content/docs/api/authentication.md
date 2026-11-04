@@ -66,7 +66,8 @@ password (minimum 8 characters); invalid or expired tokens return `400`.
 ### OIDC
 
 OIDC is a core capability. Operators configure providers in Admin > Identity
-Providers; see [Federated identity](../options/federated-identity.md).
+Providers; see [Authentication & SSO](../authentication/index.mdx) and
+[OIDC configuration](../authentication/oidc-configuration.mdx).
 
 - `GET /api/auth/providers` — public list of enabled identity providers plus
   public metadata. No authentication required.

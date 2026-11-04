@@ -30,40 +30,70 @@ export default defineConfig({
         { icon: 'discord', label: 'Join the Esiana Discord', href: 'https://discord.gg/2K4bQVNbUZ' },
         { icon: 'reddit', label: 'Visit the Esiana Reddit community', href: 'https://www.reddit.com/r/esiana/' },
       ],
-      components: { SocialIcons: './src/components/header/SocialIcons.astro' },
+      components: {
+        SocialIcons: './src/components/header/SocialIcons.astro',
+        Sidebar: './src/components/navigation/Sidebar.astro',
+      },
       pagefind: true,
       expressiveCode: {
         shiki: { langAlias: { env: 'dotenv', caddy: 'text', caddyfile: 'text' } },
       },
       sidebar: [
-        { label: 'Getting Started', items: [
+        { label: 'Docs · Getting Started', items: [
           { slug: 'index', label: 'Documentation home' },
+          { slug: 'architecture/campaign-model', label: 'About Esiana' },
           { slug: 'self-hosting/installation' },
-          { slug: 'architecture/campaign-model' },
         ] },
-        { label: 'Player & GM Guide', items: [{ autogenerate: { directory: 'features' } }], collapsed: true },
-        { label: 'Campaign Management', items: [
+        { label: 'Docs · Features & Guides', items: [{ autogenerate: { directory: 'features' } }], collapsed: true },
+        { label: 'Docs · Campaign Management', items: [
           { slug: 'options/campaign-settings' },
           { label: 'Data management', items: [{ autogenerate: { directory: 'data-management' } }] },
           { label: 'Reference catalogs', items: [{ autogenerate: { directory: 'reference' } }] },
         ], collapsed: true },
-        { label: 'Instance Administration', items: [
-          { label: 'Self-hosting', items: [{ autogenerate: { directory: 'self-hosting' } }] },
-          { label: 'Configuration reference', items: [{ autogenerate: { directory: 'options' } }] },
+        { label: 'Docs · Instance Administration', items: [
+          { label: 'Self-hosting', items: [
+            { slug: 'self-hosting' }, { slug: 'self-hosting/docker' },
+            { slug: 'self-hosting/backups' }, { slug: 'self-hosting/capacity-and-sizing' },
+            { slug: 'self-hosting/postgres' }, { slug: 'self-hosting/reverse-proxy' },
+            { slug: 'self-hosting/upgrades' },
+          ] },
+          { label: 'Authentication & SSO', items: [{ autogenerate: { directory: 'authentication' } }] },
+          { label: 'Configuration', items: [
+            { slug: 'options' }, { slug: 'options/environment-variables' },
+            { slug: 'options/database-and-persistence' }, { slug: 'options/limits-and-quotas' },
+            { slug: 'options/reverse-proxy-and-security' }, { slug: 'options/system-admin-settings' },
+            { slug: 'options/user-account-settings' }, { slug: 'options/installation' },
+          ] },
         ], collapsed: true },
-        { label: 'Integrations & Providers', items: [
-          { slug: 'extensions' },
-          { slug: 'options/federated-identity' },
+        { label: 'Docs · Extensions & Apps', items: [
+          { slug: 'extensions', label: 'Community showcase' },
           { label: 'Plugin development', items: [{ autogenerate: { directory: 'plugin-development' } }] },
         ], collapsed: true },
-        { label: 'API & Development', items: [
-          { label: 'API guides', items: [{ autogenerate: { directory: 'api' } }] },
-          { label: 'Architecture', items: [{ autogenerate: { directory: 'architecture' } }] },
-        ], collapsed: true },
-        { label: 'Contributing', items: [
+        { label: 'Docs · Contributing', items: [
           { slug: 'contributing' },
           { label: 'Suggest an improvement', link: 'https://github.com/Esiana-ttrpg/docs/issues/new' },
         ] },
+        { label: 'API · API', items: [
+          { slug: 'api/overview', label: 'Overview' },
+          { slug: 'api/authentication', label: 'Authentication & API keys' },
+          { label: 'OpenAPI reference', link: '/api/overview/' },
+        ] },
+        { label: 'API · API Guides', items: [
+          { slug: 'api', label: 'Guide index' }, { slug: 'api/access-control' },
+          { slug: 'api/request-conventions' }, { slug: 'api/campaigns' }, { slug: 'api/entities' },
+          { slug: 'api/wiki-pages' }, { slug: 'api/narrative-knowledge' }, { slug: 'api/chronology' },
+          { slug: 'api/downtime' }, { slug: 'api/world-state' }, { slug: 'api/journal' },
+          { slug: 'api/workshop' }, { slug: 'api/maps' }, { slug: 'api/assets' },
+          { slug: 'api/import-export' }, { slug: 'api/admin' }, { slug: 'api/users-notifications' },
+          { slug: 'api/route-coverage' },
+        ], collapsed: true },
+        { label: 'API · Extensions', items: [
+          { slug: 'api/plugins' },
+          { label: 'Custom fields', link: '/features/wiki-and-lore/' },
+          { label: 'Plugin development', link: '/plugin-development/' },
+          { label: 'Webhooks', link: '/options/campaign-settings/' },
+        ], collapsed: true },
+        { label: 'API · Architecture', items: [{ autogenerate: { directory: 'architecture' } }], collapsed: true },
       ],
     }),
   ],

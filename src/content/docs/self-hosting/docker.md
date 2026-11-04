@@ -84,7 +84,7 @@ Configure after the base install — do not block quick start.
 | Integration | Where to configure |
 |-------------|-------------------|
 | **HTTPS / reverse proxy** | [Reverse proxy](reverse-proxy.md) |
-| **OIDC / external sign-in** | [Federated identity](../options/federated-identity.md) — IdP details in Admin; set `AUTH_SECRETS_KEY` in production |
+| **OIDC / external sign-in** | [Authentication & SSO](../authentication/index.mdx) — IdP details in Admin; set `AUTH_SECRETS_KEY` in production |
 | **Plugins** | [Plugins overview](../features/plugins-overview.md), [System admin settings](../options/system-admin-settings.md) |
 | **S3-compatible uploads** | [`esiana-core/docs/deployment/object-storage.md`](https://github.com/Esiana-ttrpg/esiana-core/blob/main/docs/deployment/object-storage.md) |
 

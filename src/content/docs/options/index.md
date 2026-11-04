@@ -26,7 +26,7 @@ Some values exist in **both** env and Admin UI. When both apply, Admin DB settin
 1. [Self-hosting: installation](../self-hosting/installation.md) — Docker Compose + `.env` (Postgres)
 2. [Database & persistence](database-and-persistence.md) — Postgres for Compose; SQLite for local dev
 3. [Environment variables](environment-variables.md) — full reference; templates: [compose.env.example](../../../../public/options/compose.env.example), [compose.docker.example.yml](../../../../public/options/compose.docker.example.yml)
-4. [Federated identity (OIDC)](federated-identity.md) — when using external IdPs
+4. [Authentication & SSO](../authentication/index.mdx) — when using external IdPs
 5. [Reverse proxy & security](reverse-proxy-and-security.md) — HTTPS, cookies, rate limits
 6. [Limits & quotas](limits-and-quotas.md) — uploads, compile caps, polling
 
@@ -41,7 +41,7 @@ Developers hacking on core: [Installation](installation.md) instead of Docker.
 | [Self-hosting installation](../self-hosting/installation.md) | Docker Compose quick start |
 | [Installation](installation.md) | Local Node dev setup |
 | [Environment variables](environment-variables.md) | All backend + frontend env vars |
-| [Federated identity (OIDC)](federated-identity.md) | External IdP setup, `AUTH_SECRETS_KEY`, user link flows |
+| [Authentication & SSO](../authentication/index.mdx) | External IdP setup, `AUTH_SECRETS_KEY`, user link flows |
 | [System admin settings](system-admin-settings.md) | Registration, SMTP, uploads, branding, plugins |
 | [Campaign settings](campaign-settings.md) | General, access, recruitment, sidebar, themes, backup |
 | [User account settings](user-account-settings.md) | Profile, appearance, notifications, API tokens |

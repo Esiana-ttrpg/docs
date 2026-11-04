@@ -1,0 +1,51 @@
+---
+title: Caddy
+description: Put Esiana behind Caddy without confusing proxy authentication with OIDC.
+---
+
+Caddy is a web server and reverse proxy, not the OIDC provider Esiana configures. Its `forward_auth` can consult a separate gateway, but Esiana does not accept trusted identity headers as a replacement for its session.
+
+## 1. Prerequisites
+
+- DNS pointing to Caddy.
+- Esiana reachable from Caddy, commonly at `localhost:8080`.
+- Public origin and secure-cookie settings configured.
+
+## 2. Provider configuration
+
+For Caddy, this is proxy configuration:
+
+```caddyfile
+esiana.example.com {
+    reverse_proxy localhost:8080
+}
+```
+
+Forward every path, including `/api/auth/oidc/...`, without stripping `/api`.
+
+## 3. Esiana configuration
+
+```env
+PUBLIC_ORIGIN=https://esiana.example.com
+TRUST_PROXY=true
+COOKIE_SECURE=true
+```
+
+Configure identity separately with [OIDC configuration](../oidc-configuration.mdx).
+
+## 4. Redirect URLs and scopes
+
+Caddy does not define OIDC scopes or an issuer. Those belong to the identity provider. Do not use `forward_auth` as a substitute for OIDC; if the gateway exposes OIDC, register Esiana as its client.
+
+## 5. Test sign-in
+
+Confirm Esiana loads over HTTPS, then test local and OIDC login privately. The callback must remain on the public hostname and the session cookie should be Secure.
+
+## 6. Troubleshooting
+
+- **Redirect uses localhost:** correct `PUBLIC_ORIGIN`.
+- **Callback is 404:** proxy `/api` without rewriting it.
+- **Login loops:** confirm HTTPS, secure cookies, and proxy trust.
+- **Gateway-authenticated but anonymous:** configure OIDC; header login is unsupported.
+
+See [Caddy reverse_proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy), [Caddy forward_auth](https://caddyserver.com/docs/caddyfile/directives/forward_auth), and Esiana's [reverse proxy guide](../../self-hosting/reverse-proxy.md).

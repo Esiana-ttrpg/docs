@@ -62,7 +62,7 @@ Defined in `esiana-core/backend/src/config/env.ts`.
 
 ## Backend — identity & OIDC
 
-Canonical OIDC contract: **[Federated identity (OIDC)](federated-identity.md)** — do not duplicate `OIDC_*` lists here.
+Canonical OIDC contract: **[OIDC configuration](../authentication/oidc-configuration.mdx)** — do not duplicate `OIDC_*` lists here.
 
 ### Session signing vs stored IdP secrets
 
@@ -80,9 +80,9 @@ Generate **different** values for each. Do not copy `JWT_SECRET` into `AUTH_SECR
 | `API_PUBLIC_ORIGIN` | (alias) | Same as `BACKEND_PUBLIC_ORIGIN` | Env only |
 | `FRONTEND_ORIGIN` | `http://localhost:5173` | Post-login redirect target; email deep links | Env only |
 
-When using environment-managed OIDC (`OIDC_ENABLED=true`), set `OIDC_ISSUER_URL`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`, and related vars per [Federated identity](federated-identity.md). Optional: `OIDC_ALLOW_SIGNUP`, `OIDC_AUTO_REDIRECT`, `OIDC_USER_GROUP`, `OIDC_ADMIN_GROUP`.
+When using environment-managed OIDC (`OIDC_ENABLED=true`), set `OIDC_ISSUER_URL`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`, and related vars per [OIDC configuration](../authentication/oidc-configuration.mdx). Optional: `OIDC_ALLOW_SIGNUP`, `OIDC_AUTO_REDIRECT`, `OIDC_USER_GROUP`, `OIDC_ADMIN_GROUP`.
 
-**Authentication mode:** `LOCAL_LOGIN_ENABLED` (default `true`) is documented under [Federated identity](federated-identity.md#local--oidc-hybrid) — it gates password login, not OIDC itself.
+**Authentication mode:** `LOCAL_LOGIN_ENABLED` (default `true`) is documented under [Authentication & SSO](../authentication/index.mdx#choose-a-sign-in-model) — it gates password login, not OIDC itself.
 
 **In practice:** `AUTH_SECRETS_KEY` is mandatory in production when storing OIDC client secrets. `BACKEND_PUBLIC_ORIGIN` must match the URL your IdP accepts for the callback path.
 
@@ -243,7 +243,7 @@ Filesystem mode uses `UPLOADS_DIR` only. See also `STORAGE_REDIRECT_THRESHOLD_BY
 
 - [Self-hosting: Installation](../self-hosting/installation.md) — Docker Compose quick start
 - [System admin settings](system-admin-settings.md) — DB-backed overrides
-- [Federated identity](federated-identity.md) — OIDC production vars
+- [OIDC configuration](../authentication/oidc-configuration.mdx) — OIDC production vars
 - [Installation](installation.md) — local Node development
 - [Reverse proxy & security](reverse-proxy-and-security.md)
 - [Limits & quotas](limits-and-quotas.md)

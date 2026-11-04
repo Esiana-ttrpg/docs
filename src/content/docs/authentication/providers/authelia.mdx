@@ -1,0 +1,43 @@
+---
+title: Authelia
+description: Register Esiana as an OpenID Connect client in Authelia.
+---
+
+Esiana integrates with Authelia as an OIDC relying party, not through trusted proxy headers. This is not maintained as an automated Esiana integration test; validate it before disabling local login.
+
+## 1. Prerequisites
+
+- Authelia's OIDC provider reachable over HTTPS.
+- Esiana's public origin finalized.
+- A confidential-client secret digest created for the installed Authelia version.
+
+## 2. Provider configuration
+
+Under `identity_providers.oidc.clients`, register a confidential Esiana client. Use authorization-code flow, code response type, and:
+
+```text
+https://esiana.example.com/api/auth/oidc/authelia/callback
+```
+
+Esiana uses PKCE `S256`, so allow or require it. Authelia syntax and secret tooling can change; follow the installed version's documentation rather than copying an unverified hash.
+
+## 3. Esiana configuration
+
+Add a generic provider with ID `authelia`; enter the issuer, client ID, and original client secret. Environment-managed Esiana uses `OIDC_*` and callback provider ID `oidc`.
+
+## 4. Redirect URL and scopes
+
+Allow `openid`, `profile`, and `email`. For group rules, also allow/request `groups` and use `groups` as Esiana's claim. Authelia documents `authorization_code` and `code` as secure defaults.
+
+## 5. Test sign-in
+
+Use a private browser window with local login enabled. Verify the callback, email release, and any authorization policy or group mapping.
+
+## 6. Troubleshooting
+
+- **Invalid secret:** regenerate the Authelia-side digest and keep the original secret in Esiana.
+- **Redirect mismatch:** Authelia compares redirect URIs exactly and case-sensitively.
+- **PKCE failure:** allow `S256`.
+- **Proxy login works but Esiana is anonymous:** `forward_auth` headers do not create an Esiana session; use OIDC.
+
+See [Authelia's OIDC client configuration](https://www.authelia.com/configuration/identity-providers/openid-connect/clients/) and [Esiana troubleshooting](../troubleshooting.mdx).

@@ -1,21 +1,51 @@
 ---
-title: "Campaign Model"
+title: About Esiana
+description: What Esiana is, what it supports, and where to begin.
 ---
 
-How Esiana thinks about your world — the handful of ideas everything else is built from. You do not need this page to play, but GMs who grasp it stop fighting the tool and start wielding it: every feature behaves the way it does because of one of the concepts below.
+# About Esiana
 
-A campaign is a sealed container. Everything belonging to one table's world — lore, sessions, maps, membership, discovery state — lives inside that campaign and nowhere else. Campaigns never share content implicitly; anything crossing the boundary, like a public listing or a shared recruiting directory, is an explicit surface with its own rules. Think of it as one leased house per table: what happens inside stays inside unless someone opens a window on purpose.
+Esiana is a free, open-source, self-hosted platform for tabletop roleplaying game worldbuilding, campaign management, and collaborative storytelling.
 
-Inside the container, the wiki page is the atom. Every person, place, faction, quest, session note, and map description is a page with text, a place in the hierarchy, a visibility, and a shape suited to its kind. Nothing else stores story content. Maps, timelines, relationship webs, and dashboards are all *views* computed from pages — which is why editing the wiki updates everything, and why deleting a page ripples everywhere. Edit the world; the views follow.
+It brings together the people, places, histories, maps, sessions, and stories that make up your worlds. You can manage multiple campaigns, invite players, and customize the tools each campaign uses.
 
-Entities are what pages describe when they describe a *thing*: characters, locations, organizations, quests, objects. An entity is simply a page with a fitting shape plus structured details, and the web of relationships between entities is derived from links and details rather than maintained separately. You never edit "the graph." You write that Varian serves the Iron Gauntlet, and the graph knows.
+## What Esiana Is
 
-Three lenses then decide what any given viewer sees. Visibility is permission: Public, Party, or GM-only, set per page. Discovery is knowledge: whether the party has found this thing yet, regardless of permission. Editorial status is the GM's commentary: active, rumored, missing, secret — where this stands in the story. A page passes all three lenses before reaching a reader's eyes, which is why the same campaign looks different to the GM and the party without anyone maintaining two versions.
+**A home for multiple worlds and campaigns.** Organize different settings, campaigns, and groups without forcing them into a single shared world.
 
-Knowledge is the layer for beliefs and provenance: checkable claims about the world ("the Cartel controls the docks"), the past names things were known by, and the sources behind each claim. This is where the campaign tracks not just what is true but what the party *believes* — including confidently wrong beliefs worth preserving until the reveal.
+**A worldbuilding toolkit.** Build connected lore using wiki pages, characters, locations, maps, timelines, calendars, and other modules.
 
-Time is the final lens. The campaign clock says what day it is; every dated surface — timelines, maps, gated lore — renders itself as of that now. Nothing is duplicated per era. When the date moves, the world re-renders, which is what makes time skips cheap and flashback browsing possible.
+**A campaign management platform.** Schedule sessions, manage recruitment, organize notes, and track what happens between adventures.
 
-Put together, the flow runs one direction: pages hold the canon, relationships and knowledge derive from pages, the lenses filter per viewer and per date, and every surface — wiki, timeline, map, recap — shows the result. Learn this direction and Esiana's behavior stops surprising you: content lives in exactly one place, and everything else is a way of looking at it.
+**A modular, extensible application.** Customize campaign navigation and layouts, add structured fields, and extend functionality through plugins and APIs.
 
-Related guides: the discovery system, knowledge, and temporal runtime pages each take one lens deeper; the narrative foundation page shows how the platform layers these ideas; and the API overview covers the same model in integrator terms.
+**Self-hosted and under your control.** Deploy Esiana with Docker and choose PostgreSQL or SQLite. Your campaign data lives on infrastructure you control, with tools for importing, exporting, and backing it up.
+
+## What Esiana Is Not
+
+**Esiana is not a virtual tabletop (VTT).** It doesn't aim to replace the battle maps, dice automation, tactical combat, or real-time tabletop experience of dedicated VTT applications.
+
+Instead, Esiana focuses on the worlds and campaigns surrounding play: preparation, storytelling, lore, scheduling, collaboration, and preserving what happens at the table.
+
+**Esiana is not tied to one game system.** Different tabletop systems need different character sheets, rules, and workflows. Esiana provides flexible foundations rather than requiring every campaign to follow the same system.
+
+**Esiana is not a hosted subscription service.** You run your own instance and manage its users, storage, configuration, and backups.
+
+## Features and Development
+
+Esiana is actively developed. Some capabilities are established, while others are available as Beta features or are still being refined.
+
+Beta features are identified in the documentation where relevant. Planned features should not be treated as available until they are released.
+
+For current functionality, explore the [Features Showcase](../features/index.mdx). For upcoming work and requests, visit the [project's GitHub repository](https://github.com/Esiana-ttrpg/esiana-core).
+
+The architecture guides explain how campaign truth stays coherent across [knowledge and belief](knowledge-model.md), [player discovery](discovery-system.md), and [calendars and temporal state](temporal-runtime.md). For integration boundaries, start with the [API overview](../api/overview.md).
+
+## Where to Begin
+
+- **[Installation](../self-hosting/installation.md):** Set up your own Esiana instance.
+- **[Features](../features/index.mdx):** Explore the tools available for worldbuilding and campaign management.
+- **[Discovery](../features/discovery-and-revelation.md):** Control what the party knows and when it becomes visible.
+- **[Calendars and timelines](../features/chronology-and-calendars.md):** Track campaign history and changing world state.
+- **[Extensions & Apps](../extensions/index.mdx):** Discover plugins, companion applications, and integrations.
+- **[API documentation](../api/overview.md):** Build tools that connect to Esiana.
