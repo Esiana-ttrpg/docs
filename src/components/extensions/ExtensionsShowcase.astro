@@ -1,0 +1,77 @@
+---
+import listings from '../../data/extensions.json';
+import ExtensionCard from './ExtensionCard.astro';
+
+const plugins = listings.filter((listing) => listing.category === 'plugin');
+const companions = listings.filter((listing) => listing.category === 'companion');
+---
+<div class="extensions-showcase not-content">
+  <nav aria-label="Explore extensions and apps">
+    <a href="#plugins">Plugins &amp; Extensions</a>
+    <a href="#companions">Companion Apps &amp; Tools</a>
+    <a href="https://github.com/Esiana-ttrpg/docs/issues/new">Suggest a listing ↗</a>
+  </nav>
+
+  <section id="plugins" aria-labelledby="plugins-title">
+    <p class="eyebrow">Extend Esiana directly</p>
+    <h2 id="plugins-title">Plugins &amp; Extensions</h2>
+    <p class="lede">Character sheets, game-system integrations, content packs, custom modules, and other capabilities installed into Esiana.</p>
+    <div class="grid">
+      {plugins.map((listing) => <ExtensionCard {...listing} />)}
+    </div>
+  </section>
+
+  <section id="companions" aria-labelledby="companions-title">
+    <p class="eyebrow">Connect your other tools</p>
+    <h2 id="companions-title">Companion Apps &amp; API Tools</h2>
+    <p class="lede">Mobile apps, desktop utilities, bots, external integrations, and API-powered tools built around Esiana.</p>
+    {companions.length > 0 ? (
+      <div class="grid">
+        {companions.map((listing) => <ExtensionCard {...listing} />)}
+      </div>
+    ) : (
+      <div class="empty">
+        <h3>Help this collection grow</h3>
+        <p>No companion apps or standalone API tools have been approved for this showcase yet. If you maintain one, tell us what it does and where people can find it.</p>
+        <a href="https://github.com/Esiana-ttrpg/docs/issues/new">Suggest a companion app or tool ↗</a>
+      </div>
+    )}
+  </section>
+
+  <aside class="curation" aria-labelledby="curation-title">
+    <h2 id="curation-title">A curated discovery page</h2>
+    <p>Listings are maintained by the documentation team and require maintainer approval. This page helps people discover projects; installation, security review, compatibility, and technical documentation remain with each project and Esiana's existing guides.</p>
+    <div class="actions">
+      <a href="https://github.com/Esiana-ttrpg/docs/issues/new">Suggest a listing ↗</a>
+      <a href="https://github.com/Esiana-ttrpg/docs">Propose a change ↗</a>
+    </div>
+  </aside>
+</div>
+
+<style is:global>
+  html:has(.extensions-showcase) { --sl-content-width: 74rem; }
+  html:has(.extensions-showcase) .hero { padding-block: clamp(2rem, 6vw, 5rem) 2.5rem; }
+  html:has(.extensions-showcase) .hero h1 { max-width: 18ch; font-size: clamp(2.75rem, 5.5vw, 5rem); line-height: 1.02; letter-spacing: -.05em; text-wrap: balance; }
+  html:has(.extensions-showcase) .hero .tagline { max-width: 48rem; text-wrap: pretty; }
+  html:has(.extensions-showcase) :focus-visible { outline: 3px solid var(--sl-color-text-accent); outline-offset: 4px; }
+</style>
+
+<style>
+  .extensions-showcase { color: var(--sl-color-text); }
+  nav { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; padding-bottom: 2rem; font-size: var(--sl-text-sm); }
+  nav a, .empty a, .actions a { color: var(--sl-color-text-accent); text-underline-offset: .25em; }
+  section { padding-block: clamp(3rem, 7vw, 6rem); border-top: 1px solid var(--sl-color-hairline); scroll-margin-top: 7rem; }
+  .eyebrow { margin: 0 0 .85rem; color: var(--sl-color-text-accent); font-size: var(--sl-text-sm); font-weight: 600; letter-spacing: .07em; text-transform: uppercase; }
+  h2 { max-width: 20ch; margin: 0; color: var(--sl-color-white); font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.1; letter-spacing: -.035em; }
+  .lede { max-width: 46rem; margin: 1rem 0 2.25rem; font-size: var(--sl-text-lg); line-height: 1.7; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+  .empty { max-width: 46rem; border-left: 3px solid var(--sl-color-text-accent); padding: .4rem 0 .4rem 1.25rem; }
+  .empty h3 { margin: 0 0 .65rem; color: var(--sl-color-white); font-size: var(--sl-text-xl); }
+  .empty p { margin: 0 0 1rem; line-height: 1.7; }
+  .curation { margin-block: 0 clamp(3rem, 7vw, 6rem); padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--sl-color-hairline); border-radius: .75rem; background: color-mix(in srgb, var(--sl-color-bg-nav) 65%, transparent); }
+  .curation h2 { font-size: clamp(1.5rem, 3vw, 2.15rem); }
+  .curation p { max-width: 48rem; margin: 1rem 0; line-height: 1.7; }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; }
+  @media (min-width: 40rem) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 70rem) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+</style>

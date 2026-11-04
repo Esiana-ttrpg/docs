@@ -9,8 +9,10 @@ export type Feature = {
   images: string[];
   documentationUrl: string;
   documentationLabel: string;
+  secondaryDocumentation?: { label: string; url: string };
   invitation?: { text: string; label: string; url: string };
-  companions?: { title: string; description: string; image: string; documentationUrl: string; documentationLabel: string; maturity?: 'beta' }[];
+  callout?: { title: string; description: string; documentationUrl: string; documentationLabel: string; maturity: 'beta' };
+  companions?: { title: string; description: string; image: string; documentationUrl: string; documentationLabel: string; links?: { label: string; url: string }[]; maturity?: 'beta' }[];
 };
 
 export const features: Feature[] = [
@@ -46,8 +48,15 @@ export const features: Feature[] = [
   {
     id: 'sessions', category: 'Keep the thread from week to week', layout: 'split', emphasis: 'featured', maturity: 'stable',
     title: 'Session Scheduling & Notes',
-    description: 'Find a place on the calendar, see who can make it, and keep the notes that carry the story forward. Give each session a lasting place in the campaign, so a long break does not have to mean a lost thread.',
+    description: "Schedule sessions, track attendance, and keep detailed notes that preserve your campaign's story. Pick up where you left off, even after a long break.",
     images: ['session-calendar', 'session-notes'], documentationUrl: 'features/sessions-and-notes/', documentationLabel: 'Explore Sessions & Notes',
+    callout: {
+      title: 'Audio Recording & Transcription',
+      description: 'Record sessions and turn conversations into searchable transcripts with supported transcription services. Keep more of the moments, decisions, and stories that happen at your table.',
+      documentationUrl: 'features/session-recordings-privacy/',
+      documentationLabel: 'Learn about recording privacy',
+      maturity: 'beta',
+    },
   },
   {
     id: 'recruitment', category: 'Find your people', layout: 'asymmetric', emphasis: 'featured', maturity: 'stable',
@@ -88,6 +97,7 @@ export const features: Feature[] = [
     title: 'Custom Fields, Plugins & API',
     description: 'Adapt Esiana to different game systems and workflows. Create custom fields, register application-provided data, and build integrations using Esiana’s API. Plugin support is currently in Beta.',
     images: ['custom-fields'], documentationUrl: 'api/overview/', documentationLabel: 'Explore the API',
+    secondaryDocumentation: { label: 'Explore Extensions & Apps', url: 'extensions/' },
   },
   {
     id: 'extensions', category: 'Experimental & Beta Features', layout: 'grid', emphasis: 'standard', maturity: 'beta',
@@ -95,8 +105,20 @@ export const features: Feature[] = [
     description: 'These Beta features are still evolving. Explore them at your table and help shape what they become.',
     images: ['plugins'], documentationUrl: 'features/plugins-overview/', documentationLabel: 'Explore Beta Features',
     companions: [
-      { title: 'Plugins & Content Packs', description: 'Add plugins and content packs to support the way your campaign works.', image: 'plugins', documentationUrl: 'features/plugins-overview/', documentationLabel: 'Explore Plugins & Content Packs', maturity: 'beta' },
-      { title: 'World Development', description: 'Explore tools for reviewing world developments as campaign time advances. Suggestions are optional and must be enabled.', image: 'world-development', documentationUrl: 'features/world-advance/', documentationLabel: 'Explore World Development', maturity: 'beta' },
+      {
+        title: 'Plugins & Content Packs',
+        description: 'Add plugins and content packs to support the way your campaign works.',
+        image: 'plugins',
+        documentationUrl: 'features/plugins-overview/',
+        documentationLabel: 'Explore Plugins',
+        links: [
+          { label: 'Explore Plugins', url: 'extensions/#plugins' },
+          { label: 'Explore Apps', url: 'extensions/#companions' },
+          { label: 'Build Your Own', url: 'plugin-development/getting-started/' },
+        ],
+        maturity: 'beta',
+      },
+      { title: 'World Development', description: 'As your world and its timeline advance, choose development trajectories and receive suggestions for how your world might evolve. Shape the future of kingdoms, factions, and ongoing stories as time passes.', image: 'world-development', documentationUrl: 'features/world-advance/', documentationLabel: 'Explore World Development', maturity: 'beta' },
     ],
   },
   {
