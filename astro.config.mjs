@@ -22,7 +22,7 @@ export default defineConfig({
     starlight({
       title: 'Esiana Documentation',
       logo: { src: './public/favicon.svg', alt: 'Esiana', replacesTitle: false },
-      favicon: '/favicon.svg',
+      favicon: '/favicon.png?v=20261104',
       description: 'Install, operate, extend, and explore Esiana campaign narrative infrastructure.',
       editLink: { baseUrl: 'https://github.com/Esiana-ttrpg/docs/edit/main/' },
       social: [
