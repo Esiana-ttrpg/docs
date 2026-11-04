@@ -1,15 +1,15 @@
 ---
 import FeatureImage from './FeatureImage.astro';
 import FeatureStatus from './FeatureStatus.astro';
-interface Props { title: string; description: string; image: string; documentationUrl: string; maturity?: string }
-const { title, description, image, documentationUrl, maturity } = Astro.props;
+interface Props { title: string; description: string; image: string; documentationUrl: string; documentationLabel: string; maturity?: string }
+const { title, description, image, documentationUrl, documentationLabel, maturity } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <article>
   <FeatureImage id={image} compact />
   <h3>{title} <FeatureStatus maturity={maturity} /></h3>
   <p>{description}</p>
-  <a class="guide" href={`${base}/${documentationUrl}`}>Explore the guide <span aria-hidden="true">↗</span><span class="sr-only">: {title}</span></a>
+  <a class="guide" href={`${base}/${documentationUrl}`}>{documentationLabel} <span aria-hidden="true">↗</span></a>
 </article>
 <style>
   article { min-width: 0; }

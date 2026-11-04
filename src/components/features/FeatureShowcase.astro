@@ -11,7 +11,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <p class="eyebrow">{feature.category}</p>
     <h2 id={`${feature.id}-title`}>{feature.title}</h2>
     <p class="description">{feature.description}</p>
-    {!feature.companions && <a href={`${base}/${feature.documentationUrl}`}>Explore the guide <span aria-hidden="true">↗</span><span class="sr-only">: {feature.title}</span></a>}
+    {!feature.companions && <a href={`${base}/${feature.documentationUrl}`}>{feature.documentationLabel} <span aria-hidden="true">↗</span></a>}
   </header>
   {feature.companions ? <div class="cards" style={`--columns: ${feature.companions.length}`}>
     {feature.companions.map((card) => <FeatureCard {...card} />)}
