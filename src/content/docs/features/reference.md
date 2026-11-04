@@ -1,8 +1,11 @@
 ---
-title: "Features Catalog"
+title: "Browse all features"
+description: "A compact index of Esiana’s feature guides for players, game masters, and hosts."
+sidebar:
+  order: 1
 ---
 
-Esiana is a self-hosted TTRPG worldbuilding and campaign manager. This section explains the features in plain language: what each one is for, how game masters and players use it, and what can be configured.
+Looking for a particular guide? Start here, or [explore the visual showcase](index.mdx).
 
 For configuration references (environment variables, admin console, campaign tabs), see the Options section. For the ideas underneath the features, see Architecture.
 
@@ -24,8 +27,6 @@ For configuration references (environment variables, admin console, campaign tab
 | In-world press, series, release rules | [Journal & publishing](journal-and-publishing.md) |
 | Session timeline, combined notes, compile export | [Sessions & notes](sessions-and-notes.md) |
 | Recording consent, visibility, transcription, retention | [Session recording privacy](session-recordings-privacy.md) |
-| Fantasy calendars, timeline events, advance time | [Chronology & calendars](chronology-and-calendars.md) |
-| Campaign History snapshots and compare | [Campaign History & snapshots](campaign-history-and-snapshots.md) |
 | Interactive maps, pins, hover previews | [Maps & cartography](maps-and-cartography.md) |
 | LFG listings, join requests | [Recruitment & LFG](recruitment-lfg.md) |
 | Bell inbox, session reminders, email (when configured) | [Notifications](notifications.md) |
@@ -57,6 +58,13 @@ For configuration references (environment variables, admin console, campaign tab
 
 See the system admin settings guide for the full console reference.
 
-## How these guides are written
+## Customize and connect
 
-Each guide explains the feature as its users meet it: the idea first, then the mental model, then the normal workflow with concrete steps, then configuration for those allowed to change it, then the player experience where it differs, and finally limitations worth knowing. Simple features get short pages; complex systems get the room they need.
+| Explore | Guide |
+|---------|-------|
+| Personal profiles and preferences | [User account settings](../options/user-account-settings.md) |
+| Campaign features, collaboration, and integrations | [Campaign settings](../options/campaign-settings.md) |
+| Imports from other tools | [Import formats](../data-management/import-formats.md) |
+| Build an extension | [Plugin development](../plugin-development/getting-started.md) |
+| Connect an application | [API overview](../api/overview.md) · [Personal API keys](../api/authentication.md) |
+| Run your own instance | [Installation](../self-hosting/installation.md) |

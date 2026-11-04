@@ -8,6 +8,14 @@ export default defineConfig({
   site: 'https://esiana-ttrpg.github.io',
   base: '/docs',
   trailingSlash: 'always',
+  // Content sync runs through Vite's module runner. Prebundle these CommonJS
+  // dependencies so Windows builds do not evaluate them as unwrapped ESM.
+  vite: {
+    environments: {
+      ssr: { optimizeDeps: { include: ['yaml', 'picomatch'] } },
+      astro: { optimizeDeps: { include: ['yaml', 'picomatch'] } },
+    },
+  },
   markdown: { processor: unified({ remarkPlugins: [documentationLinks] }) },
   integrations: [
     mermaid({ autoTheme: true, enableLog: false }),

@@ -1,0 +1,32 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section class="ownership" aria-labelledby="your-worlds">
+  <h2 id="your-worlds">Your worlds. Your server. Your data.</h2>
+  <p>Esiana is free and self-hosted, with Docker deployment and support for PostgreSQL or local SQLite setups. Keep your campaigns, writing, and worldbuilding under your control, without having to store your worlds on a service we operate.</p>
+  <dl>
+    <div>
+      <dt><a href={`${base}/self-hosting/installation/`}>Docker</a></dt>
+      <dd>Self-hosted deployment</dd>
+    </div>
+    <div>
+      <dt><a href={`${base}/options/database-and-persistence/`}>PostgreSQL / SQLite</a></dt>
+      <dd>Database choice</dd>
+    </div>
+    <div>
+      <dt><a href="#portability">Portable data</a></dt>
+      <dd>Import, export &amp; duplication</dd>
+    </div>
+  </dl>
+</section>
+<style>
+  .ownership { padding-block: 2rem 3rem; }
+  h2 { margin: 0; color: var(--sl-color-white); font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.25; letter-spacing: -.025em; text-wrap: balance; }
+  p { max-width: 49rem; margin-block: 1rem 1.75rem; line-height: 1.7; }
+  dl { display: grid; gap: 1.25rem 2rem; margin: 0; }
+  dl > div { border-inline-start: 2px solid var(--sl-color-hairline); padding-inline-start: 1rem; }
+  dt { font-weight: 600; }
+  a { color: var(--sl-color-text-accent); text-underline-offset: .25em; }
+  dd { margin: .35rem 0 0; font-size: var(--sl-text-sm); }
+  @media (min-width: 40rem) { dl { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+</style>

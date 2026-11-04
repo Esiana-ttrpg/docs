@@ -1,0 +1,989 @@
+[
+  {
+    "id": "ancestries",
+    "original": "Ancestries.png",
+    "feature": "lore",
+    "maturity": "stable",
+    "emphasis": "standard",
+    "alt": "High Elves ancestry page with description and structured lore fields.",
+    "review": "Shown alongside the bestiary; no crop.",
+    "width": 1315,
+    "height": 1165,
+    "originalBytes": 62711,
+    "variants": [
+      {
+        "src": "images/features/ancestries-480.webp",
+        "width": 480,
+        "bytes": 6026
+      },
+      {
+        "src": "images/features/ancestries-960.webp",
+        "width": 960,
+        "bytes": 17864
+      },
+      {
+        "src": "images/features/ancestries-1315.webp",
+        "width": 1315,
+        "bytes": 27902
+      }
+    ]
+  },
+  {
+    "id": "bestiary",
+    "original": "Besitary.png",
+    "feature": "lore",
+    "maturity": "stable",
+    "emphasis": "standard",
+    "alt": "Balrog bestiary entry with creature details and descriptive fields.",
+    "review": "Original filename contains a spelling error; public asset uses bestiary.",
+    "width": 1341,
+    "height": 987,
+    "originalBytes": 81154,
+    "variants": [
+      {
+        "src": "images/features/bestiary-480.webp",
+        "width": 480,
+        "bytes": 4908
+      },
+      {
+        "src": "images/features/bestiary-960.webp",
+        "width": 960,
+        "bytes": 14930
+      },
+      {
+        "src": "images/features/bestiary-1341.webp",
+        "width": 1341,
+        "bytes": 23118
+      }
+    ]
+  },
+  {
+    "id": "campaign-home",
+    "original": "Campaign Home CustomizableGrid.png",
+    "feature": "campaign-home",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "Florence campaign home with a Wanted banner, session schedule, notes, quests, and campaign overview.",
+    "review": "Light theme; whole dashboard preserved.",
+    "width": 1637,
+    "height": 1251,
+    "originalBytes": 932974,
+    "variants": [
+      {
+        "src": "images/features/campaign-home-480.webp",
+        "width": 480,
+        "bytes": 14772
+      },
+      {
+        "src": "images/features/campaign-home-960.webp",
+        "width": 960,
+        "bytes": 47398
+      },
+      {
+        "src": "images/features/campaign-home-1440.webp",
+        "width": 1440,
+        "bytes": 89382
+      },
+      {
+        "src": "images/features/campaign-home-1637.webp",
+        "width": 1637,
+        "bytes": 103198
+      }
+    ]
+  },
+  {
+    "id": "permissions",
+    "original": "Campaign Permissions.png",
+    "feature": "permissions",
+    "maturity": "in-development",
+    "emphasis": "secondary",
+    "alt": "Campaign role capability settings and permission toggles.",
+    "review": "Excluded from public showcase: expanded permissions are in development.",
+    "width": 1353,
+    "height": 1199,
+    "originalBytes": 118970,
+    "variants": [
+      {
+        "src": "images/features/permissions-480.webp",
+        "width": 480,
+        "bytes": 11346
+      },
+      {
+        "src": "images/features/permissions-960.webp",
+        "width": 960,
+        "bytes": 38570
+      },
+      {
+        "src": "images/features/permissions-1353.webp",
+        "width": 1353,
+        "bytes": 61636
+      }
+    ]
+  },
+  {
+    "id": "characters",
+    "original": "Character & Forms.png",
+    "feature": "everyday",
+    "maturity": "stable",
+    "emphasis": "standard",
+    "alt": "Angel character page with portrait, descriptive information, and organized sheet tabs.",
+    "review": "Polish ongoing; no public maturity badge.",
+    "width": 1337,
+    "height": 1199,
+    "originalBytes": 141514,
+    "variants": [
+      {
+        "src": "images/features/characters-480.webp",
+        "width": 480,
+        "bytes": 8168
+      },
+      {
+        "src": "images/features/characters-960.webp",
+        "width": 960,
+        "bytes": 24398
+      },
+      {
+        "src": "images/features/characters-1337.webp",
+        "width": 1337,
+        "bytes": 38684
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "original": "Command Pallete Search.png",
+    "feature": "everyday",
+    "maturity": "stable",
+    "emphasis": "standard",
+    "alt": "Command palette finding Angel and Florence across campaign content.",
+    "review": "Original spelling retained in inventory.",
+    "width": 1081,
+    "height": 1033,
+    "originalBytes": 48529,
+    "variants": [
+      {
+        "src": "images/features/search-480.webp",
+        "width": 480,
+        "bytes": 4836
+      },
+      {
+        "src": "images/features/search-960.webp",
+        "width": 960,
+        "bytes": 14940
+      },
+      {
+        "src": "images/features/search-1081.webp",
+        "width": 1081,
+        "bytes": 16518
+      }
+    ]
+  },
+  {
+    "id": "create-campaign",
+    "original": "Create New Campaign.png",
+    "feature": "worlds",
+    "maturity": "stable",
+    "emphasis": "secondary",
+    "alt": "Campaign creation wizard with campaign identity, game system, and world settings.",
+    "review": "Supporting view, available in the worlds gallery.",
+    "width": 1101,
+    "height": 1227,
+    "originalBytes": 235857,
+    "variants": [
+      {
+        "src": "images/features/create-campaign-480.webp",
+        "width": 480,
+        "bytes": 22770
+      },
+      {
+        "src": "images/features/create-campaign-960.webp",
+        "width": 960,
+        "bytes": 73184
+      },
+      {
+        "src": "images/features/create-campaign-1101.webp",
+        "width": 1101,
+        "bytes": 88570
+      }
+    ]
+  },
+  {
+    "id": "branding",
+    "original": "Custom Branding & Footer.png",
+    "feature": "campaign-home",
+    "maturity": "stable",
+    "emphasis": "secondary",
+    "alt": "Global appearance settings for theme, accent color, and footer branding.",
+    "review": "Instance branding, not per-campaign branding; caption distinguishes this.",
+    "width": 1113,
+    "height": 1199,
+    "originalBytes": 107815,
+    "variants": [
+      {
+        "src": "images/features/branding-480.webp",
+        "width": 480,
+        "bytes": 13062
+      },
+      {
+        "src": "images/features/branding-960.webp",
+        "width": 960,
+        "bytes": 42086
+      },
+      {
+        "src": "images/features/branding-1113.webp",
+        "width": 1113,
+        "bytes": 53412
+      }
+    ]
+  },
+  {
+    "id": "custom-fields",
+    "original": "Custom Fields.png",
+    "feature": "extensibility",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "Custom field editor showing named fields, field types, and fields supplied by an external application.",
+    "review": "Example includes system-specific fields; describe extensibility, not combat automation.",
+    "width": 1305,
+    "height": 1005,
+    "originalBytes": 101389,
+    "variants": [
+      {
+        "src": "images/features/custom-fields-480.webp",
+        "width": 480,
+        "bytes": 9114
+      },
+      {
+        "src": "images/features/custom-fields-960.webp",
+        "width": 960,
+        "bytes": 26664
+      },
+      {
+        "src": "images/features/custom-fields-1305.webp",
+        "width": 1305,
+        "bytes": 42160
+      }
+    ]
+  },
+  {
+    "id": "downtime",
+    "original": "Downtime.png",
+    "feature": "between-sessions",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "Downtime overview with a restoration project, party funds, property, and hirelings.",
+    "review": "Full overview preserved.",
+    "width": 1321,
+    "height": 819,
+    "originalBytes": 58092,
+    "variants": [
+      {
+        "src": "images/features/downtime-480.webp",
+        "width": 480,
+        "bytes": 7472
+      },
+      {
+        "src": "images/features/downtime-960.webp",
+        "width": 960,
+        "bytes": 22216
+      },
+      {
+        "src": "images/features/downtime-1321.webp",
+        "width": 1321,
+        "bytes": 36006
+      }
+    ]
+  },
+  {
+    "id": "export",
+    "original": "Export.png",
+    "feature": "portability",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "Campaign backup download and restore options, plus Fantasy-Calendar export.",
+    "review": "Pair with import wizard.",
+    "width": 807,
+    "height": 717,
+    "originalBytes": 58068,
+    "variants": [
+      {
+        "src": "images/features/export-480.webp",
+        "width": 480,
+        "bytes": 18088
+      },
+      {
+        "src": "images/features/export-807.webp",
+        "width": 807,
+        "bytes": 38144
+      }
+    ]
+  },
+  {
+    "id": "global-home-alternate",
+    "original": "Global Home 2.png",
+    "feature": "worlds",
+    "maturity": "stable",
+    "emphasis": "secondary",
+    "alt": "Global home with world cards, recent activity, and campaigns at a glance.",
+    "review": "Alternate home composition; retained as a supporting view.",
+    "width": 1631,
+    "height": 1243,
+    "originalBytes": 882313,
+    "variants": [
+      {
+        "src": "images/features/global-home-alternate-480.webp",
+        "width": 480,
+        "bytes": 14952
+      },
+      {
+        "src": "images/features/global-home-alternate-960.webp",
+        "width": 960,
+        "bytes": 47240
+      },
+      {
+        "src": "images/features/global-home-alternate-1440.webp",
+        "width": 1440,
+        "bytes": 89504
+      },
+      {
+        "src": "images/features/global-home-alternate-1631.webp",
+        "width": 1631,
+        "bytes": 105914
+      }
+    ]
+  },
+  {
+    "id": "global-home",
+    "original": "Global Home.jpg",
+    "feature": "worlds",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "Campaign hub with illustrated campaign cards and multiple worlds to explore.",
+    "review": "Hero; full composition preserved.",
+    "width": 1668,
+    "height": 1255,
+    "originalBytes": 419863,
+    "variants": [
+      {
+        "src": "images/features/global-home-480.webp",
+        "width": 480,
+        "bytes": 31366
+      },
+      {
+        "src": "images/features/global-home-960.webp",
+        "width": 960,
+        "bytes": 93654
+      },
+      {
+        "src": "images/features/global-home-1440.webp",
+        "width": 1440,
+        "bytes": 177928
+      },
+      {
+        "src": "images/features/global-home-1668.webp",
+        "width": 1668,
+        "bytes": 228056
+      }
+    ]
+  },
+  {
+    "id": "imports",
+    "original": "Imports.png",
+    "feature": "portability",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "New campaign wizard offering imports from an Esiana backup, World Anvil, Kanka, and Obsidian.",
+    "review": "Source import choices visible; no claims of lossless migration.",
+    "width": 1011,
+    "height": 1041,
+    "originalBytes": 94036,
+    "variants": [
+      {
+        "src": "images/features/imports-480.webp",
+        "width": 480,
+        "bytes": 14678
+      },
+      {
+        "src": "images/features/imports-960.webp",
+        "width": 960,
+        "bytes": 48790
+      },
+      {
+        "src": "images/features/imports-1011.webp",
+        "width": 1011,
+        "bytes": 51182
+      }
+    ]
+  },
+  {
+    "id": "journal",
+    "original": "Journal Planner.png",
+    "feature": "publishing",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "Journal planner with an expedition journal draft, publication queue, release controls, and readiness checks.",
+    "review": "Dark theme; full planner and editor preserved.",
+    "width": 1355,
+    "height": 1177,
+    "originalBytes": 128480,
+    "variants": [
+      {
+        "src": "images/features/journal-480.webp",
+        "width": 480,
+        "bytes": 13926
+      },
+      {
+        "src": "images/features/journal-960.webp",
+        "width": 960,
+        "bytes": 42858
+      },
+      {
+        "src": "images/features/journal-1355.webp",
+        "width": 1355,
+        "bytes": 68926
+      }
+    ]
+  },
+  {
+    "id": "ledger",
+    "original": "Ledger.png",
+    "feature": "between-sessions",
+    "maturity": "stable",
+    "emphasis": "secondary",
+    "alt": "Shared ledger with party treasury, scheduled income, and recent transactions.",
+    "review": "Supporting finance view.",
+    "width": 1339,
+    "height": 1053,
+    "originalBytes": 59538,
+    "variants": [
+      {
+        "src": "images/features/ledger-480.webp",
+        "width": 480,
+        "bytes": 7170
+      },
+      {
+        "src": "images/features/ledger-960.webp",
+        "width": 960,
+        "bytes": 21144
+      },
+      {
+        "src": "images/features/ledger-1339.webp",
+        "width": 1339,
+        "bytes": 31698
+      }
+    ]
+  },
+  {
+    "id": "map-layers",
+    "original": "Map Layers.jpg",
+    "feature": "maps",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "Illustrated regional map with labeled places, routes, and a map layers panel.",
+    "review": "Map artwork preserved without cropping.",
+    "width": 1661,
+    "height": 1271,
+    "originalBytes": 636063,
+    "variants": [
+      {
+        "src": "images/features/map-layers-480.webp",
+        "width": 480,
+        "bytes": 52556
+      },
+      {
+        "src": "images/features/map-layers-960.webp",
+        "width": 960,
+        "bytes": 183720
+      },
+      {
+        "src": "images/features/map-layers-1440.webp",
+        "width": 1440,
+        "bytes": 348926
+      },
+      {
+        "src": "images/features/map-layers-1661.webp",
+        "width": 1661,
+        "bytes": 446738
+      }
+    ]
+  },
+  {
+    "id": "maps-overview",
+    "original": "Maps Overview.png",
+    "feature": "maps",
+    "maturity": "stable",
+    "emphasis": "secondary",
+    "alt": "Maps gallery showing city and regional maps with linked locations.",
+    "review": "Naturally wide supporting view.",
+    "width": 1317,
+    "height": 563,
+    "originalBytes": 848139,
+    "variants": [
+      {
+        "src": "images/features/maps-overview-480.webp",
+        "width": 480,
+        "bytes": 17458
+      },
+      {
+        "src": "images/features/maps-overview-960.webp",
+        "width": 960,
+        "bytes": 55842
+      },
+      {
+        "src": "images/features/maps-overview-1317.webp",
+        "width": 1317,
+        "bytes": 98028
+      }
+    ]
+  },
+  {
+    "id": "timelines",
+    "original": "Multiple Timelines.png",
+    "feature": "lore",
+    "maturity": "stable",
+    "emphasis": "standard",
+    "alt": "Chronology settings with multiple timelines and a fantasy calendar month.",
+    "review": "Polish ongoing; no public maturity badge.",
+    "width": 1361,
+    "height": 1205,
+    "originalBytes": 106034,
+    "variants": [
+      {
+        "src": "images/features/timelines-480.webp",
+        "width": 480,
+        "bytes": 9454
+      },
+      {
+        "src": "images/features/timelines-960.webp",
+        "width": 960,
+        "bytes": 31208
+      },
+      {
+        "src": "images/features/timelines-1361.webp",
+        "width": 1361,
+        "bytes": 50952
+      }
+    ]
+  },
+  {
+    "id": "plugins",
+    "original": "Plugins.png",
+    "feature": "extensions",
+    "maturity": "beta",
+    "emphasis": "standard",
+    "alt": "Plugin manager listing an installed character sheet extension and demo content packs.",
+    "review": "Beta; screenshot shows installed catalog, not plugin discovery results.",
+    "width": 945,
+    "height": 511,
+    "originalBytes": 44234,
+    "variants": [
+      {
+        "src": "images/features/plugins-480.webp",
+        "width": 480,
+        "bytes": 7438
+      },
+      {
+        "src": "images/features/plugins-945.webp",
+        "width": 945,
+        "bytes": 22040
+      }
+    ]
+  },
+  {
+    "id": "quests",
+    "original": "Quests.png",
+    "feature": "everyday",
+    "maturity": "stable",
+    "emphasis": "standard",
+    "alt": "Adventure Board listing campaign quests with status and priority labels.",
+    "review": "Polish ongoing; no public maturity badge.",
+    "width": 1303,
+    "height": 787,
+    "originalBytes": 57184,
+    "variants": [
+      {
+        "src": "images/features/quests-480.webp",
+        "width": 480,
+        "bytes": 7050
+      },
+      {
+        "src": "images/features/quests-960.webp",
+        "width": 960,
+        "bytes": 20762
+      },
+      {
+        "src": "images/features/quests-1303.webp",
+        "width": 1303,
+        "bytes": 30596
+      }
+    ]
+  },
+  {
+    "id": "recruitment-light",
+    "original": "Recruitment Lobby 2.png",
+    "feature": "recruitment",
+    "maturity": "stable",
+    "emphasis": "secondary",
+    "alt": "Light-theme campaign recruitment lobby with table expectations, GM introduction, and safety information.",
+    "review": "Alternate theme of the same lobby; retained, not treated as another feature.",
+    "width": 1613,
+    "height": 1167,
+    "originalBytes": 693269,
+    "variants": [
+      {
+        "src": "images/features/recruitment-light-480.webp",
+        "width": 480,
+        "bytes": 12328
+      },
+      {
+        "src": "images/features/recruitment-light-960.webp",
+        "width": 960,
+        "bytes": 35622
+      },
+      {
+        "src": "images/features/recruitment-light-1440.webp",
+        "width": 1440,
+        "bytes": 64478
+      },
+      {
+        "src": "images/features/recruitment-light-1613.webp",
+        "width": 1613,
+        "bytes": 76702
+      }
+    ]
+  },
+  {
+    "id": "recruitment-lobby",
+    "original": "Recruitment Lobby.png",
+    "feature": "recruitment",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "Campaign recruitment lobby with table expectations, GM introduction, safety information, and a join request.",
+    "review": "Primary lobby image.",
+    "width": 1629,
+    "height": 1085,
+    "originalBytes": 695997,
+    "variants": [
+      {
+        "src": "images/features/recruitment-lobby-480.webp",
+        "width": 480,
+        "bytes": 11860
+      },
+      {
+        "src": "images/features/recruitment-lobby-960.webp",
+        "width": 960,
+        "bytes": 34762
+      },
+      {
+        "src": "images/features/recruitment-lobby-1440.webp",
+        "width": 1440,
+        "bytes": 63186
+      },
+      {
+        "src": "images/features/recruitment-lobby-1629.webp",
+        "width": 1629,
+        "bytes": 75578
+      }
+    ]
+  },
+  {
+    "id": "recruitment-directory",
+    "original": "Recruitment Overview.png",
+    "feature": "recruitment",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "Recruitment directory with filters and two campaign listings.",
+    "review": "Public player-discovery view.",
+    "width": 1601,
+    "height": 881,
+    "originalBytes": 312196,
+    "variants": [
+      {
+        "src": "images/features/recruitment-directory-480.webp",
+        "width": 480,
+        "bytes": 9170
+      },
+      {
+        "src": "images/features/recruitment-directory-960.webp",
+        "width": 960,
+        "bytes": 28532
+      },
+      {
+        "src": "images/features/recruitment-directory-1440.webp",
+        "width": 1440,
+        "bytes": 53416
+      },
+      {
+        "src": "images/features/recruitment-directory-1601.webp",
+        "width": 1601,
+        "bytes": 62408
+      }
+    ]
+  },
+  {
+    "id": "session-calendar",
+    "original": "Session Calendar.png",
+    "feature": "sessions",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "Session calendar with a month view and upcoming sessions showing attendance choices.",
+    "review": "Tall composition; use complete image.",
+    "width": 1083,
+    "height": 1195,
+    "originalBytes": 141964,
+    "variants": [
+      {
+        "src": "images/features/session-calendar-480.webp",
+        "width": 480,
+        "bytes": 16848
+      },
+      {
+        "src": "images/features/session-calendar-960.webp",
+        "width": 960,
+        "bytes": 53924
+      },
+      {
+        "src": "images/features/session-calendar-1083.webp",
+        "width": 1083,
+        "bytes": 65616
+      }
+    ]
+  },
+  {
+    "id": "session-notes",
+    "original": "Session Note 2.png",
+    "feature": "sessions",
+    "maturity": "stable",
+    "emphasis": "featured",
+    "alt": "Session notes editor with campaign notes, headings, outline, and writing controls.",
+    "review": "Primary populated notes view.",
+    "width": 1339,
+    "height": 1263,
+    "originalBytes": 139394,
+    "variants": [
+      {
+        "src": "images/features/session-notes-480.webp",
+        "width": 480,
+        "bytes": 18164
+      },
+      {
+        "src": "images/features/session-notes-960.webp",
+        "width": 960,
+        "bytes": 53528
+      },
+      {
+        "src": "images/features/session-notes-1339.webp",
+        "width": 1339,
+        "bytes": 79944
+      }
+    ]
+  },
+  {
+    "id": "session-notes-overview",
+    "original": "SessionNotes.png",
+    "feature": "sessions",
+    "maturity": "stable",
+    "emphasis": "secondary",
+    "alt": "Session notes organized under Arc One and Arc Two, with empty session cards.",
+    "review": "Sparse supporting overview, omitted from primary layout.",
+    "width": 1313,
+    "height": 473,
+    "originalBytes": 26002,
+    "variants": [
+      {
+        "src": "images/features/session-notes-overview-480.webp",
+        "width": 480,
+        "bytes": 3420
+      },
+      {
+        "src": "images/features/session-notes-overview-960.webp",
+        "width": 960,
+        "bytes": 8928
+      },
+      {
+        "src": "images/features/session-notes-overview-1313.webp",
+        "width": 1313,
+        "bytes": 13608
+      }
+    ]
+  },
+  {
+    "id": "api-keys",
+    "original": "User API Keys.png",
+    "feature": "connections",
+    "maturity": "stable",
+    "emphasis": "standard",
+    "alt": "Account settings for creating scoped API keys and viewing existing keys and usage.",
+    "review": "No raw credentials visible; key names only.",
+    "width": 1043,
+    "height": 1065,
+    "originalBytes": 83877,
+    "variants": [
+      {
+        "src": "images/features/api-keys-480.webp",
+        "width": 480,
+        "bytes": 12126
+      },
+      {
+        "src": "images/features/api-keys-960.webp",
+        "width": 960,
+        "bytes": 39484
+      },
+      {
+        "src": "images/features/api-keys-1043.webp",
+        "width": 1043,
+        "bytes": 45638
+      }
+    ]
+  },
+  {
+    "id": "profiles",
+    "original": "User Profiles.png",
+    "feature": "connections",
+    "maturity": "stable",
+    "emphasis": "standard",
+    "alt": "Player profile with introduction, campaign memberships, and public posts.",
+    "review": "Supporting view of player identity.",
+    "width": 1635,
+    "height": 1143,
+    "originalBytes": 108332,
+    "variants": [
+      {
+        "src": "images/features/profiles-480.webp",
+        "width": 480,
+        "bytes": 4126
+      },
+      {
+        "src": "images/features/profiles-960.webp",
+        "width": 960,
+        "bytes": 13536
+      },
+      {
+        "src": "images/features/profiles-1440.webp",
+        "width": 1440,
+        "bytes": 26592
+      },
+      {
+        "src": "images/features/profiles-1635.webp",
+        "width": 1635,
+        "bytes": 33806
+      }
+    ]
+  },
+  {
+    "id": "settings",
+    "original": "User Settings.png",
+    "feature": "connections",
+    "maturity": "stable",
+    "emphasis": "secondary",
+    "alt": "Account interface preferences including language, timezone, and reading options.",
+    "review": "Supporting personal settings view.",
+    "width": 1095,
+    "height": 1123,
+    "originalBytes": 108566,
+    "variants": [
+      {
+        "src": "images/features/settings-480.webp",
+        "width": 480,
+        "bytes": 15816
+      },
+      {
+        "src": "images/features/settings-960.webp",
+        "width": 960,
+        "bytes": 54026
+      },
+      {
+        "src": "images/features/settings-1095.webp",
+        "width": 1095,
+        "bytes": 66252
+      }
+    ]
+  },
+  {
+    "id": "webhooks",
+    "original": "Webhooks.png",
+    "feature": "connections",
+    "maturity": "beta",
+    "emphasis": "standard",
+    "alt": "Campaign settings for Discord announcements, outgoing webhooks, and integrations.",
+    "review": "Beta; settings view, not a configured delivery example.",
+    "width": 1157,
+    "height": 1205,
+    "originalBytes": 76130,
+    "variants": [
+      {
+        "src": "images/features/webhooks-480.webp",
+        "width": 480,
+        "bytes": 11938
+      },
+      {
+        "src": "images/features/webhooks-960.webp",
+        "width": 960,
+        "bytes": 35728
+      },
+      {
+        "src": "images/features/webhooks-1157.webp",
+        "width": 1157,
+        "bytes": 46198
+      }
+    ]
+  },
+  {
+    "id": "world-development-settings",
+    "original": "World Development Settings.png",
+    "feature": "extensions",
+    "maturity": "beta",
+    "emphasis": "secondary",
+    "alt": "World Development settings with scope and review controls.",
+    "review": "Beta; settings explain opt-in configuration.",
+    "width": 1163,
+    "height": 1197,
+    "originalBytes": 80237,
+    "variants": [
+      {
+        "src": "images/features/world-development-settings-480.webp",
+        "width": 480,
+        "bytes": 12270
+      },
+      {
+        "src": "images/features/world-development-settings-960.webp",
+        "width": 960,
+        "bytes": 37628
+      },
+      {
+        "src": "images/features/world-development-settings-1163.webp",
+        "width": 1163,
+        "bytes": 46836
+      }
+    ]
+  },
+  {
+    "id": "world-development",
+    "original": "World Developments.png",
+    "feature": "extensions",
+    "maturity": "beta",
+    "emphasis": "standard",
+    "alt": "World Development workspace with campaign time, pending review area, and scheduling controls.",
+    "review": "Beta; empty state with suggestions disabled. No generated results claimed.",
+    "width": 1317,
+    "height": 823,
+    "originalBytes": 67814,
+    "variants": [
+      {
+        "src": "images/features/world-development-480.webp",
+        "width": 480,
+        "bytes": 9896
+      },
+      {
+        "src": "images/features/world-development-960.webp",
+        "width": 960,
+        "bytes": 29678
+      },
+      {
+        "src": "images/features/world-development-1317.webp",
+        "width": 1317,
+        "bytes": 46410
+      }
+    ]
+  }
+]

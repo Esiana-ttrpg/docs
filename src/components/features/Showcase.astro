@@ -1,0 +1,80 @@
+---
+import { features } from '../../data/feature-showcase';
+import FeatureHero from './FeatureHero.astro';
+import FeatureOwnership from './FeatureOwnership.astro';
+import FeatureShowcase from './FeatureShowcase.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<div class="showcase not-content">
+  <nav aria-label="Explore the showcase">
+    <a href="#maps">Discover the world</a>
+    <a href="#publishing">Tell its stories</a>
+    <a href="#recruitment">Find your table</a>
+    <a href="#extensibility">Make it yours</a>
+    <a href={`${base}/features/reference/`}>Browse all features ↗</a>
+  </nav>
+  <FeatureHero />
+  <FeatureOwnership />
+  {features.map((feature) => <FeatureShowcase feature={feature} />)}
+  <section class="closing" aria-labelledby="next-chapter">
+    <p class="eyebrow">Free. Self-hosted. Yours.</p>
+    <h2 id="next-chapter">Give your next chapter a home.</h2>
+    <p>Start with a single campaign, or bring a whole collection of worlds. Host them on your own terms, choose the features and plugins your table needs, and keep your campaign’s memory under your control. Export your campaigns or duplicate them when it is time for a new adventure.</p>
+    <div class="actions">
+      <a class="primary" href={`${base}/self-hosting/installation/`}>Set up Esiana <span aria-hidden="true">→</span></a>
+      <a href={`${base}/features/reference/`}>Browse the guides</a>
+      <a href="https://github.com/Esiana-ttrpg/esiana-core">Explore the source ↗</a>
+    </div>
+  </section>
+</div>
+<dialog aria-label="Enlarged screenshot" id="feature-image-dialog">
+  <div class="dialog-toolbar"><a class="full-image" target="_blank" rel="noopener">Open full-size image ↗</a><button type="button" autofocus>Close <span aria-hidden="true">×</span></button></div>
+  <img alt="" />
+</dialog>
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#feature-image-dialog');
+  if (dialog && typeof dialog.showModal === 'function') {
+    const image = dialog.querySelector('img')!;
+    const full = dialog.querySelector<HTMLAnchorElement>('.full-image')!;
+    let trigger: HTMLAnchorElement | null = null;
+    document.querySelectorAll<HTMLAnchorElement>('[data-feature-image]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        trigger = link;
+        image.src = link.href;
+        image.alt = link.querySelector('img')?.alt ?? '';
+        full.href = link.href;
+        dialog.showModal();
+      });
+    });
+    dialog.querySelector('button')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+    dialog.addEventListener('close', () => { image.removeAttribute('src'); trigger?.focus(); });
+  }
+</script>
+<style is:global>
+  html:has(.showcase) { --sl-content-width: 74rem; }
+  html:has(.showcase) .hero { padding-block: clamp(2rem, 6vw, 5rem) 2.5rem; }
+  html:has(.showcase) .hero h1 { max-width: 16ch; font-size: clamp(2.75rem, 6vw, 5.5rem); line-height: 1.02; letter-spacing: -.05em; text-wrap: balance; }
+  html:has(.showcase) .hero .tagline { max-width: 46rem; text-wrap: pretty; }
+  html:has(.showcase) :focus-visible { outline: 3px solid var(--sl-color-text-accent); outline-offset: 4px; }
+</style>
+<style>
+  .showcase { color: var(--sl-color-text); }
+  nav { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; padding-block: 0 2rem; font-size: var(--sl-text-sm); }
+  nav a { color: var(--sl-color-text-accent); text-underline-offset: .3em; }
+  .closing { border-block: 1px solid var(--sl-color-hairline); padding-block: clamp(3rem, 8vw, 6rem); }
+  .eyebrow { color: var(--sl-color-text-accent); font-size: var(--sl-text-sm); font-weight: 600; letter-spacing: .07em; text-transform: uppercase; }
+  h2 { max-width: 17ch; color: var(--sl-color-white); font-size: clamp(2rem, 5vw, 4rem); line-height: 1.1; letter-spacing: -.04em; }
+  .closing p:not(.eyebrow) { max-width: 44rem; margin-block: 1.5rem 2rem; font-size: var(--sl-text-lg); line-height: 1.7; }
+  .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .actions a { color: var(--sl-color-text-accent); }
+  .actions .primary { display: inline-flex; gap: 1.5rem; padding: .85rem 1.3rem; background: var(--sl-color-text-accent); color: var(--sl-color-text-invert); border-radius: 999px; text-decoration: none; }
+  dialog { width: min(96vw, 100rem); max-width: 96vw; max-height: 95vh; padding: 1rem; border: 1px solid var(--sl-color-gray-4); border-radius: .65rem; background: var(--sl-color-bg); color: var(--sl-color-white); }
+  dialog::backdrop { background: color-mix(in srgb, var(--sl-color-black) 85%, transparent); }
+  .dialog-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  .dialog-toolbar a { color: var(--sl-color-text-accent); }
+  button { cursor: pointer; border: 1px solid var(--sl-color-gray-4); border-radius: .35rem; padding: .45rem .8rem; background: var(--sl-color-bg); color: var(--sl-color-white); font: inherit; }
+  dialog img { display: block; width: 100%; max-height: 78vh; object-fit: contain; }
+</style>

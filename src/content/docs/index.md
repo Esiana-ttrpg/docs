@@ -31,7 +31,7 @@ Open **http://localhost:8080**, register, and use Esiana. The first account beco
 
 | Audience | Start here |
 |----------|------------|
-| Game masters & players | [Features catalog](features/index.md) |
+| Game masters & players | [Explore Esiana](features/index.mdx) |
 | Self-hosting operators | [Installation](self-hosting/installation.md) |
 | Plugin developers | [Getting started](plugin-development/getting-started.md) |
 | API integrators | [API overview](api/overview.md) · `/api/docs` on your instance |
@@ -57,7 +57,7 @@ Install, configure, and run your instance.
 
 Guides for the table — game masters, players, and campaign managers.
 
-- [Features catalog](features/index.md) — wiki, sessions, chronology, maps, discovery, downtime, journals, Campaign Home
+- [Explore Esiana](features/index.mdx) — a visual tour of worlds, maps, discovery, sessions, and stories
 - [Data management](data-management/index.md) — import formats, export, backups
 
 ### Building & extending
