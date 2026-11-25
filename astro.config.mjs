@@ -55,7 +55,7 @@ export default defineConfig({
             { slug: 'self-hosting' }, { slug: 'self-hosting/docker' },
             { slug: 'self-hosting/backups' }, { slug: 'self-hosting/capacity-and-sizing' },
             { slug: 'self-hosting/postgres' }, { slug: 'self-hosting/reverse-proxy' },
-            { slug: 'self-hosting/upgrades' },
+            { slug: 'self-hosting/upgrades' }, { slug: 'self-hosting/dashboards-and-integrations' },
           ] },
           { label: 'Authentication & SSO', items: [{ autogenerate: { directory: 'authentication' } }] },
           { label: 'Configuration', items: [

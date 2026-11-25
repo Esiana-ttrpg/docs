@@ -11,6 +11,7 @@ Install, deploy, and operate Esiana on your own infrastructure.
 | [PostgreSQL](postgres.md) | Database engine choice and backups |
 | [Backups](backups.md) | Campaign ZIP and system data |
 | [Reverse proxy](reverse-proxy.md) | HTTPS, CORS, cookies |
+| [Dashboards & Integrations](dashboards-and-integrations.md) | Dashboard shortcuts, widgets, and existing integrations |
 | [Upgrades](upgrades.md) | Image pulls, migrations, rollback |
 | [Capacity and sizing](capacity-and-sizing.md) | Campaign tiers, hardware guidance, profiling |
 | [Environment variables](../options/environment-variables.md) | Full `.env` reference (Docker, demo, seed, debug) |
